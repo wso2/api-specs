@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot Marketing Transactional API",
+    "baseUrl": "https://api.hubapi.com/marketing/v3/transactional",
+    "documentationUrl": "https://developers.hubspot.com/beta-docs/guides/api/marketing/emails/transactional-emails",
+    "description": "The HubSpot Marketing Transactional API enables the sending of transactional emails from a dedicated IP address to your contacts. It's particularly useful for sending essential business communications, such as transaction receipts after customer purchases, account updates, or terms of service changes. The API provides functionality for single-send emails and supports public SMTP tokens for secure email delivery. It's designed for sending critical business communications that require reliable delivery.",
+    "tags": ["marketing", "transactional", "hubspot", "emails", "smtp", "communications", "business"]
+}

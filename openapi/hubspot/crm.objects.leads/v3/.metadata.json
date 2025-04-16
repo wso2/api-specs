@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Objects Leads API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/leads",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/objects/leads",
+    "description": "The HubSpot CRM Objects Leads API enables the management of lead records in the CRM. Leads represent contacts or companies that have shown interest in your products or services and are potential customers. The API is particularly useful for tracking the sales prospecting journey, allowing you to create and manage lead records when existing contacts express interest in purchasing. It provides functionality for creating, reading, updating, and managing lead information throughout the sales process.",
+    "tags": ["crm", "leads", "objects", "hubspot", "sales", "prospecting", "conversion"]
+}

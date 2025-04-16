@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Commerce Discounts API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/discounts",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/commerce/discounts",
+    "description": "The HubSpot CRM Commerce Discounts API enables the creation and management of discount records within HubSpot's CRM. It allows you to create, read, update, and delete discount records that can be applied to quotes and other commerce objects. The API supports features such as batch operations, basic CRUD operations, and searching for discounts based on specific criteria. This API is particularly useful for businesses that want to implement discount strategies, such as first-time buyer discounts, and manage them programmatically.",
+    "tags": ["crm", "commerce", "discounts", "quotes", "hubspot", "ecommerce"]
+}

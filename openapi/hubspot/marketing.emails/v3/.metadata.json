@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot Marketing Emails API",
+    "baseUrl": "https://api.hubapi.com/marketing/v3/emails",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/marketing/emails/marketing-emails",
+    "description": "The HubSpot Marketing Emails API enables the creation, management, and analysis of marketing emails. It provides functionality for programmatically creating marketing emails and retrieving their send statistics. The API allows you to access detailed information about email performance, similar to what you can see in the HubSpot interface. It supports comprehensive email marketing functionality, including email creation, management, and analytics.",
+    "tags": ["marketing", "emails", "hubspot", "analytics", "statistics", "campaigns", "automation"]
+}

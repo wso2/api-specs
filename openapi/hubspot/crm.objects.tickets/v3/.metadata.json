@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Objects Tickets API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/tickets",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/objects/tickets",
+    "description": "The HubSpot CRM Objects Tickets API enables the creation and management of ticket records in the CRM. It's particularly useful for customer support teams to track and manage customer requests and issues. When a customer contacts the support team for help, the API allows you to create a ticket to track that request and maintain a record for future reference. The API provides comprehensive functionality for managing the entire lifecycle of support tickets within the CRM.",
+    "tags": ["crm", "tickets", "objects", "hubspot", "support", "customer-service", "tracking"]
+}

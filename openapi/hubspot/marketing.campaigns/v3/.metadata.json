@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot Marketing Campaigns API",
+    "baseUrl": "https://api.hubapi.com/marketing/v3/campaigns",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/marketing/campaigns",
+    "description": "The HubSpot Marketing Campaigns API enables the management of marketing campaign data. It provides endpoints for creating, reading, updating, and deleting marketing campaigns, allowing you to manage HubSpot campaigns from external applications. The API is particularly useful for integrating campaign management with external systems and transferring campaign data to external data warehouses for analytics purposes. It supports comprehensive campaign management functionality for marketing professionals.",
+    "tags": ["marketing", "campaigns", "hubspot", "analytics", "data-warehouse", "integration", "management"]
+}

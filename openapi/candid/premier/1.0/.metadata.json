@@ -1,0 +1,7 @@
+{
+    "name": "Candid Premier API",
+    "baseUrl": "https://api.candid.org/premier/v1",
+    "documentationUrl": "https://candid.org/use-our-data/apis",
+    "description": "The Candid Premier API offers comprehensive access to detailed nonprofit data, including financial information, program details, and organizational metrics",
+    "tags": ["charity", "nonprofit", "premier", "organizations", "financials", "candid"]
+}

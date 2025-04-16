@@ -1,0 +1,7 @@
+{
+    "name": "OpenAI Images API",
+    "baseUrl": "https://api.openai.com/v1",
+    "documentationUrl": "https://platform.openai.com/docs/api-reference/images",
+    "description": "The OpenAI Images API enables the generation and manipulation of images using AI. It provides functionality for creating images from text descriptions, editing existing images, and generating variations of images. The API supports various image formats and styles, allowing for creative and practical image generation applications. It's particularly useful for applications requiring AI-generated visual content, image editing, or creative design assistance.",
+    "tags": ["openai", "images", "generation", "editing", "ai", "art", "design"]
+}

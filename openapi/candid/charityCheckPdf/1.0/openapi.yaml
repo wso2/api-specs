@@ -1,0 +1,200 @@
+openapi: 3.0.1
+info:
+  title: CharityCheckPdf
+  description:
+    This end-point will allow you to retrieve organization's Charity Check
+    information in PDF format. API returns the byte stream.
+  version: "1.0"
+servers:
+  - url: https://apidata.guidestar.org/charitycheckpdf
+  - url: https://api.candid.org/charitycheckpdf
+paths:
+  "/v1/pdf/{ein}":
+    get:
+      summary: "/charitycheckpdf/v1/pdf"
+      description:
+        Generate a PDF report to validate nonprofit status and eligibility
+        with a 100% IRS-compliant charity check.
+      operationId: charitycheckpdf_v1
+      parameters:
+        - name: ein
+          in: path
+          description: Employer Identification Number.
+          example: 13-1837418
+          required: true
+          schema:
+            type: string
+            default: 13-1837418
+      responses:
+        "200":
+          description: OK
+          content:
+            application/pdf:
+              schema:
+                type: object
+                description:
+                  PDF containing charity check information for the organization
+                  with the given ein
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+        "404":
+          description: No Results Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+        "406":
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+components:
+  schemas:
+    BadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 400
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example: The request cannot be fulfilled due to bad syntax.
+    Unauthorized:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 401
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example:
+            Access denied due to missing subscription key. Make sure to include
+            subscription key when making requests to an API.
+    Forbidden:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 403
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example:
+            Forbidden, we found insufficient permissions to grant access to
+            the resources. Please check the detailed message of the response.
+    NotFound:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 404
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example:
+            Request was processed successfully but we could not find the resource
+            ein
+    NotAcceptable:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 406
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example:
+            The requested resource is capable of generating only content not
+            acceptable according to the Accept headers sent in the request.
+    TooManyRequests:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 429
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example: Rate limit is exceeded. Try again later.
+    InternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 500
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example:
+            Oh no!, this is bad, something went wrong... please contact API
+            support!
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Subscription-Key
+      in: header
+security:
+  - apiKeyHeader: []
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

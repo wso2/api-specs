@@ -1,0 +1,7 @@
+{
+    "name": "Candid Essentials API",
+    "baseUrl": "https://api.candid.org/essentials/v1",
+    "documentationUrl": "https://candid.org/use-our-data/apis",
+    "description": "The Candid Essentials API provides core nonprofit data and information services, offering essential details about charitable organizations",
+    "tags": ["charity", "nonprofit", "essentials", "organizations", "candid"]
+}

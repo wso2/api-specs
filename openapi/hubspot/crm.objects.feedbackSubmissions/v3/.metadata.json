@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Objects Feedback Submissions API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/feedback_submissions",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/objects/feedback-submissions",
+    "description": "The HubSpot CRM Objects Feedback Submissions API enables the retrieval and management of feedback survey responses. It supports various types of feedback surveys including NPS (Net Promoter Score), CSAT (Customer Satisfaction), CES (Customer Effort Score), and custom feedback surveys. The API is particularly useful for gathering customer sentiment data, such as preparing for product redesigns or analyzing customer satisfaction trends. It provides functionality for accessing and managing feedback data submitted through HubSpot's survey tools.",
+    "tags": ["crm", "feedback", "surveys", "nps", "csat", "ces", "customer-sentiment"]
+}

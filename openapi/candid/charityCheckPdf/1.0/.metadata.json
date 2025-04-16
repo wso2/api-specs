@@ -1,0 +1,7 @@
+{
+    "name": "Candid Charity Check PDF API",
+    "baseUrl": "https://api.candid.org/charity-check-pdf",
+    "documentationUrl": "https://candid.org/use-our-data/apis",
+    "description": "The Charity Check PDF API allows you to generate PDF reports containing comprehensive information about nonprofit organizations",
+    "tags": ["charity", "nonprofit", "pdf", "reports", "candid"]
+}

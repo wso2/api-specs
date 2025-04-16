@@ -1,0 +1,7 @@
+{
+    "name": "Discord HTTP API",
+    "baseUrl": "https://discord.com/api/v10",
+    "documentationUrl": "https://discord.com/developers/docs",
+    "description": "Discord's HTTP API enables developers to interact with Discord servers, channels, users, and messages. It provides comprehensive access to Discord's features including bot creation, server management, and real-time communication",
+    "tags": ["discord", "chat", "messaging", "gaming", "bots", "webhooks", "real-time"]
+}

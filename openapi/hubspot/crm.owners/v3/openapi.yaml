@@ -1,0 +1,408 @@
+openapi: 3.0.1
+info:
+  title: CRM Crm Owners
+  description: |-
+    HubSpot uses **owners** to assign CRM objects to specific people in your organization. The endpoints described here are used to get a list of the owners that are available for an account. To assign an owner to an object, set the hubspot_owner_id property using the appropriate CRM object update or create a request.
+
+    If teams are available for your HubSpot tier, these endpoints will also indicate which team(s) an owner can access, as well as which team is the owner's primary team.
+  version: v3
+  x-hubspot-product-tier-requirements:
+    marketing: FREE
+    sales: FREE
+    service: FREE
+    cms: STARTER
+  x-hubspot-documentation-banner: NONE
+  x-hubspot-api-use-case: Retrieve the owner IDs for all users in the account to later
+    assign CRM records across the team.
+  x-hubspot-related-documentation:
+  - name: Owners Guide
+    url: https://developers.hubspot.com/docs/guides/api/crm/owners
+  x-hubspot-introduction: Each user in a HubSpot account is assigned an owner ID,
+    which HubSpot uses to map the user to their assigned CRM records, activities,
+    and more. Use the owners API to retrieve owner IDs and other related information
+    for users in the account. To assign an owner to a CRM record, you can use the
+    properties API to set the hubspot_owner_id property.
+servers:
+- url: https://api.hubapi.com/crm/v3/owners
+tags:
+- name: Owners
+paths:
+  "/":
+    get:
+      tags:
+      - Owners
+      summary: Get a page of owners
+      operationId: get-/crm/v3/owners/_getPage
+      parameters:
+      - name: email
+        in: query
+        description: Filter by email address (optional)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: after
+        in: query
+        description: The paging cursor token of the last successfully read resource
+          will be returned as the `paging.next.after` JSON property of a paged response
+          containing more results
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The maximum number of results to display per page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          default: 100
+      - name: archived
+        in: query
+        description: Whether to return only results that have been archived
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CollectionResponsePublicOwnerForwardPaging"
+        default:
+          "$ref": "#/components/responses/Error"
+      security:
+      - private_apps_legacy:
+        - contacts
+      - private_apps:
+        - crm.objects.owners.read
+      - oauth2:
+        - crm.objects.owners.read
+  "/{ownerId}":
+    get:
+      tags:
+      - Owners
+      summary: Read an owner by given `id` or `userId`
+      operationId: get-/crm/v3/owners/{ownerId}_getById
+      parameters:
+      - name: ownerId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      - name: idProperty
+        in: query
+        description: The property to search by. Defaults to `id`
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: id
+          enum:
+          - id
+          - userId
+      - name: archived
+        in: query
+        description: Whether to return only results that have been archived
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PublicOwner"
+        default:
+          "$ref": "#/components/responses/Error"
+      security:
+      - private_apps_legacy:
+        - contacts
+      - private_apps:
+        - crm.objects.owners.read
+      - oauth2:
+        - crm.objects.owners.read
+components:
+  schemas:
+    ErrorDetail:
+      required:
+      - message
+      type: object
+      properties:
+        subCategory:
+          type: string
+          description: A specific category that contains more specific detail about
+            the error
+        code:
+          type: string
+          description: The status code associated with the error detail
+        in:
+          type: string
+          description: The name of the field or parameter in which the error was found
+        context:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Context about the error condition
+          example:
+            missingScopes:
+            - scope1
+            - scope2
+        message:
+          type: string
+          description: A human readable message describing the error along with remediation
+            steps where appropriate
+    ForwardPaging:
+      type: object
+      properties:
+        next:
+          "$ref": "#/components/schemas/NextPage"
+      description: Details about forward pagination used to retrieve the next set
+        of results in a paginated response
+    PublicOwner:
+      required:
+      - archived
+      - createdAt
+      - id
+      - type
+      - updatedAt
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The first name of the owner
+          example: John
+        lastName:
+          type: string
+          description: The last name of the owner
+          example: Smith
+        createdAt:
+          type: string
+          description: The date and time the owner was created
+          format: datetime
+          example: '2019-10-30T03:30:17.883+00:00'
+        archived:
+          type: boolean
+          description: Whether the owner has been archived
+          example: false
+        teams:
+          type: array
+          description: The teams that the owner is a member of
+          example:
+          - id: '178588'
+            name: West Coast Sales
+            primary: true
+          - id: '178590'
+            name: California Sales
+            primary: false
+          items:
+            "$ref": "#/components/schemas/PublicTeam"
+        id:
+          type: string
+          description: The unique identifier for the owner
+          example: '6166860'
+        userIdIncludingInactive:
+          type: integer
+          description: The unique identifier for the owner, including inactive owners
+          format: int32
+        type:
+          type: string
+          description: The type of owner
+          enum:
+          - PERSON
+          - QUEUE
+        userId:
+          type: integer
+          description: The unique identifier for the owner
+          format: int32
+          example: 1296619
+        email:
+          type: string
+          description: The email address of the owner
+          example: jsmith@example.com
+        updatedAt:
+          type: string
+          description: The date and time the owner was last updated
+          format: datetime
+          example: '2019-12-07T16:50:06.678+00:00'
+      description: Represents a HubSpot owner, which can be either an individual (PERSON)
+        or a queue (QUEUE), along with their associated details
+      example:
+        id: '6166860'
+        email: jsmith@example.com
+        firstName: John
+        lastName: Smith
+        userId: 1296619
+        createdAt: '2019-10-30T03:30:17.883Z'
+        updatedAt: '2019-12-07T16:50:06.678Z'
+        archived: false
+        teams:
+        - id: '178588'
+          name: West Coast Sales
+          primary: true
+        - id: '178590'
+          name: California Sales
+          primary: false
+    PublicTeam:
+      required:
+      - id
+      - name
+      - primary
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the team
+        id:
+          type: string
+          description: The unique identifier for the team
+        primary:
+          type: boolean
+          description: Whether the team is the primary team
+      description: Represents a HubSpot team with a name, a unique identifier, and
+        a flag indicating whether it is the primary team
+    Error:
+      required:
+      - category
+      - correlationId
+      - message
+      type: object
+      properties:
+        subCategory:
+          type: string
+          description: A specific category that contains more specific detail about
+            the error
+        context:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Context about the error condition
+          example:
+            missingScopes:
+            - scope1
+            - scope2
+            invalidPropertyName:
+            - propertyValue
+        correlationId:
+          type: string
+          description: A unique identifier for the request. Include this value with
+            any error reports or support tickets
+          format: uuid
+          example: aeb5f871-7f07-4993-9211-075dc63e7cbf
+        links:
+          type: object
+          additionalProperties:
+            type: string
+          description: A map of link names to associated URIs containing documentation
+            about the error or recommended remediation steps
+          example:
+            knowledge-base: https://www.hubspot.com/products/service/knowledge-base
+        message:
+          type: string
+          description: A human readable message describing the error along with remediation
+            steps where appropriate
+          example: Invalid input (details will vary based on the error)
+        category:
+          type: string
+          description: The error category
+          example: VALIDATION_ERROR
+        errors:
+          type: array
+          description: further information about the error
+          items:
+            "$ref": "#/components/schemas/ErrorDetail"
+      example:
+        message: Invalid input (details will vary based on the error)
+        correlationId: aeb5f871-7f07-4993-9211-075dc63e7cbf
+        category: VALIDATION_ERROR
+        links:
+          knowledge-base: https://www.hubspot.com/products/service/knowledge-base
+    CollectionResponsePublicOwnerForwardPaging:
+      required:
+      - results
+      type: object
+      properties:
+        paging:
+          "$ref": "#/components/schemas/ForwardPaging"
+        results:
+          type: array
+          description: A list of owners
+          items:
+            "$ref": "#/components/schemas/PublicOwner"
+      description: Collection of owners with forward paging information for continued
+        retrieval
+    NextPage:
+      required:
+      - after
+      type: object
+      properties:
+        link:
+          type: string
+          description: A link to the next page of results
+        after:
+          type: string
+          description: The paging cursor token of the last successfully read resource
+            will be returned as the `paging.next.after` JSON property of a paged response
+            containing more results
+      description: Information about the next page, including a link and the paging
+        cursor token to retrieve more results
+  responses:
+    Error:
+      description: An error occurred.
+      content:
+        "*/*":
+          schema:
+            "$ref": "#/components/schemas/Error"
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.hubspot.com/oauth/authorize
+          tokenUrl: https://api.hubapi.com/oauth/v1/token
+          scopes:
+            crm.objects.owners.read: " "
+    private_apps_legacy:
+      type: apiKey
+      description: Used to authenticate requests from legacy private apps
+      name: private-app-legacy
+      in: header
+      x-ballerina-name: privateAppLegacy
+    private_apps:
+      type: apiKey
+      description: Used to authenticate requests from private apps
+      name: private-app
+      in: header
+      x-ballerina-name: privateApp
+x-hubspot-available-client-libraries:
+- PHP
+- Node
+- Ruby
+- Python
+x-hubspot-product-tier-requirements:
+  marketing: FREE
+  sales: FREE
+  service: FREE
+  cms: STARTER
+x-hubspot-documentation-banner: NONE

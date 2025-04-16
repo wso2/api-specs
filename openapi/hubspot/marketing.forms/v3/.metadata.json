@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot Marketing Forms API",
+    "baseUrl": "https://api.hubapi.com/marketing/v3/forms",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/marketing/forms/forms",
+    "description": "The HubSpot Marketing Forms API enables the creation and management of forms in your HubSpot account. These forms can be embedded on your website to collect submissions from visitors. The API is particularly useful for programmatically modifying form elements based on complex use cases or data from third-party services, such as dynamically displaying fields based on external data sources. It provides comprehensive functionality for managing form configurations and submissions.",
+    "tags": ["marketing", "forms", "hubspot", "website", "submissions", "integration", "dynamic-fields"]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "OpenAI Fine-tunes API",
+    "baseUrl": "https://api.openai.com/v1",
+    "documentationUrl": "https://platform.openai.com/docs/api-reference/fine-tuning",
+    "description": "The OpenAI Fine-tunes API enables the customization of OpenAI models through fine-tuning. It allows you to train models on your specific data to improve performance for particular tasks or domains. The API provides functionality for creating, managing, and deploying fine-tuned models, supporting various training parameters and model configurations. It's particularly useful for organizations that need specialized AI models tailored to their specific use cases and data.",
+    "tags": ["openai", "fine-tuning", "models", "training", "customization", "machine-learning", "ai"]
+}

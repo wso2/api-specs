@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Objects Deals API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/deals",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/objects/deals",
+    "description": "The HubSpot CRM Objects Deals API enables the creation and management of deal records in the CRM. It's particularly useful for sales teams to track the negotiation process with prospective customers, from initial contact through to closed deals. The API provides functionality for creating, updating, and managing deal records, including the ability to update deal stages as they progress through the sales pipeline. It supports comprehensive deal management features for tracking sales opportunities and customer relationships.",
+    "tags": ["crm", "deals", "objects", "hubspot", "sales", "pipeline", "opportunities"]
+}

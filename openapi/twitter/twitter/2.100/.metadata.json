@@ -1,0 +1,7 @@
+{
+    "name": "Twitter API v2",
+    "baseUrl": "https://api.twitter.com/2",
+    "documentationUrl": "https://developer.twitter.com/en/docs/twitter-api",
+    "description": "The Twitter API v2 provides a comprehensive set of endpoints for interacting with Twitter's platform. It enables developers to access and manage tweets, user profiles, bookmarks, and other Twitter data. The API supports various features including tweet creation, user management, and data analytics. It's particularly useful for building applications that integrate with Twitter's social media platform, enabling tweet management, user engagement, and data analysis.",
+    "tags": ["twitter", "social-media", "tweets", "users", "bookmarks", "analytics", "integration"]
+}

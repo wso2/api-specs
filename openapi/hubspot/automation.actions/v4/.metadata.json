@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot Automation Actions API",
+    "baseUrl": "https://api.hubapi.com/automation/v4/actions",
+    "documentationUrl": "https://developers.hubspot.com/docs/reference/api/automation/custom-workflow-actions",
+    "description": "The HubSpot Automation Actions API allows you to create and manage custom workflow actions in HubSpot's automation platform",
+    "tags": ["automation", "workflow", "actions", "hubspot"]
+}

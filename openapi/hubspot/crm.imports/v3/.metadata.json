@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Imports API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/imports",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/imports",
+    "description": "The HubSpot CRM Imports API enables the import of CRM records and activities into your HubSpot account. It supports importing various types of data including contacts, companies, and notes. The API is particularly useful for scenarios like importing contact lists from events or webinars, or migrating data from other systems into HubSpot. It provides functionality for managing import processes, mapping data fields, and handling import results.",
+    "tags": ["crm", "imports", "data-migration", "hubspot", "contacts", "companies", "records"]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Commerce Quotes API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/quotes",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/commerce/quotes",
+    "description": "The HubSpot CRM Commerce Quotes API enables the creation and management of sales quotes for sharing pricing information with potential buyers. It's particularly useful for creating contract proposals, such as for service packages or recurring services. The API supports comprehensive quote management including creating, reading, updating, and archiving quotes, as well as batch operations and searching capabilities. This makes it ideal for businesses that need to streamline their quote generation and management process.",
+    "tags": ["crm", "commerce", "quotes", "sales", "pricing", "hubspot", "proposals"]
+}
