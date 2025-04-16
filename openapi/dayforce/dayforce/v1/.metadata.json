@@ -1,0 +1,7 @@
+{
+    "name": "Dayforce HCM API",
+    "baseUrl": "https://ustest241-services.dayforcehcm.com/Api",
+    "documentationUrl": "https://developers.dayforce.com/",
+    "description": "Dayforce HCM API provides access to Ceridian's Human Capital Management system, allowing integration with workforce management, payroll, benefits, HR, talent management, and other employee data",
+    "tags": ["hcm", "hr", "payroll", "workforce", "employees", "ceridian", "dayforce"]
+}

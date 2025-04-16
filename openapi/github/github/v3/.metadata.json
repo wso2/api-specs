@@ -1,0 +1,7 @@
+{
+    "name": "GitHub REST API",
+    "baseUrl": "https://api.github.com",
+    "documentationUrl": "https://docs.github.com/rest",
+    "description": "The GitHub REST API allows you to manage GitHub resources such as repositories, issues, pull requests, and more. It provides comprehensive access to GitHub's features for developers and integrators",
+    "tags": ["github", "git", "version-control", "repositories", "issues", "pull-requests", "actions"]
+}

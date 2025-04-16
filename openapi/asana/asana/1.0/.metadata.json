@@ -1,0 +1,7 @@
+{
+    "name": "Asana REST API",
+    "baseUrl": "https://app.asana.com/api/1.0",
+    "documentationUrl": "https://developers.asana.com/reference/rest-api-reference",
+    "description": "Asana is a popular project management and team collaboration tool that enables teams to organize, track, and manage their work and projects",
+    "tags": ["management", "collaboration", "project management"]
+}

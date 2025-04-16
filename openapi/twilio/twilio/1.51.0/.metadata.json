@@ -1,0 +1,7 @@
+{
+    "name": "Twilio API",
+    "baseUrl": "https://api.twilio.com/2010-04-01",
+    "documentationUrl": "https://www.twilio.com/docs/usage/api",
+    "description": "The Twilio API provides a comprehensive set of endpoints for communication services, including SMS, voice calls, video, and messaging. It enables developers to integrate telecommunication capabilities into their applications, allowing for sending and receiving messages, making and receiving calls, and managing communication workflows. The API supports various communication channels and provides tools for building scalable communication solutions.",
+    "tags": ["twilio", "sms", "voice", "messaging", "communication", "telephony", "integration"]
+}

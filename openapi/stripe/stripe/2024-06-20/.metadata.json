@@ -1,0 +1,7 @@
+{
+    "name": "Stripe API",
+    "baseUrl": "https://api.stripe.com/v1",
+    "documentationUrl": "https://docs.stripe.com/api",
+    "description": "The Stripe API provides a comprehensive set of endpoints for processing payments, managing subscriptions, handling refunds, and managing customer data. It supports various payment methods, currencies, and payment flows. The API enables businesses to accept payments, manage recurring billing, handle disputes, and integrate with Stripe's suite of financial services. It's particularly useful for e-commerce platforms, subscription services, and any application requiring payment processing capabilities.",
+    "tags": ["stripe", "payments", "subscriptions", "e-commerce", "billing", "financial", "integration"]
+}

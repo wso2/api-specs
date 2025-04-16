@@ -1,0 +1,7 @@
+{
+    "name": "Zendesk Support API",
+    "baseUrl": "https://{subdomain}.zendesk.com/api/v2",
+    "documentationUrl": "https://developer.zendesk.com/api-reference",
+    "description": "The Zendesk Support API provides a comprehensive set of endpoints for managing customer support operations. It enables integration with Zendesk's support platform, allowing for ticket management, user administration, and automation of support workflows. The API supports various features including ticket creation and management, user and organization management, automation rules, and reporting. It's particularly useful for building applications that integrate with Zendesk's customer support platform.",
+    "tags": ["zendesk", "support", "tickets", "customer-service", "automation", "helpdesk", "integration"]
+}

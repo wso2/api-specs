@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Extensions Video Conferencing API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/extensions/video-conferencing",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/extensions/video-conferencing",
+    "description": "The HubSpot CRM Extensions Video Conferencing API enables integration with video conferencing applications, allowing HubSpot to add video conference links to meeting requests with contacts. It's particularly useful for companies that frequently conduct meetings through platforms like Zoom, enabling users to seamlessly add video conferencing information to meeting invitations scheduled in HubSpot. The API provides functionality for configuring and managing video conferencing settings within the CRM.",
+    "tags": ["crm", "extensions", "video-conferencing", "meetings", "hubspot", "zoom", "integration"]
+}

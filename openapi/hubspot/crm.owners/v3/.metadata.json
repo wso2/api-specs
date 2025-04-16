@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Owners API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/owners",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/owners",
+    "description": "The HubSpot CRM Owners API enables the management of owners in the CRM system. Owners are used to assign CRM objects to specific people in your organization. The API provides functionality to retrieve a list of available owners for an account, which can then be used to assign ownership of CRM records. For accounts with team functionality, the API also provides information about which teams an owner can access and their primary team. This is particularly useful for managing record assignments across your organization.",
+    "tags": ["crm", "owners", "hubspot", "teams", "assignments", "organization", "management"]
+}

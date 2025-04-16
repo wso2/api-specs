@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Objects Contacts API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/contacts",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/objects/contacts",
+    "description": "The HubSpot CRM Objects Contacts API enables the management of contact records in the CRM. It provides comprehensive functionality for creating, reading, updating, and managing contact information. The API is particularly useful for integrating contact data with external systems, allowing you to retrieve contact information by ID and maintain contact records across different platforms. It supports various contact-related operations and data management features.",
+    "tags": ["crm", "contacts", "objects", "hubspot", "integration", "data", "management"]
+}

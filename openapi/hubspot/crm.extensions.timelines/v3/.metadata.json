@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Extensions Timelines API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/timeline",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/extensions/timeline",
+    "description": "The HubSpot CRM Extensions Timelines API enables the creation and configuration of custom events that can be displayed in the timelines of CRM objects such as contacts, companies, tickets, or deals. This feature allows apps to enhance the CRM experience by adding custom events and data to object timelines, including the ability to display external data through iframes. It's particularly useful for tracking custom user interactions, sign-up flows, and other application-specific events within the HubSpot CRM timeline view.",
+    "tags": ["crm", "extensions", "timelines", "events", "hubspot", "custom", "tracking"]
+}

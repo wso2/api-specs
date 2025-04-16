@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Engagements Emails API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/emails",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/engagements/email",
+    "description": "The HubSpot CRM Engagements Emails API enables the association of email communications with records in the CRM. It's particularly useful for teams using third-party email providers, allowing them to programmatically log email data to associated records in HubSpot. The API supports including various metadata fields such as email headers, subject lines, and body content, ensuring comprehensive tracking of all email communications within the HubSpot CRM.",
+    "tags": ["crm", "engagements", "emails", "hubspot", "communications", "tracking", "metadata"]
+}

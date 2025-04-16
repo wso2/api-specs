@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot Marketing Events API",
+    "baseUrl": "https://api.hubapi.com/marketing/v3/marketing-events",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/marketing/marketing-events",
+    "description": "The HubSpot Marketing Events API enables the management of marketing events as CRM objects. It allows you to track marketing events, such as webinars, along with the contacts who registered and attended. The API is particularly useful for integrating external systems that handle event registration with HubSpot CRM, ensuring that attendee data and behavior are properly synced. It provides comprehensive functionality for managing marketing events and their associated contact data.",
+    "tags": ["marketing", "events", "hubspot", "webinars", "registration", "tracking", "integration"]
+}

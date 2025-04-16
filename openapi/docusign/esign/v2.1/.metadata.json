@@ -1,0 +1,7 @@
+{
+    "name": "DocuSign eSignature API",
+    "baseUrl": "https://api.docusign.com/restapi",
+    "documentationUrl": "https://developers.docusign.com/docs/esign-rest-api",
+    "description": "The DocuSign eSignature API provides electronic signature capabilities, enabling the creation, sending, and management of electronic signatures and documents",
+    "tags": ["docusign", "esignature", "electronic-signature", "documents", "signing"]
+}

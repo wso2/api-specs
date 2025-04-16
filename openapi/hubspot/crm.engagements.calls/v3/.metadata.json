@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Engagements Calls API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/calls",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/engagements/calls",
+    "description": "The HubSpot CRM Engagements Calls API enables the logging and management of call engagements with prospects and customers. It's particularly useful for teams using external calling services, allowing them to integrate call information into their HubSpot account. The API provides functionality for creating, reading, updating, and managing call records, ensuring all customer communication is tracked within the HubSpot CRM.",
+    "tags": ["crm", "engagements", "calls", "telephony", "hubspot", "communications", "interactions"]
+}

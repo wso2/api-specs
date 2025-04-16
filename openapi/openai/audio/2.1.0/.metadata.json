@@ -1,0 +1,7 @@
+{
+    "name": "OpenAI Audio API",
+    "baseUrl": "https://api.openai.com/v1",
+    "documentationUrl": "https://platform.openai.com/docs/api-reference/audio",
+    "description": "The OpenAI Audio API provides functionality for audio processing and generation. It enables the conversion between audio and text, allowing for speech-to-text transcription and text-to-speech synthesis. The API supports various audio formats and provides high-quality audio processing capabilities. It's particularly useful for applications requiring voice interaction, audio transcription, or speech synthesis.",
+    "tags": ["openai", "audio", "speech", "transcription", "synthesis", "voice", "processing"]
+}

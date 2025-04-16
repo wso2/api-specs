@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Lists API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/lists",
+    "documentationUrl": "https://developers.hubspot.com/beta-docs/guides/api/crm/lists/overview",
+    "description": "The HubSpot CRM Lists API enables the management of list memberships for object lists in HubSpot. It provides functionality for creating, updating, and managing lists of contacts, companies, and other CRM objects. The API is particularly useful for bulk operations, such as adding multiple contacts to a list or removing company records from a company list. It supports various list types and membership management operations.",
+    "tags": ["crm", "lists", "contacts", "companies", "hubspot", "membership", "segmentation"]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Commerce Orders API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/orders",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/commerce/orders",
+    "description": "The HubSpot CRM Commerce Orders API enables the management of ecommerce purchase data within HubSpot's CRM. It allows you to create and track individual orders when buyers make purchases, including the ability to update orders with tracking information after shipping labels are created. This API is particularly valuable for maintaining synchronization between HubSpot and external ecommerce platforms like Shopify and NetSuite, ensuring consistent order data across your commerce ecosystem.",
+    "tags": ["crm", "commerce", "orders", "ecommerce", "hubspot", "shipping", "tracking"]
+}

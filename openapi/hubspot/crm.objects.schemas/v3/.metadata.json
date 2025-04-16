@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Objects Schemas API",
+    "baseUrl": "https://api.hubapi.com/crm-object-schemas/v3/schemas",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/objects/custom-objects",
+    "description": "The HubSpot CRM Objects Schemas API enables the definition and management of custom object schemas in the HubSpot CRM. Schemas define how custom objects store and represent information, including details about object types, properties, and associations. The API is particularly useful for creating custom objects with specific properties and filters, such as creating a new object type for storing car information at a dealership. It provides functionality for managing the structure and behavior of custom objects within the CRM.",
+    "tags": ["crm", "schemas", "objects", "hubspot", "custom-objects", "metadata", "enterprise"]
+}

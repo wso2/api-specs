@@ -1,0 +1,2053 @@
+openapi: 3.0.0
+info:
+  title: Essentials
+  description:
+    Search GuideStar’s most common set of data about nonprofits to quickly
+    find organizations most relevant to your users, and use those results to get more
+    data from our other APIs. API returns search result in JSON format.
+  version: "1.0"
+servers:
+  - url: https://api.candid.org/essentials
+  - url: https://apidata.guidestar.org/essentials
+paths:
+  "/v1":
+    post:
+      summary: "/essentials/v1"
+      description:
+        Find nonprofits using variable search criteria and explore essential
+        information.
+      operationId: essentials_v1
+      requestBody:
+        description:
+          Below JSON request body is an example showing all available elements.
+          Please use the examples from the API Documentation.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Query"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Query"
+          application/x-www-form-urlencoded: {}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/V1EssentialsResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/V1EssentialsResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+        "404":
+          description: No Results Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+        "406":
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+  "/v2":
+    post:
+      summary: "/essentials/v2"
+      description:
+        Find nonprofits using variable search criteria and explore essential
+        information.
+      operationId: essentials_v2
+      requestBody:
+        description:
+          Below JSON request body is an example showing all available elements.
+          Please use the examples from the API Documentation.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Query"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Query"
+          application/x-www-form-urlencoded: {}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/V2EssentialsResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/V2EssentialsResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+        "404":
+          description: No Results Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+        "406":
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+  "/v3":
+    post:
+      summary: "/essentials/v3"
+      description:
+        Make your searches more relevant and real-time with access to new
+        filters and fields.
+      operationId: essentials_v3
+      requestBody:
+        description:
+          Below JSON request body is an example showing all available elements.
+          Please use the examples from the API Documentation.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/v3Query"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/v3Query"
+          application/x-www-form-urlencoded: {}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/V3EssentialsResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/V3EssentialsResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+        "404":
+          description: No Results Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+        "406":
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+  "/lookup":
+    get:
+      summary: "/essentials/lookup"
+      description:
+        Use the /lookup endpoint to retrieve a list of the tables that
+        can be passed as a filter_name to the lookup detail endpoints. The tables
+        and their contents can be used to generate dropdowns and filters in your system
+        when using the Essentials API.
+      operationId: essentials_lookup
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/EssentialsLookupResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+        "404":
+          description: No Results Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+        "406":
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+  "/lookup/{filter_name}":
+    get:
+      summary: "/essentials/lookup/{filter_name}"
+      description:
+        Provides a list of all the human-readable search values within
+        a specific filter_name table, which can then be used in search queries with
+        the Essentials endpoints. Each array contains a table key, name value, and
+        search value. The resulting search_value(s) can be passed as search values
+        in the Essentials API.
+      operationId: essentials_lookup_{filter_name}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/EssentialsFilteredLookupResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+        "404":
+          description: No Results Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+        "406":
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+      parameters:
+        - name: filter_name
+          x-global: true
+          in: path
+          example: ntee_major
+          required: true
+          schema:
+            type: string
+  "/lookup/{filter_name}/{key_or_value}":
+    get:
+      summary: "/essentials/lookup/{filter_name}/{key_or_value}"
+      description:
+        Lookup details on a specific filter using the known filter_name
+        and key_or_value.  The resulting search_value can be passed as a search value
+        in the Essentials API.
+      operationId: essentials_lookup_{filter_name}_{key_or_value}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/EssentialsFilteredLookupResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BadRequest"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Unauthorized"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Forbidden"
+        "404":
+          description: No Results Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotFound"
+        "406":
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/NotAcceptable"
+        "429":
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/TooManyRequests"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/InternalServerError"
+      parameters:
+        - name: filter_name
+          x-global: true
+          in: path
+          description:
+            A list of all filters that can be used in Essentials endpoints.
+            Found in the response of /essentials/lookup.
+          example: ntee_major
+          required: true
+          schema:
+            type: string
+        - name: key_or_value
+          x-global: true
+          in: path
+          description: Key of filterable items. Found in the response of /essentials/lookup/{filter_name}
+          example: C00
+          required: true
+          schema:
+            type: string
+components:
+  schemas:
+    Query:
+      type: object
+      properties:
+        search_terms:
+          type: string
+          description:
+            Can be any string you'd like to search on, including EIN, organization
+            name, keywords, etc.
+          example: candid
+        from:
+          type: integer
+          description: The offset from the first result. Defaults to 0.
+          example: 0
+        size:
+          type: integer
+          description:
+            The maximum number of hits to be returned. Defaults to 25.
+            The maximum number allowed is 25.
+          example: 25
+        sort:
+          "$ref": "#/components/schemas/Sort"
+        filters:
+          "$ref": "#/components/schemas/Filters"
+    v3Query:
+      type: object
+      properties:
+        search_terms:
+          type: string
+          description:
+            Can be any string you'd like to search on, including EIN, organization
+            name, keywords, etc.
+          example: candid
+        from:
+          type: integer
+          description: The offset from the first result. Defaults to 0.
+          example: 0
+        size:
+          type: integer
+          description:
+            The maximum number of hits to be returned. Defaults to 25.
+            The maximum number allowed is 25.
+          example: 25
+        sort:
+          "$ref": "#/components/schemas/v3Sort"
+        filters:
+          "$ref": "#/components/schemas/v3Filters"
+    Sort:
+      type: object
+      properties:
+        sort_by:
+          type: string
+          description: Leave blank to sort by relevance.
+          enum:
+            - organization_name
+            - bmf_gross_receipts
+            - bmf_assets
+          example: organization_name
+        ascending:
+          type: boolean
+          description:
+            Default value is true (ascending). Set to false to sort by
+            descending value.
+          example: true
+    v3Sort:
+      type: object
+      properties:
+        sort_by:
+          type: string
+          description: Leave blank to sort by relevance.
+          enum:
+            - organization_name
+            - bmf_gross_receipts
+            - bmf_assets
+            - distance
+            - year_founded
+          example: organization_name
+        sort_order:
+          type: string
+          description:
+            Default value is ascending. Allowed values are "asc" (ascending)
+            and "desc" (descending).
+          enum:
+            - asc
+            - desc
+          example: asc
+    Filters:
+      type: object
+      properties:
+        geography:
+          "$ref": "#/components/schemas/GeographyFilter"
+        organization:
+          "$ref": "#/components/schemas/OrganizationFilter"
+        financials:
+          "$ref": "#/components/schemas/FinancialsFilter"
+    v3Filters:
+      type: object
+      properties:
+        geography:
+          "$ref": "#/components/schemas/GeographyFilter"
+        organization:
+          "$ref": "#/components/schemas/v3OrganizationFilter"
+        financials:
+          "$ref": "#/components/schemas/v3FinancialsFilter"
+        last_updated:
+          "$ref": "#/components/schemas/LastUpdated"
+    GeographyFilter:
+      type: object
+      properties:
+        state:
+          type: array
+          items:
+            type: string
+            description: State code, comma separated
+            example: NY
+        zip:
+          type: string
+          description: Five digit ZIP code
+          example: 10005
+        radius:
+          type: integer
+          description:
+            Radius from the specified ZIP code in miles. Allowed range
+            is between 1 and 50 miles. Values exceeding 50 will default to a radius
+            of 50 miles.
+          example: 50
+        msa:
+          type: array
+          items:
+            type: string
+            description: Metropolitan statistical area, comma separated
+            example: NY-NJ
+        city:
+          type: array
+          items:
+            type: string
+            description: US cities, comma separated
+            example: New York
+        county:
+          type: array
+          items:
+            type: string
+            description: US counties, comma separated
+            example: New York, NY
+    OrganizationFilter:
+      type: object
+      properties:
+        profile_levels:
+          type: array
+          description: GuideStar seal levels, comma separated.
+          enum:
+            - bronze
+            - silver
+            - gold
+            - platinum
+          items:
+            type: string
+            example: platinum
+        ntee_major_codes:
+          type: array
+          description:
+            National Taxonomy of Exempt Entities (NTEE) major codes, comma
+            separated.
+          items:
+            type: string
+            example: T
+        ntee_minor_codes:
+          type: array
+          description:
+            National Taxonomy of Exempt Entities (NTEE) minor codes, comma
+            separated.
+          items:
+            type: string
+            example: "50"
+        subsection_codes:
+          type: array
+          description: IRS subsection codes and/or descriptions, comma separated.
+          items:
+            type: string
+            example: 501(c)(3) Public Charity
+        foundation_codes:
+          type: array
+          description: Foundation codes and/or descriptions, comma separated.
+          items:
+            type: string
+            example: "15"
+        bmf_status:
+          type: boolean
+          description:
+            Flag indicating the organization has the most recent IRS BMF.
+            Defaults to null. Otherwise true or false.
+          example: true
+        pub78_verified:
+          type: boolean
+          description:
+            Flag indicating the organization is pub78 verified. Value set
+            as true or false.
+          example: true
+        affiliation_type:
+          "$ref": "#/components/schemas/AffiliationTypeFilter"
+        specific_exclusions:
+          "$ref": "#/components/schemas/SpecificExclusionsFilter"
+        number_of_employees_range:
+          "$ref": "#/components/schemas/NumberRangeFilter"
+        form_types:
+          "$ref": "#/components/schemas/IrsFormTypesFilter"
+        audits:
+          "$ref": "#/components/schemas/AuditsFilter"
+    v3OrganizationFilter:
+      type: object
+      properties:
+        profile_levels:
+          type: array
+          description: GuideStar seal levels, comma separated.
+          enum:
+            - bronze
+            - silver
+            - gold
+            - platinum
+          items:
+            type: string
+            example: platinum
+        subject_codes:
+          type: array
+          description: Subject codes, comma separated.
+          items:
+            type: string
+            example: SN04
+        population_served_codes:
+          type: array
+          description: Population served codes, comma separated.
+          items:
+            type: string
+            example: PG0302
+        ntee_major_codes:
+          type: array
+          description:
+            National Taxonomy of Exempt Entities (NTEE) major codes, comma
+            separated.
+          items:
+            type: string
+            example: T
+        ntee_minor_codes:
+          type: array
+          description:
+            National Taxonomy of Exempt Entities (NTEE) minor codes, comma
+            separated.
+          items:
+            type: string
+            example: "50"
+        subsection_codes:
+          type: array
+          description: IRS subsection codes and/or descriptions, comma separated.
+          items:
+            type: string
+            example: 501(c)(3) Public Charity
+        foundation_codes:
+          type: array
+          description: Foundation codes and/or descriptions, comma separated.
+          items:
+            type: string
+            example: "15"
+        group_exemption:
+          type: array
+          description: Group exemption codes, comma separated.
+          items:
+            type: string
+            example: "9334"
+        number_of_employees:
+          "$ref": "#/components/schemas/NumberRangeFilter"
+        ruling_year:
+          type: object
+          description:
+            Range specifying the year the granted organization tax exempt
+            status (a.k.a. Ruling Year)
+          "$ref": "#/components/schemas/NumberRangeFilter"
+        properties:
+          "$ref": "#/components/schemas/v3OrgProperties"
+    v3OrgProperties:
+      type: object
+      properties:
+        bmf_status:
+          type: boolean
+          description:
+            Flag indicating the organization has the most recent IRS BMF.
+            Defaults to null. Otherwise true or false.
+          example: true
+        pub78_verified:
+          type: boolean
+          description:
+            Flag indicating the organization is pub78 verified. Value set
+            as true or false.
+          example: true
+        allow_online_giving:
+          type: boolean
+          description:
+            Flag indicating the organization allows online giving. Value
+            set as true or false.
+          example: true
+        dei_submitted:
+          type: boolean
+          description:
+            Flag indicating the organization has submitted demographics
+            information. Value set as true or false.
+          example: false
+        exclude_revoked_organizations:
+          type: boolean
+          description:
+            Flag to exclude revoked organizations. Value set as true or
+            false.
+          example: false
+        exclude_defunct_or_merged_organizations:
+          type: boolean
+          description:
+            Flag to exclude defunct or merged organizations. Value set
+            as true or false.
+          example: false
+        relationship_type:
+          "$ref": "#/components/schemas/AffiliationTypeFilter"
+    v3FinancialsFilter:
+      type: object
+      properties:
+        most_recent_year:
+          type: object
+          properties:
+            form_types:
+              type: object
+              properties:
+                f990:
+                  type: boolean
+                  description:
+                    Flag indicating the organization files a form 990.
+                    Value set as true or false.
+                  example: true
+                f990pf:
+                  type: boolean
+                  description:
+                    Flag indicating the organization files a form 990-PF.
+                    Value set as true or false.
+                  example: false
+                f990ez:
+                  type: boolean
+                  description:
+                    Flag indicating the organization files a form 990ez.
+                    Value set as true or false.
+                  example: true
+                f990n:
+                  type: boolean
+                  description:
+                    Flag indicating the organization files a form 990n.
+                    Value set as true or false.
+                  example: false
+            total_revenue:
+              "$ref": "#/components/schemas/NumberRangeFilter"
+            total_expenses:
+              "$ref": "#/components/schemas/NumberRangeFilter"
+            total_assets:
+              "$ref": "#/components/schemas/NumberRangeFilter"
+        required_to_file_990t:
+          type: boolean
+          description:
+            Flag indicating the organization is required to file a 990-T.
+            Value set as true or false.
+          example: false
+        a_133_audit_performed:
+          type: boolean
+          description:
+            Flag indicating the organization performed A-133 audit. Value
+            set as true or false.
+          example: false
+    FinancialsFilter:
+      type: object
+      properties:
+        total_revenue:
+          "$ref": "#/components/schemas/NumberRangeFilter"
+        total_expenses:
+          "$ref": "#/components/schemas/NumberRangeFilter"
+        total_assets:
+          "$ref": "#/components/schemas/NumberRangeFilter"
+    AffiliationTypeFilter:
+      type: object
+      properties:
+        parent:
+          type: boolean
+          description:
+            Flag indicating the organization is a parent. Value set as
+            true or false.
+          example: false
+        subordinate:
+          type: boolean
+          description:
+            Flag indicating the organization is a subordinate. Value set
+            as true or false.
+          example: false
+        independent:
+          type: boolean
+          description:
+            Flag indicating the organization is independent. Value set
+            as true or false.
+          example: true
+        headquarter:
+          type: boolean
+          description:
+            Flag indicating the organization is a headquarter. Value set
+            as true or false.
+          example: false
+    SpecificExclusionsFilter:
+      type: object
+      properties:
+        exclude_revoked_organizations:
+          type: boolean
+          description:
+            Flag to exclude revoked organizations. Value set as true or
+            false.
+          example: false
+        exclude_defunct_or_merged_organizations:
+          type: boolean
+          description:
+            Flag to exclude defunct or merged organizations. Value set
+            as true or false.
+          example: false
+    NumberRangeFilter:
+      type: object
+      properties:
+        min:
+          type: integer
+          description: Minimum number
+          example: 5
+        max:
+          type: integer
+          description: Maximum number
+          example: 987654321
+    IrsFormTypesFilter:
+      type: object
+      properties:
+        f990:
+          type: boolean
+          description:
+            Flag indicating the organization files a form 990. Value set
+            as true or false.
+          example: true
+        f990pf:
+          type: boolean
+          description:
+            Flag indicating the organization files a form 990-PF. Value
+            set as true or false.
+          example: false
+        f990ez:
+          type: boolean
+          description:
+            Flag indicating the organization files a form 990 EZ. Value
+            set as true or false.
+          example: false
+        f990n:
+          type: boolean
+          description:
+            Flag indicating the organization files a form 990N. Value set
+            as true or false.
+          example: false
+        required_to_file_990t:
+          type: boolean
+          description:
+            Flag indicating the organization is required to file a 990-T.
+            Value set as true or false.
+          example: false
+    AuditsFilter:
+      type: object
+      properties:
+        a_133_audit_performed:
+          type: boolean
+          description:
+            Flag indicating the organization performed A-133 audit. Value
+            set as true or false.
+          example: false
+    LastUpdated:
+      type: object
+      properties:
+        start_date:
+          type: string
+          description:
+            A filter, along with end_date, defines a range on date_type,
+            in the format yyyy-MM-ddTHH:mm:ss.
+          example: 2020-01-01T01:01:01:01
+        end_date:
+          type: string
+          description:
+            A filter, along with start_date, defines a range on date_type,
+            in the format yyyy-MM-ddTHH:mm:ss.
+          example: 2020-01-01T01:01:01:01
+        date_type:
+          type: string
+          description:
+            A filter, to specify updates made to a organization over the
+            specified end_date and start_date.
+          enum:
+            - seal_last_modified
+            - profile_last_modified
+            - dei_last_modified
+            - financials_last_modified
+            - last_modified
+          example: seal_last_modified
+    V1EssentialsResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Response Code
+          example: 200
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example: Request was processed successfully!
+        took:
+          type: integer
+          description: Time taken for request to process
+          example: 24
+        errors:
+          type: array
+          description: List of errors encountered
+          items:
+            type: string
+        data:
+          type: object
+          properties:
+            took:
+              type: integer
+              description: Elapsed time to calculate results
+              example: 22
+            total_hits:
+              type: integer
+              description: Number of results returned by search
+              example: 1
+            hits:
+              type: array
+              items:
+                type: object
+                properties:
+                  organization_id:
+                    type: string
+                    description:
+                      A unique number identifying organizations and organizational
+                      entities
+                    example: "9938979"
+                  bridge_id:
+                    type: string
+                    description: Deprecated Bridge ID
+                    example:
+                  ein:
+                    type: string
+                    description: Employer Identification Number
+                    example: 82-4267025
+                  organization_name:
+                    type: string
+                    description: The public name recognized by the IRS
+                    example: Illinois Youth Rugby Association
+                  also_known_as:
+                    type: string
+                    description: Organization name Also Known As
+                    example: chillicothe rugby football club
+                  mission:
+                    type: string
+                    description: Mission statement for the organization
+                    example: To assist those in need
+                  address_line_1:
+                    type: string
+                    description: Address line 1 of the organization
+                    example: 123 West 1st Street
+                  address_line_2:
+                    type: string
+                    description: Address line 2 of the organization
+                    example: Suite 201
+                  city:
+                    type: string
+                    description: City of the organization's address
+                    example: Chicago
+                  state:
+                    type: string
+                    description: State (Abbreviation) of the organization's address
+                    example: IL
+                  zip:
+                    type: string
+                    description: Zip code of the organization's address
+                    example: "23185"
+                  county:
+                    type: string
+                    description: County of the organization's address
+                    example: Peoria, IL
+                  msa:
+                    type: string
+                    description:
+                      Metropolitan statistical area of the organization's
+                      adresss
+                    example: IL - Peoria-Pekin
+                  lat_long:
+                    type: string
+                    description: latitude and longitude of the organization's adress
+                    example: 40.9052,-89.5866
+                  ntee_code:
+                    type: string
+                    description: National Taxonomy of Exempt Entities
+                    example: N60 Amateur Sports Clubs, Leagues, N.E.C.
+                  profile_level:
+                    type: string
+                    description: GuideStar seal levels.
+                    enum:
+                      - BRONZE
+                      - SILVER
+                      - GOLD
+                      - PLATINUM
+                      - NONE
+                    example: BRONZE
+                  public_report:
+                    type: string
+                    description: GuideStar's public profile URL
+                    example: https://www.guidestar.org/profile/82-4267025
+                  subsection_code:
+                    type: string
+                    description: IRS subsection code of the organization
+                    example: 501(c)(3) Public Charity
+                  number_of_employees:
+                    type: string
+                    description: Number of employees at the organization
+                    example: "55"
+                  form_type:
+                    type: string
+                    description: "Tax form filing type. "
+                    example: "990"
+                  website_url:
+                    type: string
+                    description: URL for the organization's website
+                    example: candid.org
+                  foundation_code:
+                    type: string
+                    description: Foundation code that describes the organization
+                    example: "15"
+                  parent_orgs:
+                    type: string
+                    description: Names of parent organizations, comma seperated
+                    example: Parent Org, Parent Org 2
+                  bmf_gross_receipts:
+                    type: string
+                    description:
+                      Gross receipts of the organization reported on the
+                      BMF
+                    example: "2349999"
+                  bmf_assets:
+                    type: string
+                    description: Assets of the organization reported on the BMF
+                    example: "1849900"
+                  form990_total_revenue:
+                    type: string
+                    description:
+                      Total revenue filed on the most recent Form 990,
+                      990-PF, or 990-EZ filing
+                    example: "2349999"
+                  form990_total_expenses:
+                    type: string
+                    description:
+                      Total expenses filed on the most recent Form 990,
+                      990-PF, or 990-EZ filing
+                    example: "22224499"
+                  form990_total_assets:
+                    type: string
+                    description:
+                      Total assets filed on the most recent Form 990, 990-PF,
+                      or 990-EZ filing
+                    example: "12348855"
+                  contact_email:
+                    type: string
+                    description: Email of the primary contact at the organization
+                    example: help@orgname.org
+                  contact_name:
+                    type: string
+                    description: Name of the primary contact at the organization
+                    example: John Smith
+                  contact_phone:
+                    type: string
+                    description: Phone number of the primary contact at the organization
+                    example: "(555) 111-5555"
+                  contact_title:
+                    type: string
+                    description: Title of the primary contact at the organization
+                    example: Support Lead
+                  properties:
+                    type: object
+                    properties:
+                      parent:
+                        type: boolean
+                        description: If the organization is a parent
+                        example: true
+                      subordinate:
+                        type: boolean
+                        description: If the organization is a subordinate
+                        example: false
+                      independent:
+                        type: boolean
+                        description: If the organization is independent
+                        example: false
+                      national_hq:
+                        type: boolean
+                        description: If the organization is a national headquarter
+                        example: true
+                      revoked:
+                        type: boolean
+                        description: If the organization is revoked
+                        example: false
+                      defuncted_or_merged:
+                        type: boolean
+                        description: If the organization is defuncted or merged
+                        example: false
+                      audit_a133_performed:
+                        type: boolean
+                        description: If the organization performed a A-133 audit
+                        example: true
+                      bmf_status:
+                        type: boolean
+                        description: If the organization is present on the BMF
+                        example: true
+                      pub78_verified:
+                        type: boolean
+                        description: If the organization is Pub78 verified
+                        example: true
+                      allow_online_giving:
+                        type: boolean
+                        description: If the organization allows online giving
+                        example: true
+    V2EssentialsResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Response Code
+          example: 200
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example: Request was processed successfully!
+        took:
+          type: integer
+          description: Time taken for request to process
+          example: 24
+        errors:
+          type: array
+          description: List of errors encountered
+          items:
+            type: string
+        data:
+          type: object
+          properties:
+            took:
+              type: integer
+              description: Elapsed time to calculate results
+              example: 22
+            total_hits:
+              type: integer
+              description: Number of results returned by search
+              example: 1
+            hits:
+              type: array
+              items:
+                type: object
+                properties:
+                  organization_id:
+                    type: string
+                    description:
+                      A unique number identifying organizations and organizational
+                      entities
+                    example: "9938979"
+                  bridge_id:
+                    type: string
+                    description: Deprecated Bridge ID
+                    example:
+                  ein:
+                    type: string
+                    description: Employer Identification Number
+                    example: 82-4267025
+                  organization_name:
+                    type: string
+                    description: The public name recognized by the IRS
+                    example: Illinois Youth Rugby Association
+                  also_known_as:
+                    type: string
+                    description: Organization name Also Known As
+                    example: chillicothe rugby football club
+                  mission:
+                    type: string
+                    description: Mission statement for the organization
+                    example: To assist those in need
+                  address_line_1:
+                    type: string
+                    description: Address line 1 of the organization
+                    example: 123 West 1st Street
+                  address_line_2:
+                    type: string
+                    description: Address line 2 of the organization
+                    example: Suite 201
+                  city:
+                    type: string
+                    description: City of the organization's address
+                    example: Chicago
+                  state:
+                    type: string
+                    description: State (Abbreviation) of the organization's address
+                    example: IL
+                  zip:
+                    type: string
+                    description: Zip code of the organization's address
+                    example: "23185"
+                  county:
+                    type: string
+                    description: County of the organization's address
+                    example: Peoria, IL
+                  msa:
+                    type: string
+                    description:
+                      Metropolitan statistical area of the organization's
+                      adresss
+                    example: IL - Peoria-Pekin
+                  lat_long:
+                    type: string
+                    description: latitude and longitude of the organization's adress
+                    example: 40.9052,-89.5866
+                  ntee_code:
+                    type: string
+                    description: National Taxonomy of Exempt Entities
+                    example: N60 Amateur Sports Clubs, Leagues, N.E.C.
+                  profile_level:
+                    type: string
+                    description: GuideStar seal levels.
+                    enum:
+                      - BRONZE
+                      - SILVER
+                      - GOLD
+                      - PLATINUM
+                      - NONE
+                    example: BRONZE
+                  public_report:
+                    type: string
+                    description: GuideStar's public profile URL
+                    example: https://www.guidestar.org/profile/82-4267025
+                  subsection_code:
+                    type: string
+                    description: IRS subsection code of the organization
+                    example: 501(c)(3) Public Charity
+                  number_of_employees:
+                    type: string
+                    description: Number of employees at the organization
+                    example: "55"
+                  form_type:
+                    type: string
+                    description: "Tax form filing type. "
+                    example: "990"
+                  website_url:
+                    type: string
+                    description: URL for the organization's website
+                    example: candid.org
+                  logo_url:
+                    type: string
+                    description: URL for the organization's logo
+                    example: candid.org
+                  foundation_code:
+                    type: string
+                    description: Foundation code that describes the organization
+                    example: "15"
+                  parent_orgs:
+                    type: string
+                    description: Names of parent organizations, comma seperated
+                    example: Parent Org, Parent Org 2
+                  bmf_gross_receipts:
+                    type: string
+                    description:
+                      Gross receipts of the organization reported on the
+                      BMF
+                    example: "2349999"
+                  bmf_assets:
+                    type: string
+                    description: Assets of the organization reported on the BMF
+                    example: "1849900"
+                  form990_total_revenue:
+                    type: string
+                    description:
+                      Total revenue filed on the most recent Form 990,
+                      990-PF, or 990-EZ filing
+                    example: "2349999"
+                  form990_total_expenses:
+                    type: string
+                    description:
+                      Total expenses filed on the most recent Form 990,
+                      990-PF, or 990-EZ filing
+                    example: "22224499"
+                  form990_total_assets:
+                    type: string
+                    description:
+                      Total assets filed on the most recent Form 990, 990-PF,
+                      or 990-EZ filing
+                    example: "12348855"
+                  contact_email:
+                    type: string
+                    description: Email of the primary contact at the organization
+                    example: help@orgname.org
+                  contact_name:
+                    type: string
+                    description: Name of the primary contact at the organization
+                    example: John Smith
+                  contact_phone:
+                    type: string
+                    description: Phone number of the primary contact at the organization
+                    example: "(555) 111-5555"
+                  contact_title:
+                    type: string
+                    description: Title of the primary contact at the organization
+                    example: Support Lead
+                  properties:
+                    type: object
+                    properties:
+                      parent:
+                        type: boolean
+                        description: If the organization is a parent
+                        example: true
+                      subordinate:
+                        type: boolean
+                        description: If the organization is a subordinate
+                        example: false
+                      independent:
+                        type: boolean
+                        description: If the organization is independent
+                        example: false
+                      national_hq:
+                        type: boolean
+                        description: If the organization is a national headquarter
+                        example: true
+                      revoked:
+                        type: boolean
+                        description: If the organization is revoked
+                        example: false
+                      defuncted_or_merged:
+                        type: boolean
+                        description: If the organization is defuncted or merged
+                        example: false
+                      audit_a133_performed:
+                        type: boolean
+                        description: If the organization performed a A-133 audit
+                        example: true
+                      bmf_status:
+                        type: boolean
+                        description: If the organization is present on the BMF
+                        example: true
+                      pub78_verified:
+                        type: boolean
+                        description: If the organization is Pub78 verified
+                        example: true
+                      allow_online_giving:
+                        type: boolean
+                        description: If the organization allows online giving
+                        example: true
+    V3EssentialsResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Response Code
+          example: 200
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example: Request was processed successfully!
+        took:
+          type: integer
+          description: Time taken for request to process
+          example: 24
+        time:
+          type: string
+          description: Time of API call.
+          example: 2020-01-01T01:01:01:01.000Z
+        results_count:
+          type: integer
+          description: Number of results returned by search
+          example: 2541
+        page_count:
+          type: integer
+          description: Number of pages returned by the search.
+          example: 67
+        errors:
+          type: array
+          description: List of errors encountered
+          items:
+            type: string
+        hits:
+          type: array
+          items:
+            type: object
+            properties:
+              organization:
+                type: object
+                properties:
+                  organization_id:
+                    type: string
+                    description:
+                      A unique number identifying organizations and organizational
+                      entities
+                    example: "7578046"
+                  ein:
+                    type: string
+                    description: Employer Identification Number
+                    example: 39-1731296
+                  organization_name:
+                    type: string
+                    description: The public name recognized by the IRS
+                    example: Candid
+                  also_known_as:
+                    type: string
+                    description: Organization name Also Known As
+                    example: Foundation Center, Guidestar
+                  group_exemption:
+                    type: string
+                    description:
+                      Four-digit number assigned to a group of organizations
+                      falling under a central/parent organization holding group exemption
+                      letters.
+                    example: "3297"
+                  mission:
+                    type: string
+                    description: Mission statement for the organization
+                    example: Get you the information to do good
+                  website_url:
+                    type: string
+                    description: URL for the organization's website
+                    example: candid.org
+                  logo_url:
+                    type: string
+                    description: URL for the organization's logo
+                    example: candid.org
+                  profile_level:
+                    type: string
+                    description: GuideStar seal level
+                    example: Platinum
+                  profile_year:
+                    type: number
+                    description: GuideStar seal year
+                    example: 2020
+                  profile_link:
+                    type: string
+                    description: GuideStar's public profile URL
+                    example: https://www.guidestar.org/profile/82-4267025
+                  profile_logo:
+                    type: string
+                    description: GuideStar's seal logo
+                    example: https://www.guidestar.org/App_Themes/MainSite2/images/ProfilePageSvgs/profile-PLATINUM2021-seal.svg
+                  leader_name:
+                    type: string
+                    description: Name of leader
+                    example: Ann Mei Chang
+                  leader_title:
+                    type: string
+                    description: Leader's title
+                    example: CEO
+                  contact_name:
+                    type: string
+                    description: Name of the primary contact at the organization
+                    example: John smith
+                  contact_email:
+                    type: string
+                    description: Email of the primary contact at the organization
+                    example: help@orgnam.org
+                  contact_phone:
+                    type: string
+                    description: Phone number of the primary contact at the organization
+                    example: "(555) 111-5555"
+                  contact_title:
+                    type: string
+                    description: Title of the primary contact at the organization
+                    example: Support lead
+                  number_of_employees:
+                    oneOf:
+                      - type: number
+                      - type: string
+                    description: Number of employees at the organization
+                    example: 55
+                  ruling_year:
+                    type: number
+                    description:
+                      The year the IRS granted organization tax exempt
+                      status (a.k.a. Ruling Year)
+                    example: 2019
+              properties:
+                type: object
+                properties:
+                  bmf_status:
+                    type: boolean
+                    description: If the organization is present on the BMF
+                    example: false
+                  pub78_verified:
+                    type: boolean
+                    description: If the organization is Pub78 verified
+                    example: false
+                  allow_online_giving:
+                    type: boolean
+                    description: If the organization allows online giving
+                    example: true
+                  dei_submitted:
+                    type: boolean
+                    description: If the organization has submitted demographics information
+                    example: false
+                  revoked:
+                    type: boolean
+                    description: If the organization is revoked
+                    example: false
+                  defuncted_or_merged:
+                    type: boolean
+                    description: If the organization is defuncted or merged
+                    example: false
+                  relationship_type:
+                    type: object
+                    properties:
+                      parent:
+                        type: boolean
+                        description: If the organization is a parent
+                        example: true
+                      subordinate:
+                        type: boolean
+                        description: If the organization is a subordinate
+                        example: false
+                      independent:
+                        type: boolean
+                        description: If the organization is independent
+                        example: false
+                      headquarters:
+                        type: boolean
+                        description: If the organization is a national headquarter
+                        example: true
+                  relationship_details:
+                    type: object
+                    description: Organization's relation with other organizations.
+                    properties:
+                      relationship_type:
+                        type: string
+                        description: Relationship type of organization.
+                        enum:
+                          - parent
+                          - subordinate
+                        example: parent
+                      organization_name:
+                        type: string
+                        description: Name of organization.
+                        example: Candid 2
+                      ein:
+                        type: string
+                        description: Employer Identification Number
+                        example: 12-4566789
+              geography:
+                type: object
+                properties:
+                  address_line_1:
+                    type: string
+                    description: Address line 1 of the organization
+                    example: 1 Financial Sq
+                  address_line_2:
+                    type: string
+                    description: Address line 2 of the organization
+                    example: Floor 24
+                  city:
+                    type: string
+                    description: City of the organization's address
+                    example: New York
+                  state:
+                    type: string
+                    description: State (Abbreviation) of the organization's address
+                    example: NY
+                  zip:
+                    oneOf:
+                      - type: number
+                      - type: string
+                    description: Zip code of the organization's address
+                    example: 10005
+                  msa:
+                    type: string
+                    description:
+                      Metropolitan statistical area of the organization's
+                      adresss
+                    example: IL - Peoria-Pekin
+                  congressional_district:
+                    type: string
+                    description: Congressional district of the organization's address
+                    example: District 45, CA
+                  county:
+                    type: string
+                    description: County of the organization's address
+                    example: Peoria, IL
+                  latitude:
+                    type: number
+                    description: latitude of the organization's adress
+                    example: 40.9052
+                  longitude:
+                    type: number
+                    description: longitude of the organization's adress
+                    example: -89.5866
+              taxonomies:
+                type: object
+                properties:
+                  subject_codes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        subject_code:
+                          type: string
+                          description: Subject code
+                          example: SP030000
+                        subject_code_description:
+                          type: string
+                          description: Description of subject code
+                          example: SP030000
+                  population_served_codes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        population_served_code:
+                          type: string
+                          description: Population served code
+                          example: PG030000
+                        population_served_description:
+                          type: string
+                          description: Description of Population served code
+                          example: "People with Physical Disabilities  "
+                  ntee_codes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ntee_code:
+                          type: string
+                          description: National Taxonomy of Exempt Entities
+                          example: A00
+                        ntee_code_description:
+                          type: string
+                          description: Description of NTEE code
+                          example: Humanities
+                  subsection_code:
+                    type: object
+                    properties:
+                      subsection_code:
+                        type: string
+                        description: IRS subsection code of the organization
+                        example: "03"
+                      subsection_code_description:
+                        type: string
+                        description: Description of IRS subsection code
+                        example: 501(c)(3) Public Charity
+                  foundation_code:
+                    type: object
+                    properties:
+                      foundation_code:
+                        type: string
+                        description: Foundation code that describes the organization
+                        example: "15"
+                      foundation_code_description:
+                        type: string
+                        description: Description of foundation code
+                        example: 50% tax deductible
+              financials:
+                type: object
+                properties:
+                  most_recent_year:
+                    type: object
+                    properties:
+                      form_types:
+                        type: string
+                        description: Tax form filing type
+                        example: "990"
+                      fiscal_year:
+                        type: number
+                        description: Fiscal year of the most recent tax filing
+                        example: 2020
+                      total_revenue:
+                        type: number
+                        description: Most recent year total revenue
+                        example: 2349999
+                      total_expenses:
+                        type: number
+                        description: Most recent year total expenses
+                        example: 22224499
+                      total_assets:
+                        type: number
+                        description: Most recent year total assets
+                        example: 57426592
+                  bmf_gross_receipts:
+                    type: number
+                    description:
+                      Gross receipts of the organization reported on the
+                      BMF
+                    example: 2349999
+                  bmf_assets:
+                    type: number
+                    description: Assets of the organization reported on the BMF
+                    example: 1849900
+                  required_to_file_990t:
+                    type: boolean
+                    description:
+                      Flag indicating the organization is required to file
+                      a 990-T.
+                    example: false
+                  a_133_audit_performed:
+                    type: boolean
+                    description:
+                      Flag indicating the organization performed A-133
+                      audit.
+                    example: false
+              dates:
+                type: object
+                properties:
+                  seal_last_modified:
+                    type: string
+                    description: Date when Candid seal status was last modified.
+                    example: 2020-01-01T01:01:01:01.000Z
+                  profile_last_modified:
+                    type: string
+                    description: Datetime of last update to Candid profile.
+                    example: 2020-01-01T01:01:01:01.000Z
+                  dei_last_modified:
+                    type: string
+                    description:
+                      Datetime of last update to organization demographics
+                      information
+                    example: 2020-01-01T01:01:01:01.000Z
+                  financials_last_modified:
+                    type: string
+                    description:
+                      Datetime of last update to organization's financial
+                      information
+                    example: 2020-01-01T01:01:01:01.000Z
+                  last_published:
+                    type: string
+                    description: Datetime of organization's last publication
+                    example: 2020-01-01T01:01:01:01.000Z
+    EssentialsLookupResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Response Code
+          example: 200
+        message:
+          type: string
+          description: Diagnostic message for response status
+          example: Request was processed successfully!
+        took:
+          type: integer
+          description: Time taken for request to process
+          example: 20
+        errors:
+          type: array
+          description: List of errors encountered
+          example: []
+          items:
+            type: string
+            description: error messaging
+        data:
+          type: array
+          items:
+            type: string
+            description: field names and values
+            example:
+              - ntee_minor
+              - msa_codes
+              - ntee_major
+              - subsections
+              - filing_type
+              - foundation_type
+    EssentialsFilteredLookupResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP response status code.
+          example: 200
+        message:
+          type: string
+          example: Request was processed successfully!
+        took:
+          type: integer
+          example: 20
+        errors:
+          type: array
+          example: []
+          items:
+            type: string
+            description: error messaging
+        data:
+          type: array
+          description:
+            A list of all the tables used as a filter_name with the Essentials
+            Lookup endpoints
+          items:
+            type: object
+            description: Key value pair for filter name, value, and search_value
+            properties:
+              key:
+                type: string
+                description: Code for the filter_name results
+                example: A00
+              value:
+                type: string
+                description: Text for the filter_name results
+                example: Arts, Culture, and Humanities
+              search_value:
+                type: string
+                description: Value to pass in Essential's API filters
+                example: A_artsCulturesAndHumanities
+    BadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 400
+        message:
+          type: string
+          example: The request cannot be fulfilled due to bad syntax.
+    Unauthorized:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 401
+        message:
+          type: string
+          example:
+            Access denied due to missing subscription key. Make sure to include
+            subscription key when making requests to an API.
+    Forbidden:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 403
+        message:
+          type: string
+          example:
+            Forbidden, we found insufficient permissions to grant access to
+            the resources. Please check the detailed message of the response.
+    NotFound:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 404
+        message:
+          type: string
+          example:
+            Request was processed successfully but we could not find the resource
+            ein
+    NotAcceptable:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 406
+        message:
+          type: string
+          example:
+            The requested resource is capable of generating only content not
+            acceptable according to the Accept headers sent in the request.
+    TooManyRequests:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 429
+        message:
+          type: string
+          example: Rate limit is exceeded. Try again later.
+    InternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP response status code.
+          example: 500
+        message:
+          type: string
+          example:
+            Oh no!, this is bad, something went wrong... please contact API
+            support!
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Subscription-Key
+      in: header
+security:
+  - apiKeyHeader: []
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

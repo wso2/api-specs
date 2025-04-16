@@ -1,0 +1,7 @@
+{
+    "name": "Slack Web API",
+    "baseUrl": "https://slack.com/api",
+    "documentationUrl": "https://api.slack.com/web",
+    "description": "The Slack Web API provides a comprehensive set of methods for interacting with the Slack platform through HTTP RPC-based calls. It requires OAuth 2.0-based authentication with user, bot, or workspace tokens that have the necessary OAuth scopes. The API enables integration with Slack's messaging, collaboration, and workspace management features, allowing developers to build applications that interact with Slack channels, users, messages, and other platform components.",
+    "tags": ["slack", "web", "messaging", "collaboration", "oauth", "integration", "workspace"]
+}

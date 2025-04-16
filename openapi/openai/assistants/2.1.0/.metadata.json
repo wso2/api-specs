@@ -1,0 +1,7 @@
+{
+    "name": "OpenAI Assistants API",
+    "baseUrl": "https://api.openai.com/v1",
+    "documentationUrl": "https://platform.openai.com/docs/api-reference/assistants",
+    "description": "The OpenAI Assistants API enables the creation and management of AI assistants that can call models and use tools. It provides functionality for building intelligent agents that can process information, interact with users, and perform various tasks. The API supports the creation of assistants with specific capabilities, tools, and knowledge bases, allowing for customized AI interactions and workflows.",
+    "tags": ["openai", "assistants", "ai", "models", "tools", "automation", "integration"]
+}

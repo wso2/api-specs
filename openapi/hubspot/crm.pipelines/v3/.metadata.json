@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Pipelines API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/pipelines",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/pipelines",
+    "description": "The HubSpot CRM Pipelines API enables the management of pipelines in the CRM system. Pipelines represent distinct stages in workflows, such as deal closing or support ticket processing. The API supports both deals and tickets object types, allowing you to read and modify pipeline configurations. It's particularly useful for streamlining customer support processes by managing ticket pipelines and their stages. The API provides comprehensive functionality for creating, updating, and managing pipeline stages to track the progress of deals and support tickets.",
+    "tags": ["crm", "pipelines", "hubspot", "workflow", "stages", "deals", "tickets"]
+}
