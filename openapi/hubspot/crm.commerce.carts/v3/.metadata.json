@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Carts API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/carts",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/commerce/carts",
+    "description": "The HubSpot CRM Carts API enables managing ecommerce cart data in HubSpot. It allows tracking when customers add products to their cart and storing purchase information, which is particularly useful for syncing data with external ecommerce platforms",
+    "tags": ["crm", "carts", "ecommerce", "shopping", "commerce", "hubspot"]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Properties API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/properties",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/properties",
+    "description": "The HubSpot CRM Properties API enables the management of object properties in the CRM system. All HubSpot objects store data in both default and custom properties, and this API provides access to read and modify these properties. It's particularly useful for creating and managing custom properties, such as multi-select properties for storing contract data on company records. The API provides comprehensive functionality for defining, updating, and managing the properties that store data across different object types in the CRM.",
+    "tags": ["crm", "properties", "hubspot", "custom-fields", "metadata", "data-storage", "configuration"]
+}

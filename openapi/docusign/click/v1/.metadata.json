@@ -1,0 +1,7 @@
+{
+    "name": "DocuSign Click API",
+    "baseUrl": "https://api.docusign.com/click",
+    "documentationUrl": "https://developers.docusign.com/docs/click-api",
+    "description": "The DocuSign Click API enables the creation and management of clickwrap agreements. It allows you to create, manage, and track online agreements that users accept by clicking",
+    "tags": ["docusign", "click", "clickwrap", "agreements", "acceptance"]
+}

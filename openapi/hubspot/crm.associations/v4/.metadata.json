@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Associations API",
+    "baseUrl": "https://api.hubapi.com/crm/v4/associations",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/associations/associations-v4",
+    "description": "The HubSpot CRM Associations API v4 enables management of relationships between CRM objects. It allows creating, retrieving, updating, and deleting associations between records and activities in HubSpot's CRM",
+    "tags": ["crm", "associations", "relationships", "hubspot", "objects"]
+}

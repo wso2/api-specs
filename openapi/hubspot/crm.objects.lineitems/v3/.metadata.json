@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Objects Line Items API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/line_items",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/commerce/line-items",
+    "description": "The HubSpot CRM Objects Line Items API enables the management of line items in deals and quotes. It allows you to add instances of products to sales documents, either by creating them from existing products or as standalone items. The API is particularly useful for creating quotes for sales reps to send to potential buyers, enabling the addition of goods and services to the quotes. It provides functionality for creating, reading, updating, and managing line items within the CRM.",
+    "tags": ["crm", "line-items", "objects", "hubspot", "quotes", "products", "sales"]
+}

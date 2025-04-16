@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Engagements Notes API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/notes",
+    "documentationUrl": "https://developers.hubspot.com/beta-docs/guides/api/crm/engagements/notes",
+    "description": "The HubSpot CRM Engagements Notes API enables the creation and management of note engagements within the CRM. It's particularly useful for documenting offline conversations with customers, allowing you to add important takeaways and details to their contact records. The API provides functionality for creating, reading, updating, and managing note records, ensuring all customer interactions and important information are properly documented and accessible within the HubSpot CRM.",
+    "tags": ["crm", "engagements", "notes", "hubspot", "documentation", "interactions", "records"]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "OpenAI Chat API",
+    "baseUrl": "https://api.openai.com/v1",
+    "documentationUrl": "https://platform.openai.com/docs/api-reference/chat",
+    "description": "The OpenAI Chat API enables the creation of conversational AI applications. It provides functionality for generating human-like text responses in a chat format, supporting multi-turn conversations and context-aware interactions. The API allows for fine-tuning of conversation parameters, including model selection, temperature, and response length. It's particularly useful for building chatbots, virtual assistants, and other conversational AI applications.",
+    "tags": ["openai", "chat", "conversation", "ai", "chatbot", "assistant", "generation"]
+}

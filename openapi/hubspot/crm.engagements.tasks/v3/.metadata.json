@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Engagements Tasks API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/tasks",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/engagements/tasks",
+    "description": "The HubSpot CRM Engagements Tasks API enables the creation and management of task engagements within the CRM. It's particularly useful for teams using third-party project management services, allowing them to create and manage tasks associated with CRM records directly in HubSpot. The API provides functionality for creating, reading, updating, and managing task records, ensuring all customer-related tasks are properly tracked and managed within the HubSpot CRM.",
+    "tags": ["crm", "engagements", "tasks", "hubspot", "project-management", "tracking", "workflow"]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Engagements Meetings API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/meetings",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/engagements/meetings",
+    "description": "The HubSpot CRM Engagements Meetings API enables the tracking and management of meeting engagements with prospects and customers. It's particularly useful for integrating external meeting scheduling services with HubSpot or supplementing the built-in HubSpot meetings tool. The API allows you to create, read, update, and manage meeting records, helping you maintain a comprehensive view of all customer interactions within the HubSpot CRM.",
+    "tags": ["crm", "engagements", "meetings", "scheduling", "hubspot", "calendar", "interactions"]
+}

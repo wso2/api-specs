@@ -1,0 +1,7 @@
+{
+    "name": "Google Calendar API",
+    "baseUrl": "https://www.googleapis.com/calendar/v3",
+    "documentationUrl": "https://developers.google.com/calendar/api",
+    "description": "The Google Calendar API allows you to manage calendars, events, and access controls. It enables integration with Google Calendar for creating and managing calendar data",
+    "tags": ["calendar", "events", "scheduling", "google", "time-management"]
+}

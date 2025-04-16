@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Commerce Taxes API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/taxes",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/commerce/taxes",
+    "description": "The HubSpot CRM Commerce Taxes API enables the creation and management of tax records that can be included in quotes. It's specifically designed to handle various tax scenarios, such as applying percentage-based sales tax based on state requirements. The API provides functionality for creating, reading, updating, and archiving tax records, along with support for batch operations and searching capabilities.",
+    "tags": ["crm", "commerce", "taxes", "quotes", "sales", "hubspot", "financial"]
+}

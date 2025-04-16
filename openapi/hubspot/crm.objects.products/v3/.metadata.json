@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Objects Products API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/products",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/commerce/products",
+    "description": "The HubSpot CRM Objects Products API enables the creation and management of product records in your HubSpot product library. It's particularly useful for preparing product launches, allowing you to create a set of products to represent new offerings. Sales teams can then use these product records when creating payment links, invoices, and other sales documents. The API provides comprehensive functionality for managing your product catalog within the CRM.",
+    "tags": ["crm", "products", "objects", "hubspot", "catalog", "sales", "inventory"]
+}

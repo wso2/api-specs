@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Object Companies API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/companies",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/objects/companies",
+    "description": "The HubSpot CRM Object Companies API enables the management of company records in the CRM. It's particularly useful for creating and maintaining company records when new customers sign up with their business email addresses, helping to establish relationships between customers and their companies. The API provides comprehensive functionality for creating, reading, updating, and managing company records, which sales teams can use to identify and pursue additional sales opportunities within the same organization.",
+    "tags": ["crm", "companies", "objects", "hubspot", "sales", "business", "relationships"]
+}

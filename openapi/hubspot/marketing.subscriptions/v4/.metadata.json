@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot Marketing Subscriptions API",
+    "baseUrl": "https://api.hubapi.com/communication-preferences/v4",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/marketing/subscriptions",
+    "description": "The HubSpot Marketing Subscriptions API enables the management of communication preferences and subscriptions for contacts. It allows you to programmatically subscribe or unsubscribe contacts from email subscription types, or unsubscribe them from all email communications. The API is particularly useful for ensuring contact opt-in statuses are properly updated when changes occur through external services. It provides comprehensive functionality for managing communication preferences, including support for business units.",
+    "tags": ["marketing", "subscriptions", "hubspot", "communications", "preferences", "opt-in", "business-units"]
+}

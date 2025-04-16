@@ -1,0 +1,7 @@
+{
+    "name": "Shopify Admin REST API"
+    "baseUrl": "https://admin.shopify.com/api/2025-01"
+    "documentationUrl": "https://shopify.dev/api/admin-rest"
+    "description": "Shopify is a complete commerce platform that lets you start, grow, and manage a business. The Admin REST API lets you build apps for merchants using Shopify. You can read and write data about products, orders, inventory, shipping, online store, and much more."
+    "tags": ["tags": ["ecommerce", "retail", "commerce", "admin", "shopify"]],
+}

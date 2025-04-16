@@ -1,0 +1,7 @@
+{
+    "name": "Gmail API",
+    "baseUrl": "https://gmail.googleapis.com/gmail/v1",
+    "documentationUrl": "https://developers.google.com/gmail/api/",
+    "description": "The Gmail API lets you view and manage Gmail mailbox data like threads, messages, and labels. It provides programmatic access to Gmail features for developers",
+    "tags": ["gmail", "email", "messages", "labels", "google", "communication"]
+}

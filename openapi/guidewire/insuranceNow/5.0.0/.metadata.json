@@ -1,0 +1,7 @@
+{
+    "name": "Guidewire InsuranceNow Cloud API",
+    "baseUrl": "https://api.insurancenow.guidewire.com/v5",
+    "documentationUrl": "https://docs.guidewire.com/cloud-api/insurancenow",
+    "description": "The Guidewire InsuranceNow Cloud API provides comprehensive access to insurance operations including policy management, claims processing, and customer engagement. It enables automation and integration with the cloud-based InsuranceNow platform",
+    "tags": ["insurance", "policy-management", "claims", "guidewire", "insurancenow", "cloud"]
+}

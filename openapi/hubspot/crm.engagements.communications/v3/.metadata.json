@@ -1,0 +1,7 @@
+{
+    "name": "HubSpot CRM Engagements Communications API",
+    "baseUrl": "https://api.hubapi.com/crm/v3/objects/communications",
+    "documentationUrl": "https://developers.hubspot.com/docs/guides/api/crm/engagements/communications",
+    "description": "The HubSpot CRM Engagements Communications API enables the tracking and management of communication engagements across multiple channels. It's particularly useful for teams that interact with contacts through various channels not directly connected to HubSpot, allowing them to centralize all customer communications in one place. The API provides functionality for creating, reading, updating, and managing communication records, ensuring comprehensive tracking of all customer interactions within the HubSpot CRM.",
+    "tags": ["crm", "engagements", "communications", "hubspot", "interactions", "channels", "tracking"]
+}
