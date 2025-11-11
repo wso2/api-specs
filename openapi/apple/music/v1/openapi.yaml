@@ -1,0 +1,2594 @@
+openapi: 3.0.3
+info:
+  title: Apple Music API
+  version: 1.0.0
+  description: |-
+    Use Apple Music API to access information about media in the Apple Music Catalog and a user's personal iCloud Music Library.
+    * Apple Music Catalog includes all resources available in Apple Music.
+    * iCloud Music Library contains only those resources the user adds to their personal library. For example, it contains items from Apple Music, songs purchased from iTunes Store, and imports from discs and other apps. This library can include content that's not in the Apple Music Catalog.
+    Use this API to retrieve information about albums, songs, artists, playlists, music videos, Apple Music stations, ratings, charts, recommendations, and the user's most-recently played content. With proper authorization from the user, you can also create or modify playlists and apply ratings to the user's content.
+  contact:
+    name: Daniel Schröder
+    email: daniel.schroeder@skriptfabrik.com
+    url: "https://skriptfabrik.com"
+servers:
+  - url: "https://api.music.apple.com"
+paths:
+  "/v1/catalog/{storefront}/albums":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+    get:
+      operationId: getAlbumsFromCatalog
+      summary: Get Multiple Catalog Albums
+      description: Fetch one or more albums by using their identifiers.
+      tags:
+        - Albums
+      parameters:
+        - $ref: "#/components/parameters/query.albums-ids"
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.filter"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.restrict"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/albums-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/albums/{id}":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+      - $ref: "#/components/parameters/path.albums-id"
+    get:
+      operationId: getAlbumFromCatalog
+      summary: Get a Catalog Album
+      description: Fetch an album by using its identifier.
+      tags:
+        - Albums
+      parameters:
+        - $ref: "#/components/parameters/query.albums-views"
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/albums-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/albums/{id}/{relationship}":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+      - $ref: "#/components/parameters/path.albums-id"
+      - $ref: "#/components/parameters/path.albums-relationship"
+    get:
+      operationId: getAlbumRelationshipFromCatalog
+      summary: Get a Catalog Album's Relationship Directly by Name
+      description: Fetch an album's relationship by using its identifier.
+      tags:
+        - Albums
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtistsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/artists-relationship-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/albums/{id}/view/{view}":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+      - $ref: "#/components/parameters/path.albums-id"
+      - $ref: "#/components/parameters/path.albums-view"
+    get:
+      operationId: getAlbumViewFromCatalog
+      summary: Get a Catalog Album's Relationship View Directly by Name
+      description: Fetch related resources for a single album's relationship view.
+      tags:
+        - Artists
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+        - $ref: "#/components/parameters/query.with"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MusicVideosResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/music-videos-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/artists":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+    get:
+      operationId: getArtistsFromCatalog
+      summary: Get Multiple Catalog Artists
+      description: Fetch one or more artists by using their identifiers.
+      tags:
+        - Artists
+      parameters:
+        - $ref: "#/components/parameters/query.artists-ids"
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.filter"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.restrict"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtistsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/artists-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/artists/{id}":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+      - $ref: "#/components/parameters/path.artists-id"
+    get:
+      operationId: getArtistFromCatalog
+      summary: Get a Catalog Artist
+      description: Fetch an artist by using the artist's identifier.
+      tags:
+        - Artists
+      parameters:
+        - $ref: "#/components/parameters/query.artists-views"
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtistsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/artists-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/artists/{id}/{relationship}":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+      - $ref: "#/components/parameters/path.artists-id"
+      - $ref: "#/components/parameters/path.artists-relationship"
+    get:
+      operationId: getArtistRelationshipFromCatalog
+      summary: Get a Catalog Artist's Relationship Directly by Name
+      description: Fetch an artist's relationship by using the its identifier.
+      tags:
+        - Artists
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/albums-relationship-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/artists/{id}/view/{view}":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+      - $ref: "#/components/parameters/path.artists-id"
+      - $ref: "#/components/parameters/path.artists-view"
+    get:
+      operationId: getArtistViewFromCatalog
+      summary: Get a Catalog Artist's Relationship View Directly by Name
+      description: Fetch related resources for a single artist's relationship view.
+      tags:
+        - Artists
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+        - $ref: "#/components/parameters/query.with"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/albums-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/search":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+    get:
+      operationId: getSearchResponseFromCatalog
+      summary: Search for Catalog Resources
+      description: Search the catalog by using a query.
+      tags:
+        - Search
+      parameters:
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+        - $ref: "#/components/parameters/query.offset"
+        - $ref: "#/components/parameters/query.term"
+        - $ref: "#/components/parameters/query.types"
+        - $ref: "#/components/parameters/query.with"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/search-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/songs":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+    get:
+      operationId: getSongsFromCatalog
+      summary: Get Multiple Catalog Songs by ID
+      description: Fetch one or more songs by using their identifiers.
+      tags:
+        - Songs
+      parameters:
+        - $ref: "#/components/parameters/query.songs-ids"
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.filter"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.restrict"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SongsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/songs-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/songs/{id}":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+      - $ref: "#/components/parameters/path.songs-id"
+    get:
+      operationId: getSongFromCatalog
+      summary: Get a Catalog Song
+      description: Fetch a song by using its identifier.
+      tags:
+        - Songs
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SongsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/songs-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/catalog/{storefront}/songs/{id}/{relationship}":
+    parameters:
+      - $ref: "#/components/parameters/path.storefront"
+      - $ref: "#/components/parameters/path.songs-id"
+      - $ref: "#/components/parameters/path.songs-relationship"
+    get:
+      operationId: getSongsRelationshipFromCatalog
+      summary: Get a Catalog Song's Relationship Directly by Name
+      description: Fetch a song's relationship by using its identifier.
+      tags:
+        - Songs
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SongsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/songs-relationship-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  /v1/me/library:
+    post:
+      operationId: addToLibrary
+      summary: Add a Resource to a Library
+      description: Add a catalog resource to a user's iCloud Music Library.
+      tags:
+        - Albums
+        - Songs
+      parameters:
+        - $ref: "#/components/parameters/query.ids"
+      responses:
+        "202":
+          description: Accepted
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  /v1/me/library/albums:
+    get:
+      operationId: getAlbumsFromLibrary
+      summary: Get All Library Albums
+      description: Fetch all the library albums in alphabetical order.
+      tags:
+        - Albums
+      parameters:
+        - $ref: "#/components/parameters/query.albums-ids"
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+        - $ref: "#/components/parameters/query.offset"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryAlbumsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-albums-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/me/library/albums/{id}":
+    parameters:
+      - $ref: "#/components/parameters/path.albums-id"
+    get:
+      operationId: getAlbumFromLibrary
+      summary: Get a Library Album
+      description: Fetch a library album by using its identifier.
+      tags:
+        - Albums
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryAlbumsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-albums-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/me/library/albums/{id}/{relationship}":
+    parameters:
+      - $ref: "#/components/parameters/path.albums-id"
+      - $ref: "#/components/parameters/path.albums-relationship"
+    get:
+      operationId: getAlbumRelationshipFromLibrary
+      summary: Get a Library Album's Relationship Directly by Name
+      description: Fetch a library album's relationship by using its identifier.
+      tags:
+        - Albums
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryArtistsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-artists-relationship-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  /v1/me/library/artists:
+    get:
+      operationId: getArtistsFromLibrary
+      summary: Get All Library Artists
+      description: Fetch all the library artists in alphabetical order.
+      tags:
+        - Artists
+      parameters:
+        - $ref: "#/components/parameters/query.artists-ids"
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+        - $ref: "#/components/parameters/query.offset"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryArtistsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-artists-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/me/library/artists/{id}":
+    parameters:
+      - $ref: "#/components/parameters/path.artists-id"
+    get:
+      operationId: getArtistFromLibrary
+      summary: Get a Library Artist
+      description: Fetch a library artist by using its identifier.
+      tags:
+        - Artists
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryArtistsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-artists-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/me/library/artists/{id}/{relationship}":
+    parameters:
+      - $ref: "#/components/parameters/path.artists-id"
+      - $ref: "#/components/parameters/path.artists-relationship"
+    get:
+      operationId: getArtistRelationshipFromLibrary
+      summary: Get a Library Artist's Relationship Directly by Name
+      description: Fetch a library artist's relationship by using its identifier.
+      tags:
+        - Artists
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryAlbumsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-albums-relationship-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  /v1/me/library/songs:
+    get:
+      operationId: getSongsFromLibrary
+      summary: Get All Library Songs
+      description: Fetch all the library songs in alphabetical order.
+      tags:
+        - Songs
+      parameters:
+        - $ref: "#/components/parameters/query.songs-ids"
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+        - $ref: "#/components/parameters/query.offset"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibrarySongsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-songs-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/me/library/songs/{id}":
+    parameters:
+      - $ref: "#/components/parameters/path.songs-id"
+    get:
+      operationId: getSongFromLibrary
+      summary: Get a Library Song
+      description: Fetch a library song by using its identifier.
+      tags:
+        - Songs
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibrarySongsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-songs-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+  "/v1/me/library/songs/{id}/{relationship}":
+    parameters:
+      - $ref: "#/components/parameters/path.songs-id"
+      - $ref: "#/components/parameters/path.songs-relationship"
+    get:
+      operationId: getSongsRelationshipFromLibrary
+      summary: Get a Library Song's Relationship Directly by Name
+      description: Fetch a library song's relationship by using its identifier.
+      tags:
+        - Songs
+      parameters:
+        - $ref: "#/components/parameters/query.extend"
+        - $ref: "#/components/parameters/query.include"
+        - $ref: "#/components/parameters/query.l"
+        - $ref: "#/components/parameters/query.limit"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibrarySongsResponse"
+              examples:
+                Response:
+                  $ref: "#/components/examples/library-songs-relationship-response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorsResponse"
+components:
+  examples:
+    albums-1571697083:
+      value:
+        id: "1571697083"
+        type: albums
+        href: /v1/catalog/us/albums/1571697083
+        attributes:
+          artistName: Maisie Peters
+          artwork:
+            bgColor: f8f9fd
+            height: 3000
+            textColor1: 100c0d
+            textColor2: 1a1314
+            textColor3: 3e3b3d
+            textColor4: "464143"
+            url: "https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/e0/d9/08/e0d90890-427e-665a-28e7-abef4cd531b0/190296612626.jpg/{w}x{h}bb.jpg"
+            width: 3000
+          contentRating: explicit
+          copyright: "A Gingerbread Man Records / Asylum Records UK release, Under exclusive license to Warner Music UK Limited., ℗ 2021 Felion Limited."
+          editorialNotes:
+            short: '"I was very free and I let myself do whatever I chose."'
+            standard: |-
+              "I'm my own album's biggest fan, and I have been for ages," Maisie Peters tells Apple Music of her debut *You Signed Up for This*. "I've been writing music for a while now, and there are so many different avenues I could have gone down and so many different albums I could have made. I feel so surely that this is the right one." Peters doesn't *exactly* need to be her record's main cheerleader. Those already in her corner include Taylor Swift—whose influence shines across all of Peters' output—and Ed Sheeran, who signed the Brighton-born singer-songwriter to his Gingerbread Man record company in 2021 and who joined her in writing three of the songs here. "We just worked really well together," says Peters. "This can feel like a very lonely [job], so it's great having a teammate and having someone rooting for you."<br />
+              Featuring previously unheard work alongside new tracks written in a Suffolk Airbnb in summer 2020, *You Signed Up for This* houses the soft indie folk the singer has built her name and loyal following on, but also forays into the '80s ("John Hughes Movie"), the early 2000s ("Boy"), and bouncy, unabashed pop ("Psycho"). "It was very important to me that this album reflected everything that I do," adds Peters. "I was very free and I let myself do whatever I chose." Running through all of it, of course, is the razor-sharp lyricism and wordplay that have made Peters one of 2021's most feted rising songwriters (and which led Sheeran to declare her the "voice of this generation" to Apple Music in 2021), as Peters deftly dissects young adult life and falling in and out of love, first with a "bolshy, dramatic, immature" attitude and then with reflection. Read on as Peters guides us through her brilliant debut, one song at a time.<br />
+              **"You Signed Up for This"**
+              "It's almost like a bullet point list of everything you need to know about me: I'm the narrator. This is my life right now. This is how I sing. This is how I write. But it's really self-aware—it starts off with an eye-roll. In this track, you have the synth noises, which felt like an ode to that side of the album, as well as a guitar feel to it, then this Coldplay-esque moment which married the two together. You're falling out of one sound and into the other."<br />
+              **"I'm Trying (Not Friends)"**
+              "There's like 5,000 lyrics in this song. It's all of my personality and everything that was going on in my life at the time. The first verse and the first chorus were actually written for *Trying* [the Apple TV+ comedy; Peters wrote the Season 2 soundtrack], but it wasn't the vibe for it, so I took it back. This song is chaotic and bitchy and passive-aggressive and really flawed."<br />
+              **"John Hughes Movie"**
+              "I wrote this when I was 17, and it just never felt right to come out at the time. We reworked it for the album, then I sent it to [LA producers] Afterhrs, who have done a lot of my stuff and who gave it a shine. This song is so naive and hopeful and stupid and embarrassing and teenage. The first half of this album hits you round the face with melodrama."<br />
+              **"Outdoor Pool"**
+              "I have a voice note on my phone that says, 'Midnight, outdoor pool.' We wrote the chorus for this song one night in Suffolk after we wrote 'Love Him I Don't.' It was such a random chorus and it was really hard to understand what it was about. Why are we in an outdoor pool? Then [Taylor Swift's] *folklore* came out that night, and, listening to 'betty,' it just clicked. It was like, 'Oh, I cannot be me all the time.' Then I came back to it a few days later realizing it had to be from the point of view of a 15-year-old. From there it was like, bang. I wanted to make it super British and we were throwing in all the references we could: *Skins* and HMV and form on Monday, science lockers, the French exchange."<br />
+              **"Love Him I Don't"**
+              "My favorite on the album. Lyrically and musically, it feels like the combination of a lot of songwriting that I've done and a lot of learning about what I love. There's a real heaviness but also lightness. It's a song to sing to yourself when you don't feel it."<br />
+              **"Psycho"**
+              "Everything about this track is so wild. It was the last session we did for the album. It was like, 'The album is done, so if we get something, great, but if not, it's done.' I was with Ed Sheeran and [prolific British songwriter] Steve Mac and thought, 'If I'm here with these people who have done massive things, I'm here to win, I'm here to write a big song.' Ed has previously said 'Psycho' would be a really good song title. The track only took about 45 minutes once we were in the session, but afterwards I just felt really scared of it—it's very different for me. I actually told my manager I'd release it 'over my dead corpse,' but I'm so glad I got over it—I love it now. It's so fun."<br />
+              **"Boy"**
+              "[Producer and songwriter] Joe Rubel, Ed Sheeran, and I had written 'Hollow,' then had dinner. Afterwards, I was like, 'Let's write another song.' Everyone had been drinking wine, so it was a fun vibe, and we ended up talking about fuckboys and softboys and I was educating the boys on the differences. They said we should write a song called 'Fuckboy.' I was crying with laughter as we wrote it, and I think you can hear that. Really last minute, I said we should take out the 'fuck' and just have a gap. They eventually all came around to that idea."<br />
+              **"Hollow"**
+              "This is a special song. I did it with Ed, Joe, and [Snow Patrol's] Johnny McDaid. It was the first day I'd met Ed and Johnny, and we all knew there was something to this song. It's so simple but it also has a weird charm—it kind of harks back to what I did when I started, but also what Ed did when he started. It's very sad and has one of my favourite lyrics on the album: 'You're the one that got away and you got away with a lot.'"<br />
+              **"Villain"**
+              "Up until this point, a lot of this album is very rash. It's coming from a place of being hurt and saying, 'I was right and you were wrong.' But 'Villain' is this moment where there's a cold shower of realism and you understand that you are not always the hero of the story. It felt like it almost leveled the playing field, a moment to hold your hand up and move forward. Sonically, it felt like an older sister to 'John Hughes Movie.' I was looking at Bruce Springsteen and Brandon Flowers and The Killers for this song."<br />
+              **"Brooklyn"**
+              "This is about me and my twin sister Ellen going to New York when we were 19. We went to Gatwick, we had terrible tickets, we flew at 2 am, we had noodles for breakfast. This song literally just tells the story of that trip. I did it with [songwriter and producer] Frances [aka Sophie Cooke] and it came together quite naturally. It was funny—a lot of people wanted to produce this, but in the end Frances finished it, and it's not dissimilar to the demo. Two women wrote and produced the song, and I think that's really amazing. "<br />
+              **"Elvis Song"**
+              "One of the oldest tracks on the album. This is like stadium euphoria to me but with more realism to it, I guess. 'I've got no right to miss you' is something I've always played around with, and it's a feeling I've definitely felt before."<br />
+              **"Talking to Strangers"**
+              "This is a love song and it's really sweet. I did this with [songwriters] Brad Ellis and Jez Ashurst, and we wrote it really late at night. The vocals you hear in it are the vocals I did then. In fact, all of this song is basically the demo, apart from some harmonies I added from my bedroom studio during lockdown. The demo was very much how it needed to stay."<br />
+              **"Volcano"**
+              "This is a different palette, and it's almost the hardest to talk about because there's so much within it. It's really a song about people who you feel like never see the consequences of their actions. This song is just repetition all the time, because that's how it feels, I think, when you're in that moment, and someone has hurt you and gotten away with it. No one has called them out, so they're able to keep living their life, and you're just stuck in this song. It was definitely fueled by #MeToo. There's a lot of real, simmering female resentment and the silence you take upon yourself. I was referencing Dolly Parton and Kacey Musgraves. It felt like the right tone for that sort of thing—no one does 'woman scorned' better than country musicians."<br />
+              **"Tough Act"**
+              "To me, this song feels sad but also has a real air of growth in it. It's hopeful and it's respectful and comes from a really mature place of 'This is nobody's fault.' By the end of it, you're not sure if it's meant to be a sad song or if it's meant to be a song of happiness. I listened to it recently and was struck by the second verse, when I say, 'I got busy and you forgot how to miss me when I'm not much of who you grew up with.' I think that speaks to so many people and so many relationships, romantic or platonic or family or anything. It's the realization that you're not who you were and that's fine, but that's something that everyone has to accept at some point. Originally it was a piano ballad with no harmonies and it was very stripped. It ended up this really beautiful orchestral arrangement. The lyrics felt like a great way to finish this album."
+          genreNames:
+            - Pop
+            - Music
+          isCompilation: false
+          isComplete: true
+          isMasteredForItunes: false
+          isSingle: false
+          name: You Signed Up For This (Apple Music Up Next Film Edition)
+          playParams:
+            id: "1571697083"
+            kind: album
+          recordLabel: Atlantic Records UK
+          releaseDate: "2021-08-27"
+          trackCount: 15
+          upc: "190296612626"
+          url: "https://music.apple.com/us/album/you-signed-up-for-this-apple-music-up-next-film-edition/1571697083"
+    albums-900721190:
+      value:
+        id: "900721190"
+        type: albums
+        href: /v1/catalog/us/albums/900721190
+        attributes:
+          artistName: James Brown
+          artwork:
+            bgColor: ffffff
+            height: 1400
+            textColor1: 0a0a09
+            textColor2: 2a240f
+            textColor3: 3b3b3a
+            textColor4: 544f3f
+            url: "https://example.mzstatic.com/image/thumb/Music4/v4/76/85/e5/7685e5c8-9346-88db-95ff-af87bf84151b/source/{w}x{h}bb.jpeg"
+            width: 1400
+          copyright: "℗ 1991 Universal Records, a Division of UMG Recordings, Inc."
+          genreNames:
+            - Soul
+            - Music
+            - R&B/Soul
+            - Funk
+          isCompilation: false
+          isComplete: true
+          isMasteredForItunes: true
+          isSingle: false
+          name: 20 All-Time Greatest Hits!
+          playParams:
+            id: "900721190"
+            kind: album
+          releaseDate: "1991-10-22"
+          trackCount: 20
+          url: "https://itunes.apple.com/us/album/20-all-time-greatest-hits/id900721190"
+    albums-219576768:
+      value:
+        id: "219576768"
+        type: albums
+        href: /v1/catalog/us/albums/219576768
+        attributes:
+          artistName: James Brown
+          artwork:
+            bgColor: 4e92c4
+            height: 1500
+            textColor1: "030506"
+            textColor2: "161616"
+            textColor3: 12222c
+            textColor4: 222f39
+            url: "https://example.mzstatic.com/image/thumb/Music5/v4/8e/45/c7/8e45c7cb-e181-edf1-c9fe-d9cfa1973133/source/{w}x{h}bb.jpeg"
+            width: 1500
+          copyright: "℗ 2007 Universal Records, a Division of UMG Recordings, Inc."
+          editorialNotes:
+            standard: 'James Brown never enjoyed a number one pop hit in *Billboard*, though seventeen R&amp;B chart-toppers bore his name. One that hit eighteen, "Doing It to Death," was credited to Fred Wesley and the J.B.''s, while "Get Up (I Feel Like Being a) Sex Machine" peaked at number two in *Billboard*, and at number one in the rival *Cashbox*. Brown''s entry in the *Number 1''s* series pays tribute to all these happy occasions by collecting the radio-friendly short versions of discs spanning 1958 (the heavenly vocal-group ballad "Try Me") to 1974 (variations on the funk "My Thang," "The Payback" and "Papa Don''t Take No Mess"). All these, of course, have much to show anyone wants to understand James Brown, his music and how it sounded on the airwaves of its time. Though no longer with us, he''s not about to stop teaching us now.'
+          genreNames:
+            - R&B/Soul
+            - Music
+            - Rock
+            - Soundtrack
+            - Soundtrack
+            - Soul
+            - Funk
+          isCompilation: false
+          isComplete: true
+          isMasteredForItunes: false
+          isSingle: false
+          name: "Number 1's: James Brown"
+          playParams:
+            id: "219576768"
+            kind: album
+          releaseDate: "2007-03-27"
+          trackCount: 19
+          url: "https://itunes.apple.com/us/album/number-1s-james-brown/id219576768"
+    albums-relationship-response:
+      value:
+        data:
+          - $ref: "#/components/examples/albums-1571697083/value"
+        meta:
+          total: 1
+    albums-response:
+      value:
+        data:
+          - $ref: "#/components/examples/albums-1571697083/value"
+    artists-117118:
+      value:
+        id: "117118"
+        type: artists
+        href: /v1/catalog/us/artists/117118
+        attributes:
+          editorialNotes:
+            standard: 'The Godfather of Soul, The Hardest Working Man in Show Business, Soul Brother Number One . . . Mountain-of-a-man nicknames, no doubt, but not one of them ever did James Brown the justice he deserved. JB''s influence is so large it''s plain impossible to imagine what music today would sound like without him. James didn''t just learn soul and funk; he invented them. From the on-bended-knee plea called "Try Me" straight to ground zero of the hip-hop revolution, where his screams, grunts, and funky drummer backboned every cut worth mentioning, Brown was soul power itself, an inspiration to an entire nation. Now that Mr. Dynamite has taken his last sweat-drenched shuffle offstage, we''re all left like an awe-struck Apollo audience — still screaming for just one more encore while trying to take in the force of nature we were blessed to witness. James Brown''s face should be on money. His likeness carved on a mountain. And, most importantly, his music played forever.'
+          genreNames:
+            - R&B/Soul
+          name: James Brown
+          url: "https://itunes.apple.com/us/artist/james-brown/id117118"
+    artists-283317494:
+      value:
+        id: "283317494"
+        type: artists
+        href: /v1/catalog/us/artists/283317494
+        attributes:
+          genreNames:
+            - R&B/Soul
+          name: James Brown & His Famous Flames
+          url: "https://itunes.apple.com/us/artist/james-brown-his-famous-flames/id283317494"
+    artists-relationship-response:
+      value:
+        data:
+          - $ref: "#/components/examples/artists-117118/value"
+        meta:
+          total: 1
+    artists-response:
+      value:
+        data:
+          - $ref: "#/components/examples/artists-117118/value"
+    library-albums-l.qrRWYhq:
+      value:
+        id: l.qrRWYhq
+        type: library-albums
+        href: "/v1/me/library/albums/l.qrRWYhq"
+        attributes:
+          playParams:
+            id: l.qrRWYhq
+            kind: album
+            isLibrary: true
+          name: Happier Than Ever
+          artistName: Billie Eilish
+          artwork:
+            width: 1200
+            height: 1200
+            url: https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/2d/f3/c9/2df3c9fd-e0eb-257c-c035-b04f05a66580/21UMGIM36691.rgb.jpg/{w}x{h}bb.jpeg
+          releaseDate: "2021-07-30"
+          trackCount: 16
+          dateAdded: "2021-09-10T18:12:57Z"
+          genreNames:
+            - Alternative
+        relationships:
+          tracks:
+            href: "/v1/me/library/albums/l.qrRWYhq/tracks"
+            data:
+              - id: i.PkdNMe3h2og2p5
+                type: library-songs
+                href: "/v1/me/library/songs/i.PkdNMe3h2og2p5"
+                attributes:
+                  artwork:
+                    width: 1200
+                    height: 1200
+                    url: https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/2d/f3/c9/2df3c9fd-e0eb-257c-c035-b04f05a66580/21UMGIM36691.rgb.jpg/{w}x{h}bb.jpeg
+                  artistName: Billie Eilish
+                  discNumber: 1
+                  genreNames:
+                    - Alternative
+                  durationInMillis: 244221
+                  releaseDate: "2021-07-30"
+                  name: Getting Older
+                  hasLyrics: true
+                  albumName: Happier Than Ever
+                  playParams:
+                    id: i.PkdNMe3h2og2p5
+                    kind: song
+                    isLibrary: true
+                    reporting: true
+                    catalogId: "1564530724"
+                  trackNumber: 1
+            meta:
+              total: 16
+    library-albums-relationship-response:
+      value:
+        data:
+          - $ref: "#/components/examples/library-albums-l.qrRWYhq/value"
+        meta:
+          total: 1
+    library-albums-response:
+      value:
+        data:
+          - $ref: "#/components/examples/library-albums-l.qrRWYhq/value"
+    library-artists-r.V2zewCs:
+      value:
+        id: r.V2zewCs
+        type: library-artists
+        href: "/v1/me/library/artists/r.V2zewCs"
+        attributes:
+          name: Billie Eilish
+    library-artists-relationship-response:
+      value:
+        data:
+          - $ref: "#/components/examples/library-artists-r.V2zewCs/value"
+        meta:
+          total: 1
+    library-artists-response:
+      value:
+        data:
+          - $ref: "#/components/examples/library-artists-r.V2zewCs/value"
+    library-songs-i.gelNOzPuL41Lxo:
+      value:
+        id: i.gelNOzPuL41Lxo
+        type: library-songs
+        href: "/v1/me/library/songs/i.gelNOzPuL41Lxo"
+        attributes:
+          artwork:
+            width: 1200
+            height: 1200
+            url: https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/2d/f3/c9/2df3c9fd-e0eb-257c-c035-b04f05a66580/21UMGIM36691.rgb.jpg/{w}x{h}bb.jpeg
+          artistName: Billie Eilish
+          discNumber: 1
+          genreNames:
+            - Alternative
+          durationInMillis: 298899
+          releaseDate: "2021-07-30"
+          name: Happier Than Ever
+          hasLyrics: true
+          albumName: Happier Than Ever
+          playParams:
+            id: i.gelNOzPuL41Lxo
+            kind: song
+            isLibrary: true
+            reporting: true
+            catalogId: "1564531202"
+          trackNumber: 15
+          contentRating: explicit
+    library-songs-relationship-response:
+      value:
+        data:
+          - $ref: "#/components/examples/library-songs-i.gelNOzPuL41Lxo/value"
+        meta:
+          total: 1
+    library-songs-response:
+      value:
+        data:
+          - $ref: "#/components/examples/library-songs-i.gelNOzPuL41Lxo/value"
+    music-videos-1584867415:
+      value:
+        id: "1584867415"
+        type: music-videos
+        href: "/v1/catalog/us/music-videos/1584867415"
+        attributes:
+          previews:
+            - url: https://video-ssl.itunes.apple.com/itunes-assets/Video115/v4/57/fc/4a/57fc4ace-4cd9-5154-a3c8-4780be7f2313/mzvf_8235072985006112981.720w.h264lc.U.p.m4v
+              hlsUrl: https://play.itunes.apple.com/WebObjects/MZPlay.woa/hls/playlist.m3u8?cc=US&a=1584867415&id=348264574&l=en&aec=HD
+              artwork:
+                width: 1920
+                height: 1080
+                url: https://is3-ssl.mzstatic.com/image/thumb/Video115/v4/d8/31/dd/d831dd30-caef-789b-ea31-e9ccb7856d63/Jobdaca5c3e-9add-46d2-a7e2-68762d9147eb-123513001-PreviewImage_preview_image_69000_video_sdr-Time1631045934054.png/{w}x{h}bb.jpeg
+                bgColor: 8e9a9b
+                textColor1: "040403"
+                textColor2: "030404"
+                textColor3: 1f2222
+                textColor4: 1f2222
+          artwork:
+            width: 1920
+            height: 1080
+            url: https://is2-ssl.mzstatic.com/image/thumb/Video115/v4/30/a3/00/30a30034-46e0-f1e2-d2f3-26b6255cc3df/Jobdaca5c3e-9add-46d2-a7e2-68762d9147eb-123513001-PreviewImage_preview_image_69000_video_sdr-Time1631045934054.png/{w}x{h}mv.jpeg
+            bgColor: 8e9a9b
+            textColor1: "040403"
+            textColor2: "030404"
+            textColor3: 1f2222
+            textColor4: 1f2222
+          artistName: Jungle
+          url: https://music.apple.com/us/music-video/what-dyou-know-about-me/1584867415
+          genreNames:
+            - Electronic
+          has4K: false
+          durationInMillis: 180755
+          releaseDate: "2021-09-10"
+          name: What D’You Know About Me?
+          isrc: GBWWP2107350
+          playParams:
+            id: "1584867415"
+            kind: musicVideo
+          hasHDR: false
+    music-videos-response:
+      value:
+        data:
+          - $ref: "#/components/examples/music-videos-1584867415/value"
+    search-response:
+      value:
+        results:
+          albums:
+            data:
+              - $ref: "#/components/examples/albums-900721190/value"
+              - $ref: "#/components/examples/albums-219576768/value"
+            href: /v1/catalog/us/search?types=albums&term=james+brown&limit=2
+            next: /v1/catalog/us/search?types=albums&term=james+brown&offset=2
+          artists:
+            data:
+              - $ref: "#/components/examples/artists-117118/value"
+              - $ref: "#/components/examples/artists-283317494/value"
+            href: /v1/catalog/us/search?types=artists&term=james+brown&limit=2
+    songs-1560735548:
+      value:
+        id: "1560735548"
+        type: songs
+        href: "/v1/catalog/us/songs/1560735548"
+        attributes:
+          previews:
+            - url: https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/af/22/53/af225371-463f-d244-0e5c-f3e4449ca160/mzaf_2223817296928647874.plus.aac.ep.m4a
+          artwork:
+            width: 3000
+            url: https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/33/fd/32/33fd32b1-0e43-9b4a-8ed6-19643f23544e/21UMGIM26092.rgb.jpg/{w}x{h}bb.jpeg
+            height: 3000
+            textColor3: d7d8e8
+            textColor2: fbeaf0
+            textColor4: decedf
+            textColor1: f3f6fb
+            bgColor: 675f9a
+            hasP3: false
+          artistName: Olivia Rodrigo
+          url: https://music.apple.com/us/album/deja-vu/1560735414?i=1560735548
+          discNumber: 1
+          genreNames:
+            - Pop
+            - Music
+          hasTimeSyncedLyrics: true
+          isMasteredForItunes: true
+          durationInMillis: 215508
+          releaseDate: "2021-04-01"
+          name: deja vu
+          isrc: USUG12101240
+          audioTraits:
+            - lossy-stereo
+            - lossless
+            - atmos
+            - spatial
+          hasLyrics: true
+          albumName: SOUR
+          playParams:
+            id: "1560735548"
+            kind: song
+          trackNumber: 5
+          audioLocale: en-US
+          composerName: Olivia Rodrigo & Daniel Nigro
+          contentRating: explicit
+        relationships:
+          albums:
+            href: "/v1/catalog/us/songs/1560735548/albums"
+            data:
+              - id: "1560735414"
+                type: albums
+                href: "/v1/catalog/us/albums/1560735414"
+          artists:
+            href: "/v1/catalog/us/songs/1560735548/artists"
+            data:
+              - id: "979458609"
+                type: artists
+                href: "/v1/catalog/us/artists/979458609"
+    songs-1572278914:
+      value:
+        id: "1572278914"
+        type: songs
+        href: "/v1/catalog/us/songs/1572278914"
+        attributes:
+          previews:
+            - url: https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/38/64/27/3864275c-3ee2-4e25-540b-a6dcaa78c142/mzaf_14287905044068171008.plus.aac.ep.m4a
+          artwork:
+            width: 3000
+            url: https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/03/fb/9e/03fb9e9c-43bb-2bfd-cccc-920a91affd12/21UMGIM51898.rgb.jpg/{w}x{h}bb.jpeg
+            height: 3000
+            textColor3: 84ae4e
+            textColor2: 99d888
+            textColor4: 7aad6d
+            textColor1: a5d961
+            bgColor: "000300"
+            hasP3: false
+          artistName: Brandee Younger
+          url: https://music.apple.com/us/album/reclamation/1572278902?i=1572278914
+          discNumber: 1
+          genreNames:
+            - Jazz
+            - Music
+          hasTimeSyncedLyrics: false
+          isMasteredForItunes: true
+          durationInMillis: 402196
+          releaseDate: "2021-08-13"
+          name: Reclamation
+          isrc: USUM72104683
+          audioTraits:
+            - lossy-stereo
+            - hi-res-lossless
+            - lossless
+          hasLyrics: false
+          albumName: Somewhere Different
+          playParams:
+            id: "1572278914"
+            kind: song
+          trackNumber: 1
+          audioLocale: zxx
+          composerName: Brandee Younger
+        relationships:
+          albums:
+            href: "/v1/catalog/us/songs/1572278914/albums"
+            data:
+              - id: "1572278902"
+                type: albums
+                href: "/v1/catalog/us/albums/1572278902"
+          artists:
+            href: "/v1/catalog/us/songs/1572278914/artists"
+            data:
+              - id: "327193278"
+                type: artists
+                href: "/v1/catalog/us/artists/327193278"
+    songs-relationship-response:
+      value:
+        data:
+          - $ref: "#/components/examples/songs-1560735548/value"
+        meta:
+          total: 1
+    songs-response:
+      value:
+        data:
+          - $ref: "#/components/examples/songs-1560735548/value"
+  parameters:
+    path.albums-id:
+      name: id
+      description: The unique identifier for the album.
+      in: path
+      schema:
+        type: string
+      required: true
+    path.albums-relationship:
+      name: relationship
+      description: The name of the relationship you want to fetch for this resource.
+      in: path
+      schema:
+        type: string
+        enum:
+          - artists
+          - genres
+          - library
+          - record-labels
+          - tracks
+      required: true
+    path.albums-view:
+      name: view
+      description: The name of the resource view to fetch.
+      in: path
+      schema:
+        type: string
+        enum:
+          - appears-on
+          - other-versions
+          - related-albums
+          - related-videos
+      required: true
+    path.artists-id:
+      name: id
+      description: The unique identifier for the artist.
+      in: path
+      schema:
+        type: string
+      required: true
+    path.artists-relationship:
+      name: relationship
+      description: The name of the relationship you want to fetch for this resource.
+      in: path
+      schema:
+        type: string
+        enum:
+          - albums
+          - genres
+          - music-videos
+          - playlists
+          - station
+      required: true
+    path.artists-view:
+      name: view
+      description: The name of the resource view to fetch.
+      in: path
+      schema:
+        type: string
+        enum:
+          - appears-on-albums
+          - compilation-albums
+          - featured-albums
+          - featured-playlists
+          - full-albums
+          - latest-release
+          - live-albums
+          - similar-artists
+          - singles
+          - top-music-videos
+          - top-songs
+      required: true
+    path.songs-id:
+      name: id
+      description: The unique identifier for the song.
+      in: path
+      schema:
+        type: string
+      required: true
+    path.songs-relationship:
+      name: relationship
+      description: The name of the relationship you want to fetch for this resource.
+      in: path
+      schema:
+        type: string
+        enum:
+          - albums
+          - artists
+          - composers
+          - genres
+          - library
+          - music-videos
+          - station
+      required: true
+    path.storefront:
+      name: storefront
+      description: "An iTunes Store territory, specified by an ISO 3166 alpha-2 country code. The possible values are the id attributes of Storefront objects."
+      in: path
+      schema:
+        type: string
+      required: true
+    query.albums-ids:
+      name: ids
+      description: The unique identifiers for the albums.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          minimum: 1
+          maximum: 100
+    query.albums-views:
+      name: views
+      description: The views to activate for the albums resource.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - appears-on
+            - other-versions
+            - related-albums
+            - related-videos
+    query.artists-ids:
+      name: ids
+      description: The unique identifiers for the artists.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          minimum: 1
+          maximum: 25
+    query.artists-views:
+      name: views
+      description: The views to activate for the artists resource.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - appears-on-albums
+            - compilation-albums
+            - featured-albums
+            - featured-playlists
+            - full-albums
+            - latest-release
+            - live-albums
+            - similar-artists
+            - singles
+            - top-music-videos
+            - top-songs
+    query.extend:
+      name: extend
+      description: A list of attribute extensions to apply to resources in the response.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+    query.filter:
+      name: filter
+      description: A filter to apply to the request.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+    query.ids:
+      name: ids
+      description: The unique catalog identifiers for the resources. To indicate the type of resource to be added, ids must be followed by one of the allowed values. Add multiple types in the same request.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          minimum: 1
+          maximum: 100
+      required: true
+    query.include:
+      name: include
+      description: Additional relationships to include in the fetch.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+    query.l:
+      name: l
+      description: "The localization to use, specified by a language tag. The possible values are in the `supportedLanguageTags` array belonging to the `Storefront` object specified by `storefront`. Otherwise, the default is `defaultLanguageTag` in `Storefront`."
+      in: query
+      schema:
+        type: string
+    query.limit:
+      name: limit
+      description: The number of objects or number of objects in the specified relationship returned.
+      in: query
+      schema:
+        type: integer
+        default: 5
+        maximum: 25
+    query.offset:
+      name: offset
+      description: The next page or group of objects to fetch.
+      in: query
+      schema:
+        type: string
+    query.restrict:
+      name: restrict
+      description: A set of restrictions (for example, to restrict explicit content).
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+    query.songs-ids:
+      name: ids
+      description: The unique identifiers for the songs.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          minimum: 1
+          maximum: 300
+    query.term:
+      name: term
+      description: "The entered text for the search with `+` characters between each word, to replace spaces (for example `term=james+br`)."
+      in: query
+      schema:
+        type: string
+      required: true
+    query.types:
+      name: types
+      description: The list of the types of resources to include in the results.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - activities
+            - albums
+            - apple-curators
+            - artists
+            - curators
+            - music-videos
+            - playlists
+            - record-labels
+            - songs
+            - stations
+    query.with:
+      name: with
+      description: A list of modifications to apply to the request.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - attributes
+            - topResults
+  schemas:
+    Albums:
+      title: Albums
+      description: A resource object that represents an album.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier for the album.
+        type:
+          type: string
+          description: This value is always `albums`.
+          enum:
+            - albums
+        href:
+          type: string
+          description: The relative location for the album resource.
+          format: uri-reference
+        attributes:
+          type: object
+          description: The attributes for the album.
+          properties:
+            artistName:
+              type: string
+              description: The name of the primary artist associated with the album.
+            artistUrl:
+              type: string
+              description: The url of the artist for this content.
+              format: url
+            artwork:
+              $ref: "#/components/schemas/Artwork"
+            contentRating:
+              type: string
+              description: The Recording Industry Association of America (RIAA) rating of the content. The possible values for this rating are clean and explicit. No value means no rating.
+              enum:
+                - clean
+                - explicit
+            copyright:
+              type: string
+              description: The copyright text.
+            editorialNotes:
+              $ref: "#/components/schemas/EditorialNotes"
+            genreNames:
+              type: array
+              description: The names of the genres associated with this album.
+              items:
+                type: string
+            isCompilation:
+              type: boolean
+              description: Indicates if the album is marked as a compilation. If `true`, the album is a compilation; otherwise, it is not.
+            isComplete:
+              type: boolean
+              description: Indicates whether the album is complete. If `true`, the album is complete; otherwise, it is not. An album is complete if it contains all its tracks and songs.
+            isMasteredForItunes:
+              type: boolean
+              description: Indicates whether the response delivered the album as an Apple Digital Master.
+            isSingle:
+              type: boolean
+              description: Indicates whether the album contains a single song.
+            name:
+              type: string
+              description: The localized name of the album.
+            playParams:
+              $ref: "#/components/schemas/PlayParameters"
+            recordLabel:
+              type: string
+              description: The name of the record label for the album.
+            releaseDate:
+              type: string
+              description: The release date of the album, when known, in `YYYY-MM-DD` or `YYYY` format. Pre-release content may have an expected release date in the future.
+            trackCount:
+              type: number
+              description: The number of tracks.
+            upc:
+              type: string
+              description: The Universal Product Code for the album.
+            url:
+              type: string
+              description: The URL for sharing the album in Apple Music.
+              format: url
+          required:
+            - artistName
+            - artwork
+            - genreNames
+            - isCompilation
+            - isComplete
+            - isMasteredForItunes
+            - isSingle
+            - name
+            - trackCount
+            - url
+        relationships:
+          type: object
+          description: The relationships for the album.
+        meta:
+          type: object
+          description: Information about the request or response. The members may be any of the endpoint parameters.
+        views:
+          type: object
+          description: The relationship views for the album.
+      required:
+        - id
+        - type
+        - href
+    AlbumsResponse:
+      title: Albums Response
+      description: The response to an albums request.
+      type: object
+      properties:
+        data:
+          type: array
+          description: The Albums included in the response for the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/Albums"
+        meta:
+          type: object
+          description: Contextual data about the relationship.
+        next:
+          type: string
+          description: A relative cursor to fetch the next paginated collection of resources, if more exist.
+          format: uri-reference
+      required:
+        - data
+    Artists:
+      title: Artists
+      description: A resource object that represents an artist of an album where an artist can be one or more persons.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier for the artist.
+        type:
+          type: string
+          description: This value is always `artists`.
+          enum:
+            - artists
+        href:
+          type: string
+          description: The relative location for the artist resource.
+          format: uri-reference
+        attributes:
+          type: object
+          description: The attributes for the artist.
+          properties:
+            editorialNotes:
+              $ref: "#/components/schemas/EditorialNotes"
+            genreNames:
+              type: array
+              description: The names of the genres associated with this artist.
+              items:
+                type: string
+            name:
+              type: string
+              description: The localized name of the artist.
+            url:
+              type: string
+              description: The URL for sharing the artist in Apple Music.
+              format: url
+          required:
+            - genreNames
+            - name
+            - url
+        relationships:
+          type: object
+          description: The relationships for the artist.
+          properties:
+            albums:
+              $ref: "#/components/schemas/AlbumsResponse"
+            genres:
+              type: object
+            music-videos:
+              type: object
+            playlists:
+              type: object
+            station:
+              type: object
+        meta:
+          type: object
+          description: Information about the request or response. The members may be any of the endpoint parameters.
+        views:
+          type: object
+          description: The views for associations between artists and other resources.
+      required:
+        - id
+        - type
+        - href
+    ArtistsResponse:
+      title: Artists Response
+      description: The response to an artists request.
+      type: object
+      properties:
+        data:
+          type: array
+          description: The Artists included in the response for the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/Artists"
+        meta:
+          type: object
+          description: Contextual data about the relationship.
+        next:
+          type: string
+          description: A relative cursor to fetch the next paginated collection of resources, if more exist.
+          format: uri-reference
+      required:
+        - data
+    Artwork:
+      title: Artwork
+      description: An object that represents artwork.
+      type: object
+      properties:
+        bgColor:
+          type: string
+          description: The average background color of the image.
+        height:
+          type: number
+          description: The maximum height available for the image.
+        textColor1:
+          type: string
+          description: The primary text color used if the background color gets displayed.
+        textColor2:
+          type: string
+          description: The secondary text color used if the background color gets displayed.
+        textColor3:
+          type: string
+          description: The tertiary text color used if the background color gets displayed.
+        textColor4:
+          type: string
+          description: The final post-tertiary text color used if the background color gets displayed.
+        url:
+          type: string
+          description: The URL to request the image asset.
+          format: url
+        width:
+          type: number
+          description: The maximum width available for the image.
+      required:
+        - height
+        - url
+        - width
+    EditorialNotes:
+      title: Editorial Notes
+      type: object
+      description: An object that represents a notes attribute.
+      properties:
+        short:
+          type: string
+          description: Abbreviated notes shown inline or when the content appears alongside other content.
+        standard:
+          type: string
+          description: Notes shown when the content is prominently displayed.
+        name:
+          type: string
+          description: Name for the editorial notes.
+        tagline:
+          type: string
+          description: The tag line for the editorial notes.
+    ErrorInformation:
+      title: Error Information
+      type: object
+      description: Information about an error that occurred while processing a request.
+      properties:
+        code:
+          type: string
+          description: The code for this error. For possible values, see HTTP Status Codes.
+        detail:
+          type: string
+          description: A long, possibly localized, description of the problem.
+        id:
+          type: string
+          description: A unique identifier for this occurrence of the error.
+        source:
+          type: object
+          description: An object containing references to the source of the error.
+          properties:
+            parameter:
+              type: string
+              description: The URI query parameter that caused the error.
+            pointer:
+              type: string
+              description: A pointer to the associated entry in the request document.
+        status:
+          type: string
+          description: The HTTP status code for this problem.
+        title:
+          type: string
+          description: A short, possibly localized, description of the problem.
+      required:
+        - code
+        - id
+        - status
+        - title
+    ErrorsResponse:
+      title: Errors Response
+      type: object
+      properties:
+        data:
+          type: array
+          description: The collection of errors that occurred while processing the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/ErrorInformation"
+      required:
+        - data
+    LibraryAlbums:
+      title: Library Albums
+      description: A resource object that represents a library album.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier for the library album.
+        type:
+          type: string
+          description: This value is always `library-albums`.
+          enum:
+            - library-albums
+        href:
+          type: string
+          description: The relative location for the library album resource.
+          format: uri-reference
+        attributes:
+          type: object
+          description: The attributes for the library album.
+          properties:
+            artistName:
+              type: string
+              description: The artist's name.
+            artwork:
+              $ref: "#/components/schemas/Artwork"
+            contentRating:
+              type: string
+              description: The Recording Industry Association of America (RIAA) rating of the content. The possible values for this rating are clean and explicit. No value means no rating.
+              enum:
+                - clean
+                - explicit
+            genreNames:
+              type: array
+              description: The names of the genres associated with this album.
+              items:
+                type: string
+            dateAdded:
+              type: string
+              description: The date the album was added to the library, in YYYY-MM-DD or YYYY format.
+            name:
+              type: string
+              description: The localized name of the album.
+            playParams:
+              $ref: "#/components/schemas/PlayParameters"
+            releaseDate:
+              type: string
+              description: The release date of the album, when known, in `YYYY-MM-DD` or `YYYY` format. Pre-release content may have an expected release date in the future.
+            trackCount:
+              type: number
+              description: The number of tracks.
+          required:
+            - artistName
+            - artwork
+            - genreNames
+            - name
+            - trackCount
+        relationships:
+          type: object
+          description: The relationships for the album.
+      required:
+        - id
+        - type
+        - href
+    LibraryAlbumsResponse:
+      title: Library Albums Response
+      type: object
+      properties:
+        data:
+          type: array
+          description: The Library Albums included in the response for the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/LibraryAlbums"
+        meta:
+          type: object
+          description: Contextual data about the relationship.
+        next:
+          type: string
+          description: A relative cursor to fetch the next paginated collection of resources, if more exist.
+          format: uri-reference
+      required:
+        - data
+    LibraryArtists:
+      title: Library Artists
+      description: A resource object that represents an artist of an album where an artist can be one or more persons.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier for the library artist.
+        type:
+          type: string
+          description: This value is always `library-artists`.
+          enum:
+            - library-artists
+        href:
+          type: string
+          description: The relative location for the library artist resource.
+          format: uri-reference
+        attributes:
+          type: object
+          description: The attributes for the library artist resource.
+          properties:
+            name:
+              type: string
+              description: The artist's name.
+          required:
+            - name
+        relationships:
+          type: object
+          description: The relationships for the artist.
+          properties:
+            albums:
+              $ref: "#/components/schemas/LibraryAlbumsResponse"
+            catalog:
+              type: object
+      required:
+        - id
+        - type
+        - href
+    LibraryArtistsResponse:
+      title: Library Artists Response
+      type: object
+      properties:
+        data:
+          type: array
+          description: The Library Artists included in the response for the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/LibraryArtists"
+        meta:
+          type: object
+          description: Contextual data about the relationship.
+        next:
+          type: string
+          description: A relative cursor to fetch the next paginated collection of resources, if more exist.
+          format: uri-reference
+      required:
+        - data
+    LibraryMusicVideos:
+      title: Library Music Videos
+      description: A resource object that represents a music video.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier for the music video.
+        type:
+          type: string
+          description: This value is always `music-videos`.
+          enum:
+            - music-videos
+        href:
+          type: string
+          description: The relative location for the music video resource.
+          format: uri-reference
+        attributes:
+          type: object
+          description: The attributes for the music video.
+          properties:
+            albumName:
+              type: string
+              description: The name of the album the music video appears on.
+            artistName:
+              type: string
+              description: The artist's name.
+            artwork:
+              $ref: "#/components/schemas/Artwork"
+            contentRating:
+              type: string
+              description: The Recording Industry Association of America (RIAA) rating of the content. The possible values for this rating are clean and explicit. No value means no rating.
+              enum:
+                - clean
+                - explicit
+            durationInMillis:
+              type: integer
+              description: The duration of the music video in milliseconds.
+            genreNames:
+              type: array
+              description: The names of the genres associated with this album.
+              items:
+                type: string
+            name:
+              type: string
+              description: The localized name of the music video.
+            playParams:
+              $ref: "#/components/schemas/PlayParameters"
+            releaseDate:
+              type: string
+              description: The release date of the music video, when known, in `YYYY-MM-DD` or `YYYY` format. Pre-release content may have an expected release date in the future.
+            trackNumber:
+              type: integer
+              description: The number of the music video in the album's track list, when associated with an album.
+          required:
+            - artistName
+            - artwork
+            - durationInMillis
+            - genreNames
+            - name
+        relationships:
+          type: object
+          description: The relationships for the music video.
+      required:
+        - id
+        - type
+        - href
+    LibraryMusicVideosResponse:
+      title: Library Music Videos Response
+      type: object
+      properties:
+        data:
+          type: array
+          description: The Library Music Videos included in the response for the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/LibraryMusicVideos"
+      required:
+        - data
+    LibrarySongs:
+      title: Library Songs
+      description: A resource object that represents a library song.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier for the library song.
+        type:
+          type: string
+          description: This value is always `library-songs`.
+          enum:
+            - library-songs
+        href:
+          type: string
+          description: The relative location for the library song resource.
+          format: uri-reference
+        attributes:
+          type: object
+          description: The attributes for the library song.
+          properties:
+            albumName:
+              type: string
+              description: The name of the album the library song appears on.
+            artistName:
+              type: string
+              description: The artist's name.
+            artwork:
+              $ref: "#/components/schemas/Artwork"
+            contentRating:
+              type: string
+              description: The Recording Industry Association of America (RIAA) rating of the content. The possible values for this rating are clean and explicit. No value means no rating.
+              enum:
+                - clean
+                - explicit
+            discNumber:
+              type: integer
+              description: The disc number of the album the library song appears on.
+            durationInMillis:
+              type: integer
+              description: The duration of the library song in milliseconds.
+            genreNames:
+              type: array
+              description: The genre names the library song is associated with.
+              items:
+                type: string
+            hasLyrics:
+              type: boolean
+              description: Indicates if the library song has lyrics available in the Apple Music catalog. If true, the library song has lyrics available; otherwise, it does not.
+            name:
+              type: string
+              description: The localized name of the library song.
+            playParams:
+              $ref: "#/components/schemas/PlayParameters"
+            releaseDate:
+              type: string
+              description: The release date of the library song, when known, in YYYY-MM-DD or YYYY format. Pre-release library songs may have an expected release date in the future.
+            trackNumber:
+              type: number
+              description: The number of the song in the album's track list.
+          required:
+            - artistName
+            - artwork
+            - durationInMillis
+            - genreNames
+            - name
+        relationships:
+          type: object
+          description: The relationships for the library song.
+          properties:
+            albums:
+              $ref: "#/components/schemas/AlbumsResponse"
+            artists:
+              $ref: "#/components/schemas/ArtistsResponse"
+            catalog:
+              type: object
+        meta:
+          type: object
+          description: Information about the request or response. The members may be any of the endpoint parameters.
+      required:
+        - id
+        - type
+        - href
+    LibrarySongsResponse:
+      title: Library Songs Response
+      description: The response to a library songs request.
+      type: object
+      properties:
+        data:
+          type: array
+          description: The library songs included in the response for the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/LibrarySongs"
+        meta:
+          type: object
+          description: Contextual data about the relationship.
+        next:
+          type: string
+          description: A relative cursor to fetch the next paginated collection of resources, if more exist.
+          format: uri-reference
+      required:
+        - data
+    MusicVideos:
+      title: Music Videos
+      description: A resource object that represents a music video.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier for the music video.
+        type:
+          type: string
+          description: This value is always `music-videos`.
+          enum:
+            - music-videos
+        href:
+          type: string
+          description: The relative location for the music video resource.
+          format: uri-reference
+        attributes:
+          type: object
+          description: The attributes for the music video.
+          properties:
+            albumName:
+              type: string
+              description: The name of the album the music video appears on.
+            artistName:
+              type: string
+              description: The artist's name.
+            artistUrl:
+              type: string
+              description: The url of the artist for this content.
+            artwork:
+              $ref: "#/components/schemas/Artwork"
+            contentRating:
+              type: string
+              description: The Recording Industry Association of America (RIAA) rating of the content. The possible values for this rating are clean and explicit. No value means no rating.
+              enum:
+                - clean
+                - explicit
+            durationInMillis:
+              type: integer
+              description: The duration of the music video in milliseconds.
+            editorialNotes:
+              $ref: "#/components/schemas/EditorialNotes"
+            genreNames:
+              type: array
+              description: The names of the genres associated with this album.
+              items:
+                type: string
+            has4K:
+              type: boolean
+              description: Whether the music video has 4K content.
+            hasHDR:
+              type: boolean
+              description: Whether the music video has HDR10-encoded content.
+            isrc:
+              type: string
+              description: The International Standard Recording Code (ISRC) for the music video.
+            name:
+              type: string
+              description: The localized name of the music video.
+            playParams:
+              $ref: "#/components/schemas/PlayParameters"
+            previews:
+              type: array
+              items:
+                $ref: "#/components/schemas/Preview"
+            releaseDate:
+              type: string
+              description: The release date of the music video, when known, in `YYYY-MM-DD` or `YYYY` format. Pre-release content may have an expected release date in the future.
+            trackNumber:
+              type: integer
+              description: The number of the music video in the album's track list, when associated with an album.
+            url:
+              type: string
+              description: The URL for sharing the music video in Apple Music.
+              format: url
+            videoSubType:
+              type: string
+              description: The video subtype associated with the content.
+            workId:
+              type: string
+              description: (Classical music only) A unique identifier for the associated work.
+            workName:
+              type: string
+              description: (Classical music only) The name of the associated work.
+          required:
+            - artistName
+            - artwork
+            - durationInMillis
+            - genreNames
+            - has4K
+            - hasHDR
+            - name
+            - previews
+            - url
+        relationships:
+          type: object
+          description: The relationships for the music video.
+        meta:
+          type: object
+          description: Information about the request or response. The members may be any of the endpoint parameters.
+        views:
+          type: object
+          description: The relationship views for the music video.
+      required:
+        - id
+        - type
+        - href
+    MusicVideosResponse:
+      title: Music Videos Response
+      description: The response to a music videos request.
+      type: object
+      properties:
+        data:
+          type: array
+          description: The Music Videos included in the response for the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/MusicVideos"
+      required:
+        - data
+    PlayParameters:
+      title: Play Parameters
+      description: An object that represents play parameters for resources.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the content to use for playback.
+        kind:
+          type: string
+          description: The kind of the content to use for playback.
+      required:
+        - id
+        - kind
+    Preview:
+      title: Preview
+      description: An object that represents a preview for resources.
+      type: object
+      properties:
+        artwork:
+          $ref: "#/components/schemas/Artwork"
+        hlsUrl:
+          type: string
+          description: The HLS preview URL for the content.
+          format: url
+        url:
+          type: string
+          description: The preview URL for the content.
+          format: url
+      required:
+        - url
+    SearchResponse:
+      title: Search Response
+      description: The response to a search request.
+      type: object
+      properties:
+        results:
+          type: object
+          description: The results included in the response to a search request.
+          properties:
+            albums:
+              $ref: "#/components/schemas/AlbumsResponse"
+            artists:
+              $ref: "#/components/schemas/ArtistsResponse"
+      required:
+        - results
+    Songs:
+      title: Songs
+      description: A resource object that represents a song.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier for the song.
+        type:
+          type: string
+          description: This value is always `songs`.
+          enum:
+            - songs
+        href:
+          type: string
+          description: The relative location for the song resource.
+          format: uri-reference
+        attributes:
+          type: object
+          description: The attributes for the song.
+          properties:
+            albumName:
+              type: string
+              description: The name of the album the song appears on.
+            artistName:
+              type: string
+              description: The artist's name.
+            artistUrl:
+              type: string
+              description: The url of the artist for this content.
+              format: url
+            artwork:
+              $ref: "#/components/schemas/Artwork"
+            attribution:
+              type: string
+              description: (Classical music only) The name of the artist or composer to attribute the song with.
+            composerName:
+              type: string
+              description: The song's composer.
+            contentRating:
+              type: string
+              description: The Recording Industry Association of America (RIAA) rating of the content. The possible values for this rating are clean and explicit. No value means no rating.
+              enum:
+                - clean
+                - explicit
+            discNumber:
+              type: integer
+              description: The disc number of the album the song appears on.
+            durationInMillis:
+              type: integer
+              description: The duration of the song in milliseconds.
+            editorialNotes:
+              $ref: "#/components/schemas/EditorialNotes"
+            genreNames:
+              type: array
+              description: The genre names the song is associated with.
+              items:
+                type: string
+            hasLyrics:
+              type: boolean
+              description: Indicates if the song has lyrics available in the Apple Music catalog. If true, the song has lyrics available; otherwise, it does not.
+            isrc:
+              type: string
+              description: The International Standard Recording Code (ISRC) for the song.
+            movementCount:
+              type: integer
+              description: (Classical music only) The movement count of this song.
+            movementName:
+              type: string
+              description: (Classical music only) The movement name of this song.
+            movementNumber:
+              type: integer
+              description: (Classical music only) The movement number of this song.
+            name:
+              type: string
+              description: The localized name of the song.
+            playParams:
+              $ref: "#/components/schemas/PlayParameters"
+            previews:
+              type: array
+              items:
+                $ref: "#/components/schemas/Preview"
+            releaseDate:
+              type: string
+              description: The release date of the song, when known, in YYYY-MM-DD or YYYY format. Pre-release songs may have an expected release date in the future.
+            trackNumber:
+              type: number
+              description: The number of the song in the album's track list.
+            url:
+              type: string
+              description: The URL for sharing the song in Apple Music.
+              format: url
+            workName:
+              type: string
+              description: (Classical music only) The name of the associated work.
+          required:
+            - albumName
+            - artistName
+            - artwork
+            - durationInMillis
+            - genreNames
+            - hasLyrics
+            - name
+            - previews
+            - url
+        relationships:
+          type: object
+          description: The relationships for the song.
+          properties:
+            albums:
+              $ref: "#/components/schemas/AlbumsResponse"
+            artists:
+              $ref: "#/components/schemas/ArtistsResponse"
+            genres:
+              type: object
+            station:
+              type: object
+            composers:
+              type: object
+            library:
+              type: object
+            music-videos:
+              type: object
+        meta:
+          type: object
+          description: Information about the request or response. The members may be any of the endpoint parameters.
+      required:
+        - id
+        - type
+        - href
+    SongsResponse:
+      title: Songs Response
+      description: The response to a songs request.
+      type: object
+      properties:
+        data:
+          type: array
+          description: The Songs included in the response for the request.
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/Songs"
+        meta:
+          type: object
+          description: Contextual data about the relationship.
+        next:
+          type: string
+          description: A relative cursor to fetch the next paginated collection of resources, if more exist.
+          format: uri-reference
+      required:
+        - data
+  securitySchemes:
+    JWT:
+      name: authorization
+      type: apiKey
+      in: header
+      description: JSON Web Token
+    MusicUserToken:
+      name: music-user-token
+      type: apiKey
+      in: header
+      description: Apple Music User Token
+security:
+  - JWT: []
+tags:
+  - name: Albums
+    description: Get an album's name, artist, list of tracks, artwork, release date, and recording information, and add new albums to the user's library.
+    externalDocs:
+      url: "https://developer.apple.com/documentation/applemusicapi/albums"
+  - name: Artists
+    description: Get information about an artist, including the content they created and references to them in playlists and radio stations.
+    externalDocs:
+      url: "https://developer.apple.com/documentation/applemusicapi/artists"
+  - name: Search
+    description: Search for albums, songs, artists, and other information in the user's personal library or the Apple Music Catalog.
+    externalDocs:
+      url: "https://developer.apple.com/documentation/applemusicapi/search"
+  - name: Songs
+    description: Get information about a particular song, including the artist who created it and the album on which it appeared.
+    externalDocs:
+      url: "https://developer.apple.com/documentation/applemusicapi/songs"

@@ -1,0 +1,7 @@
+{
+    "name": "Apple Music REST API",
+    "baseUrl": "https://api.music.apple.com/v1",
+    "documentationUrl": "https://developer.apple.com/documentation/applemusicapi/",
+    "description": "API for accessing Apple Music Catalog and user's iCloud Music Library. Retrieve albums, songs, artists, playlists, music videos, stations, ratings, charts, and recommendations. Create playlists and manage user content with authorization.",
+    "tags": ["music", "apple", "media", "entertainment"]
+}
