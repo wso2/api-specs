@@ -1,0 +1,314 @@
+[
+    {
+       "name": "Asana",
+       "sourceUrl": "https://github.com/Asana/openapi",
+       "connectorRepo": "ballerina-platform/module-ballerinax-asana"
+   },
+   {
+       "name": "Candid",
+       "sourceUrl": "https://developer.candid.org/reference/openapi",
+       "connectorRepo": "ballerina-platform/module-ballerinax-candid"
+   },
+   {
+       "name": "Discord",
+       "sourceUrl": "https://discord.com/developers/docs/reference",
+       "connectorRepo": "ballerina-platform/module-ballerinax-discord"
+   },
+   {
+       "name": "DocuSign Click",
+       "sourceUrl": "https://github.com/docusign/OpenAPI-Specifications",
+       "connectorRepo": "ballerina-platform/module-ballerinax-docusign.dsclick"
+   },
+   {
+       "name": "DocuSign eSign",
+       "sourceUrl": "https://github.com/docusign/OpenAPI-Specifications",
+       "connectorRepo": "ballerina-platform/module-ballerinax-docusign.dsesign"
+   },
+   {
+       "name": "DocuSign admin",
+       "sourceUrl": "https://github.com/docusign/OpenAPI-Specifications",
+       "connectorRepo": "ballerina-platform/module-ballerinax-docusign.dsadmin"
+   },
+   {
+       "name": "Elastic Cloud",
+       "sourceUrl": "https://www.elastic.co/docs/api/doc/cloud/",
+       "connectorRepo": "ballerina-platform/module-ballerinax-elastic.elasticcloud"
+   },
+   {
+       "name": "GitHub",
+       "sourceUrl": "https://docs.github.com/en/rest",
+       "connectorRepo": "ballerina-platform/module-ballerinax-github"
+   },
+   {
+       "name": "Google Calendar",
+       "sourceUrl": "https://developers.google.com/calendar/api/v3/reference",
+       "connectorRepo": "ballerina-platform/module-ballerinax-gcalendar"
+   },
+   {
+        "name": "Google Gmail",
+        "sourceUrl": "https://developers.google.com/gmail/api/reference/rest",
+        "connectorRepo": "ballerina-platform/module-ballerinax-googleapis.gmail"
+   },
+   {
+       "name": "Guidewire Insnow",
+       "sourceUrl": "https://www.guidewire.com/Developers/APIs/InsuranceNow-APIs",
+       "connectorRepo": "ballerina-platform/module-ballerinax-guidewire.insnow"
+   },
+   {
+        "name": "HubSpot Automation Actions",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.automation.actions"
+   },
+   {
+       "name": "HubSpot CRM Associations",
+       "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+       "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.associations"
+    },
+    {
+        "name": "HubSpot CRM Associations Schema",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.associations.schema"
+    },
+    {
+        "name": "HubSpot CRM Commerce Carts",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.commerce.carts"
+    },
+    {   "name": "HubSpot CRM Commerce Discounts",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.commerce.discounts"
+    },
+    {   "name": "HubSpot CRM Commerce Orders",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.commerce.orders"
+    },
+    {
+        "name": "HubSpot CRM Commerce Quotes",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.commerce.quotes"
+    },
+    {
+        "name": "HubSpot CRM Commerce Taxes",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.commerce.taxes"
+    },
+    {
+        "name": "HubSpot CRM Eengagement meeting",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.engagement.meeting"
+    },
+    {    "name": "HubSpot CRM Engagement Notes",
+         "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+         "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.engagement.notes"
+    },
+    {    "name": "HubSpot CRM Engagements Calls",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.engagements.calls"
+    },
+    {  "name": "HubSpot CRM Engagements Communications",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.engagements.communications"
+    },
+    {  "name": "HubSpot CRM Engagements Email",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.engagements.email"
+    },
+    {  "name": "HubSpot CRM Engagements Tasks",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.engagements.tasks"
+    },
+    {  "name": "HubSpot CRM Extensions Timelines",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.extensions.timelines"
+    },
+    {  "name": "HubSpot CRM Extensions Videoconferencing",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.extensions.videoconferencing"
+    },
+    {
+        "name": "HubSpot CRM Import",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.import"
+    },
+    {
+        "name": "HubSpot CRM Lists",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.lists"
+    },
+    {
+        "name": "HubSpot CRM Obj Companies",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.companies"
+    },
+    {
+        "name": "HubSpot CRM Obj Contacts",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.contacts"
+    },
+    {
+        "name": "HubSpot CRM Obj Deals",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.deals"
+    },
+    {
+        "name": "HubSpot CRM Obj Feedback",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.feedback"
+    },
+    {
+        "name": "HubSpot CRM Obj Leads",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.leads"
+    },
+    {
+        "name": "HubSpot CRM Obj Lineitems",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.lineitems"
+    },
+    {
+        "name": "HubSpot CRM Obj Products",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.products"
+    },
+    {
+        "name": "HubSpot CRM Obj Schemas",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.schemas"
+    },
+    {
+        "name": "HubSpot CRM Obj Tickets",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.object.tickets"
+    },
+    {
+        "name": "HubSpot CRM Owners",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.owners"
+    },
+    {
+        "name": "HubSpot CRM Pipelines",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.pipelines"
+    },
+    {
+        "name": "HubSpot CRM Properties",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.crm.properties"
+    },
+    {
+        "name": "HubSpot Marketing Campaigns",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.marketing.campaigns"
+    },
+    {
+        "name": "HubSpot Marketing Emails",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.marketing.emails"
+    },
+    {
+        "name": "HubSpot Marketing Events",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.marketing.events"
+    },
+    {
+        "name": "HubSpot Marketing Forms",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.marketing.forms"
+    },
+    {
+        "name": "HubSpot Marketing Subscriptions",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.marketing.subscriptions"
+    },
+    {
+        "name": "HubSpot Marketing Transactional",
+        "sourceUrl": "https://github.com/HubSpot/HubSpot-public-api-spec-collection",
+        "connectorRepo": "ballerina-platform/module-ballerinax-hubspot.marketing.transactional"
+    },
+    {
+        "name": "Jira",
+        "sourceUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-jira"
+    },
+    {
+        "name": "Mailchimp Marketing",
+        "sourceUrl": "https://mailchimp.com/developer/marketing/api/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-mailchimp.marketing"
+    },
+    {
+        "name": "Mailchimp Transactional",
+        "sourceUrl": "https://mailchimp.com/developer/transactional/api/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-mailchimp.transactional"
+    },
+    {
+       "name": "Microsoft One Drive",
+       "sourceUrl": "https://learn.microsoft.com/en-us/onedrive/developer/rest-api/?view=odsp-graph-online&utm_source",
+       "connectorRepo": "ballerina-platform/module-ballerinax-microsoft.onedrive"
+   },
+   {
+        "name": "OpenAI",
+        "sourceUrl": "https://platform.openai.com/docs/api-reference/introduction",
+        "connectorRepo": "ballerina-platform/module-ballerinax-openai"
+    },
+    {
+        "name": "PayPal Invoices",
+        "sourceUrl": "https://developer.paypal.com/docs/api/invoicing/v2/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-paypal.invoices"
+    },
+    {
+        "name": "PayPal Orders",
+        "sourceUrl": "https://developer.paypal.com/docs/api/orders/v2/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-paypal.orders"
+    },
+    {
+        "name": "PayPal Payments",
+        "sourceUrl": "https://developer.paypal.com/docs/api/payments/v2/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-paypal.payments"
+    },
+    {
+        "name": "PayPal Subscriptions",
+        "sourceUrl": "https://developer.paypal.com/docs/api/subscriptions/v1/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-paypal.subscriptions"
+    },
+    {
+       "name": "Salesforce Marketing Cloud",
+       "sourceUrl": "https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/apis-overview?utm_source",
+       "connectorRepo": "ballerina-platform/module-ballerinax-salesforce.marketingcloud"
+   },
+   {
+       "name": "SCIM",
+       "sourceUrl": "https://developer.okta.com/docs/api/openapi/okta-scim/guides/scim-20",
+       "connectorRepo": "ballerina-platform/module-ballerinax-scim"
+    },
+    {
+       "name": "Smartsheet",
+       "sourceUrl": "https://developers.smartsheet.com/api/smartsheet/introduction",
+       "connectorRepo": "ballerina-platform/module-ballerinax-smartsheet"
+   },
+   {
+       "name": "Stripe",
+       "sourceUrl": "https://github.com/stripe/openapi",
+       "connectorRepo": "ballerina-platform/module-ballerinax-stripe"
+    },
+    {
+        "name": "Trello",
+        "sourceUrl": "https://developer.atlassian.com/cloud/trello/rest/api-group-actions/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-trello"
+    },
+    {
+        "name": "Twilio",
+        "sourceUrl": "https://www.twilio.com/docs/usage/api",
+        "connectorRepo": "ballerina-platform/module-ballerinax-twilio"
+    },
+    {
+        "name": "Zoom Meetings",
+        "sourceUrl": "https://developers.zoom.us/docs/api/meetings/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-zoom.meetings"
+    },
+    {
+        "name": "Zoom Scheduler",
+        "sourceUrl": "https://developers.zoom.us/docs/api/rest/zoom-scheduler-api/",
+        "connectorRepo": "ballerina-platform/module-ballerinax-zoom.scheduler"
+    }
+]
+

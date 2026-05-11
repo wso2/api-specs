@@ -1,0 +1,18 @@
+[package]
+org = "wso2"
+name = "openapi_spec_finder"
+version = "1.0.0"
+distribution = "2201.13.1"
+
+[build-options]
+observabilityIncluded = false
+
+# ── Java OpenAPI Validator ────────────────────────────────────────────────────
+#
+# Build the fat JAR first (one-time setup):
+#   cd java-validator && ./build.sh
+# That creates libs/openapi-validator.jar.
+#
+# The dependency block below points to that generated JAR.
+[[platform.java21.dependency]]
+path = "libs/openapi-validator.jar"

@@ -1,0 +1,5 @@
+# Ballerina build output
+target/
+
+# Node.js
+node_modules/

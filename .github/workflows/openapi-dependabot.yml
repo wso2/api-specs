@@ -1,0 +1,348 @@
+# This workflow runs daily to check for updates to OpenAPI specifications.
+# The Ballerina agent (dependabot/) discovers the latest spec URLs, downloads
+# the specs to openapi/, writes openapi/openapi_specs.json, and produces
+# UPDATE_SUMMARY.json (repo root, never committed) when changes are detected.
+#
+# If updates are found the workflow:
+#   1. Creates a branch and commits the changes (everything under openapi/).
+#   2. Opens a pull request.
+#   3. Validates the PR (file structure + OpenAPI file validity).
+#   4. Approves and merges the PR with REVIEWER_BOT_TOKEN (a different identity
+#      than the committer so branch-protection approval rules are satisfied).
+#   5. Triggers connector regeneration for every updated spec.
+
+name: OpenAPI Dependabot
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # Run daily at 2 AM UTC
+  workflow_dispatch:      # Allow manual triggers
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+env:
+  ENABLE_CONNECTOR_REGEN: "true"
+
+jobs:
+  update-openapi-specs:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    steps:
+      - name: Checkout api-specs repo
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Set up Ballerina
+        uses: ballerina-platform/setup-ballerina@v1.1.0
+        with:
+          version: 2201.13.1
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "ballerina-bot@users.noreply.github.com"
+          git config --global user.name "ballerina-bot"
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Build OpenAPI Validator JAR
+        run: |
+          cd dependabot/java-validator
+          mvn package -DskipTests -q
+          mkdir -p ../libs
+          cp target/openapi-validator-1.0.0-jar-with-dependencies.jar ../libs/openapi-validator.jar
+          echo "JAR built and copied to dependabot/libs/openapi-validator.jar"
+
+      - name: Pull Ballerina dependencies
+        run: bash dependabot/resources/scripts/pull-dependencies.sh
+
+      - name: Run Dependabot Monitor
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          cd dependabot
+          bal run
+          cd ..
+
+      - name: Check for updates
+        run: |
+          if [ -f "UPDATE_SUMMARY.json" ]; then
+            echo "UPDATES_FOUND=true" >> $GITHUB_ENV
+            echo "Updates detected:"
+            cat UPDATE_SUMMARY.json
+          else
+            echo "UPDATES_FOUND=false" >> $GITHUB_ENV
+            echo "No updates found"
+          fi
+
+      - name: Create and Push Branch
+        if: env.UPDATES_FOUND == 'true'
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          BRANCH_NAME="openapi-update-${TIMESTAMP}"
+          echo "Creating branch: ${BRANCH_NAME}"
+          git checkout -b "${BRANCH_NAME}"
+          git add openapi/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "UPDATES_FOUND=false" >> $GITHUB_ENV
+            exit 0
+          fi
+          git commit -m "chore: Update OpenAPI specifications"
+          git push -u origin "$BRANCH_NAME"
+          echo "Branch pushed successfully"
+          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        if: env.UPDATES_FOUND == 'true'
+        run: bash dependabot/resources/scripts/create-pr.sh
+
+      # ── Inline auto-review and merge ─────────────────────────────────────────
+
+      - name: Validate PR file structure
+        if: env.UPDATES_FOUND == 'true' && env.PR_NUMBER != ''
+        id: validate_files
+        env:
+          GH_TOKEN: ${{ secrets.REVIEWER_BOT_TOKEN }}
+        run: |
+          echo "Validating changed files in PR #${PR_NUMBER}..."
+
+          CHANGED_FILES=$(gh pr view "$PR_NUMBER" --json files -q '.files[].path')
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          VALID=true
+          for file in $CHANGED_FILES; do
+            if [[ ! "$file" =~ ^openapi/ ]]; then
+              echo "Unexpected file change: $file"
+              VALID=false
+            fi
+          done
+
+          if [ "$VALID" = true ]; then
+            echo "All file changes are valid"
+            echo "valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "Invalid file changes detected"
+            echo "valid=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate OpenAPI spec files
+        if: env.UPDATES_FOUND == 'true' && env.PR_NUMBER != '' && steps.validate_files.outputs.valid == 'true'
+        id: validate_openapi
+        env:
+          GH_TOKEN: ${{ secrets.REVIEWER_BOT_TOKEN }}
+        run: |
+          echo "Validating OpenAPI specification files..."
+
+          VALIDATION_PASSED=true
+          VALIDATION_ERRORS=""
+
+          # Accept both openapi.json and openapi.yaml
+          OPENAPI_FILES=$(gh pr view "$PR_NUMBER" --json files -q '.files[].path' \
+            | grep -E 'openapi\.(json|yaml)$' || true)
+
+          if [ -z "$OPENAPI_FILES" ]; then
+            echo "No OpenAPI spec files found in this PR"
+            echo "openapi_valid=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Found OpenAPI files:"
+          echo "$OPENAPI_FILES"
+
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            echo ""
+            echo "Checking: $file"
+
+            if [ ! -f "$file" ]; then
+              echo "File was deleted (skipping validation): $file"
+              continue
+            fi
+
+            DIR=$(dirname "$file")
+            METADATA_FILE="$DIR/.metadata.json"
+            if [ ! -f "$METADATA_FILE" ]; then
+              echo "Missing metadata: $METADATA_FILE"
+              VALIDATION_PASSED=false
+              VALIDATION_ERRORS="${VALIDATION_ERRORS}\n- Missing metadata: $METADATA_FILE"
+            else
+              echo "Metadata exists: $METADATA_FILE"
+              if ! jq empty "$METADATA_FILE" 2>/dev/null; then
+                echo "Invalid JSON in metadata: $METADATA_FILE"
+                VALIDATION_PASSED=false
+                VALIDATION_ERRORS="${VALIDATION_ERRORS}\n- Invalid JSON in: $METADATA_FILE"
+              fi
+            fi
+
+            # Validate JSON spec files
+            if [[ "$file" == *.json ]]; then
+              if ! jq empty "$file" 2>/dev/null; then
+                echo "Invalid JSON in: $file"
+                VALIDATION_PASSED=false
+                VALIDATION_ERRORS="${VALIDATION_ERRORS}\n- Invalid JSON in: $file"
+              elif ! jq -e '.openapi' "$file" >/dev/null 2>&1 && ! jq -e '.swagger' "$file" >/dev/null 2>&1; then
+                echo "Missing openapi/swagger field in: $file"
+                VALIDATION_PASSED=false
+                VALIDATION_ERRORS="${VALIDATION_ERRORS}\n- Missing openapi/swagger field in: $file"
+              else
+                SPEC_VER=$(jq -r '.openapi // .swagger' "$file")
+                echo "Valid spec (version: $SPEC_VER): $file"
+              fi
+            fi
+
+            # Basic YAML spec validation
+            if [[ "$file" == *.yaml ]]; then
+              if ! grep -qE '^\s*(openapi|swagger):' "$file"; then
+                echo "Missing openapi/swagger key in: $file"
+                VALIDATION_PASSED=false
+                VALIDATION_ERRORS="${VALIDATION_ERRORS}\n- Missing openapi/swagger key in: $file"
+              else
+                echo "Valid YAML spec: $file"
+              fi
+            fi
+
+          done <<< "$OPENAPI_FILES"
+
+          if [ "$VALIDATION_PASSED" = true ]; then
+            echo "All OpenAPI validations passed"
+            echo "openapi_valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "OpenAPI validation failed"
+            echo "openapi_valid=false" >> $GITHUB_OUTPUT
+            echo "validation_errors<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$VALIDATION_ERRORS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Approve PR
+        if: >
+          env.UPDATES_FOUND == 'true' &&
+          env.PR_NUMBER != '' &&
+          steps.validate_files.outputs.valid == 'true' &&
+          steps.validate_openapi.outputs.openapi_valid == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.REVIEWER_BOT_TOKEN }}
+          script: |
+            const prNumber = parseInt(process.env.PR_NUMBER);
+            console.log("Approving PR #" + prNumber);
+
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              event: "APPROVE",
+              body: "Auto-approved by Ballerina Bot\n\n**Validation Results:**\n- File structure verified\n- Only expected files modified\n- OpenAPI specifications validated\n- Ready to merge\n\n---\nAutomated approval by Ballerina Bot"
+            });
+
+            console.log("PR approved successfully");
+
+      - name: Merge PR
+        if: >
+          env.UPDATES_FOUND == 'true' &&
+          env.PR_NUMBER != '' &&
+          steps.validate_files.outputs.valid == 'true' &&
+          steps.validate_openapi.outputs.openapi_valid == 'true'
+        id: merge_pr
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.REVIEWER_BOT_TOKEN }}
+          script: |
+            const prNumber = parseInt(process.env.PR_NUMBER);
+            try {
+              console.log("Merging PR #" + prNumber);
+
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                merge_method: "squash",
+                commit_title: `[Dependabot] chore: Update OpenAPI Specifications (#${prNumber})`,
+                commit_message: "Automated merge of OpenAPI specification updates"
+              });
+
+              console.log("PR merged successfully");
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: "**Auto-merge completed successfully**\n\nThe OpenAPI specifications have been merged to main. Connector regeneration will be triggered automatically.\n\n---\nBallerina Bot"
+              });
+
+              core.setOutput("merged", "true");
+              core.exportVariable("MERGE_SUCCESSFUL", "true");
+            } catch (error) {
+              console.error("Failed to merge PR:", error);
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: "**Auto-merge failed**\n\nPlease review and merge manually.\n\n**Error:** " + error.message + "\n\n---\nBallerina Bot"
+              });
+              core.setOutput("merged", "false");
+              throw error;
+            }
+
+      - name: Comment on validation failure
+        if: >
+          env.UPDATES_FOUND == 'true' &&
+          env.PR_NUMBER != '' &&
+          (steps.validate_files.outputs.valid == 'false' ||
+           steps.validate_openapi.outputs.openapi_valid == 'false')
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.REVIEWER_BOT_TOKEN }}
+          script: |
+            const prNumber = parseInt(process.env.PR_NUMBER);
+            const fileVal = '${{ steps.validate_files.outputs.valid }}' === 'true' ? 'PASSED' : 'FAILED';
+            const openapiVal = '${{ steps.validate_openapi.outputs.openapi_valid }}' === 'true' ? 'PASSED' : 'FAILED';
+            const errors = `${{ steps.validate_openapi.outputs.validation_errors }}`;
+            const errDetails = errors ? '\n\n**Error Details:**\n' + errors : '';
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `**Auto-merge skipped: Validation failed**\n\n**Validation Results:**\nFile structure validation: ${fileVal}\nOpenAPI specification validation: ${openapiVal}${errDetails}\n\nPlease review the changes manually before merging.\n\n---\nBallerina Bot`
+            });
+
+      # ── Trigger connector regeneration ────────────────────────────────────────
+
+      - name: Prepare connector update payload
+        if: env.UPDATES_FOUND == 'true' && steps.merge_pr.outputs.merged == 'true' && env.ENABLE_CONNECTOR_REGEN == 'true'
+        id: prepare_payload
+        run: bash dependabot/resources/scripts/prepare-payload.sh
+
+      - name: Trigger ballerina-library connector orchestration workflow
+        if: >
+          env.UPDATES_FOUND == 'true' &&
+          steps.merge_pr.outputs.merged == 'true' &&
+          env.ENABLE_CONNECTOR_REGEN == 'true' &&
+          (steps.prepare_payload.outputs.connector_count != '0' ||
+           steps.prepare_payload.outputs.malformed_count != '0')
+        env:
+          GH_TOKEN: ${{ secrets.CROSS_REPO_PAT }}
+        run: |
+          echo "Triggering connector orchestration workflow..."
+          gh api repos/orgBBalLib/ballerina-library/dispatches \
+            --method POST \
+            --input /tmp/dispatch_payload.json
+          echo "Orchestration workflow triggered successfully"
+
+      - name: Notify on failure
+        if: failure() && env.UPDATES_FOUND == 'true' && env.PR_NUMBER != ''
+        run: |
+          gh pr comment "$PR_NUMBER" --body "Workflow failed. Please check the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details."
