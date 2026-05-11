@@ -29,6 +29,7 @@ The repository structure would be organized as follows:
 
 api-specs/
 ├── asyncapi/
+├── dependabot/
 ├── graphql/
 └── openapi/
 ```
@@ -47,8 +48,7 @@ The following is the directory structure for OpenAPI specifications:
 3. If the API is categorized hierarchically, the API directory would be named with the hierarchy, separated with a dot (`.`). (E.g.: `openapi/hubspot/crm.associations`, `openapi/hubspot/automation.actions`, etc.)
 4. Within the API directory, another directory would be created for each version of the API. (E.g.: `openapi/google/calendar/v3`, `openapi/hubspot/automation.actions/v4`, etc.)
 5. Apart from the OpenAPI spec version directory, each API directory contains an `icon.png` file that contains the logo of the API.
-6. Inside the API version directory, the OpenAPI spec file would be named as `openapi.yaml`.
-    > **Note:** If an API contract is in the `JSON` format, it should be converted to `YAML` format before committing to the repository.
+6. Inside the API version directory, the OpenAPI spec file would be named as `openapi.yaml` or `openapi.json`.
 7. The relevant icon for the API would be placed in the API directory as `icon.png`.
 8. A `.metadata.json` file would be placed in the API version directory to store metadata such as the API name, version, vendor, and other relevant information.
 
@@ -199,6 +199,84 @@ The `.metadata.json` file would contain the following information:
 }
 ```
 
+### OpenAPI Dependabot
+
+The repository includes an automated system that monitors upstream sources for updates to OpenAPI specifications and keeps the specs in this repository up to date.
+
+#### `openapi/openapi_specs.json`
+
+The file `openapi/openapi_specs.json` is the registry of all OpenAPI specs tracked by the dependabot. Each entry describes one API that the system monitors:
+
+- `name`: The human-readable name of the API.
+- `sourceUrl`: The upstream URL from which the latest spec is fetched.
+- `connectorRepo`: The Ballerina connector repository associated with this API.
+
+```json
+[
+    {
+        "name": "Asana",
+        "sourceUrl": "https://github.com/Asana/openapi",
+        "connectorRepo": "ballerina-platform/module-ballerinax-asana"
+    }
+]
+```
+
+When adding a new API to be monitored, add an entry to this file following the structure above.
+
+#### `dependabot/` Directory
+
+The `dependabot/` directory contains a Ballerina agent that automates OpenAPI spec discovery and updates. The agent:
+
+1. Reads `openapi/openapi_specs.json` to determine which APIs to monitor.
+2. Fetches the latest OpenAPI spec from each API's `sourceUrl`.
+3. Downloads updated specs into the appropriate directory under `openapi/`.
+4. Produces an `UPDATE_SUMMARY.json` file (at the repo root, never committed) listing what changed.
+
+Key files in `dependabot/`:
+
+| File / Directory | Purpose |
+|---|---|
+| `main.bal` | Entry point — runs the agent sequentially for each connector |
+| `agent.bal` | AI agent logic for discovering the latest spec URL |
+| `downloader.bal` | Downloads the spec from the discovered URL |
+| `extractor.bal` | Extracts and normalises the spec content |
+| `pipeline.bal` | Orchestrates the per-connector update pipeline |
+| `openapi_validator.bal` | Validates downloaded specs using the Java validator |
+| `types.bal` | Shared Ballerina type definitions |
+| `browser-service/` | Node.js service used for browser-based spec fetching |
+| `java-validator/` | Java-based OpenAPI validator source and build scripts |
+| `libs/openapi-validator.jar` | Pre-built validator JAR used at runtime |
+| `resources/scripts/` | Shell scripts used by the GitHub Actions workflow |
+| `Ballerina.toml` | Ballerina project configuration |
+
+#### `.github/workflows/openapi-dependabot.yml`
+
+The `openapi-dependabot.yml` workflow automates the full update lifecycle on a daily schedule (2 AM UTC) and can also be triggered manually.
+
+**Workflow steps:**
+
+1. **Run the dependabot agent** — executes `bal run` inside `dependabot/` to discover and download updated specs.
+2. **Detect updates** — checks for the presence of `UPDATE_SUMMARY.json`; if absent, the workflow exits early with no changes.
+3. **Create a branch and PR** — commits changed files under `openapi/` to a timestamped branch and opens a pull request.
+4. **Validate the PR** — verifies that only files under `openapi/` were modified and that all OpenAPI spec files are structurally valid.
+5. **Approve and merge** — if validation passes, the PR is automatically approved (using `REVIEWER_BOT_TOKEN`) and squash-merged.
+6. **Trigger connector regeneration** — dispatches a workflow event to the `ballerina-library` repository to regenerate connectors for every updated spec.
+
+**Required secrets:**
+
+| Secret | Purpose |
+|---|---|
+| `GH_TOKEN` | Pushes branches and opens pull requests |
+| `REVIEWER_BOT_TOKEN` | Approves and merges the PR (must be a different identity from the committer to satisfy branch-protection rules) |
+| `ANTHROPIC_API_KEY` | Used by the Ballerina AI agent to discover spec URLs |
+| `CROSS_REPO_PAT` | Dispatches the connector regeneration workflow in `ballerina-library` |
+
+ **Least-privilege guidance:**
+ - Prefer the default `GITHUB_TOKEN` where it is sufficient for repository-local automation.
+ - If a personal access token is required, prefer a **fine-grained PAT** scoped only to the specific repository and only the minimum permissions needed for the workflow.
+ - For `REVIEWER_BOT_TOKEN`, use a dedicated bot or GitHub App identity with only the permissions required to review and merge pull requests.
+ - For `CROSS_REPO_PAT`, restrict the token to the target `ballerina-library` repository and grant only the minimum access needed to trigger the downstream workflow (for example, workflow dispatch / Actions access only). Prefer a GitHub App over a PAT where feasible.
+
 ### API Contract Validation
 
 An API contract is considered verified if _one of the following conditions_ is met:
@@ -218,7 +296,7 @@ If an API contract is not from the official source, it can be graduated to the `
 When graduating an API contract, the following steps should be followed:
 
 1. Validate whether the API contract is in the correct format.
-    * OpenAPI: The OpenAPI spec should be in YAML format and should follow the OpenAPI specification.
+    * OpenAPI: The OpenAPI spec should be in YAML or JSON format and should follow the OpenAPI specification.
     * GraphQL: The GraphQL schema should be in SDL format and should follow the GraphQL specification.
     * AsyncAPI: The AsyncAPI spec should be in YAML format and should follow the AsyncAPI specification.
 2. Add a valid `.metadata.json` file to the API version directory.
