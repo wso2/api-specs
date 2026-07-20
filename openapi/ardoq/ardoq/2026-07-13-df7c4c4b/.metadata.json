@@ -1,0 +1,7 @@
+{
+    "name": "Ardoq Public API",
+    "baseUrl": "https://app.ardoq.com/api/v2",
+    "documentationUrl": "https://developer.ardoq.com/",
+    "description": "Ardoq is a data-driven enterprise architecture platform that helps organizations model, analyze, and visualize their business and IT landscapes as connected data.",
+    "tags": ["enterprise architecture", "integration", "erp"]
+}
