@@ -1,0 +1,2457 @@
+openapi: 3.0.0
+info:
+  title: Ardoq Public API
+  description: Resources for writing custom integrations.
+  termsOfService: https://www.ardoq.com/terms
+  contact:
+    email: support@ardoq.com
+  license:
+    name: private
+    url: https://www.ardoq.com/terms
+  version: 2026-07-13-df7c4c4b
+servers:
+- url: https://app.ardoq.com/api/v2
+paths:
+  /me:
+    get:
+      tags:
+      - Misc
+      summary: Get current user and organization info
+      description: A simple endpoint for testing your connection to the Ardoq server.
+      responses:
+        '200':
+          description: The current user and their organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+      x-public-v2: true
+      operationId: getMe
+  /references:
+    get:
+      tags:
+      - References
+      summary: List References
+      description: 'List all references. Query parameters can be used to retrieve a subset of the collection. All included query parameters are interpreted as forming a logical **conjunction**, meaning that only the references that satisfy every property will be returned. The list endpoint supports searching for custom fields. When searching for a custom field, the value is interpreted based on the type associated with the field. This means that you are not required to _quote_ strings. To include a **custom field** in your search, you should specify the JSON path. For example; if you wanted to search for all references that have the **displayText** "Ardoq" and the **custom field** `my_field` with a boolean value of `true` you would use the query param:
+
+
+        ```displayText=Ardoq&customFields.my_field=true```'
+      parameters:
+      - name: displayText
+        in: query
+        description: Display label for your reference
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Depends on
+      - name: rootWorkspace
+        in: query
+        description: The ardoq identifier of the workspace that the reference/source belongs to
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 4b131856bb51f7fa1aace0db
+      - name: source
+        in: query
+        description: The ardoq identifier of the source
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 4b131856bb51f7fa1aace0db
+      - name: targetWorkspace
+        in: query
+        description: The ardoq identifier of the workspace that the target belongs to
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 4b131856bb51f7fa1aace0db
+      - name: target
+        in: query
+        description: The ardoq identifier of the target
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 4b131856bb51f7fa1aace0db
+      - name: type
+        in: query
+        description: The type identifier of the reference
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2'
+      responses:
+        '200':
+          description: A paginated list of references matching the given filters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedReferenceResponse'
+      x-public-v2: true
+      operationId: listReferences
+    post:
+      tags:
+      - References
+      summary: Create a Reference
+      description: References are connections between components.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReferenceRequest'
+        required: true
+      responses:
+        '201':
+          description: The newly created reference
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reference'
+      x-public-v2: true
+      operationId: createReference
+  /attachments:
+    get:
+      tags:
+      - Attachments
+      summary: List attachments
+      description: 'List all attachments. Query parameters can be used to retrieve a subset of the attachments. All included query parameters are interpreted as forming a logical **conjunction**, meaning that only attachments that satisfy every property will be returned. '
+      parameters:
+      - name: filename
+        in: query
+        description: The filename of the attachment
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: employee-thumbnail.png
+      - name: folder
+        in: query
+        description: The `id` of the folder that the attachment is in
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 123456789abcdef123456789
+      responses:
+        '200':
+          description: A paginated list of attachments matching the given filters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAttachmentResponse'
+      deprecated: false
+      x-public-v2: true
+      operationId: listAttachments
+  /components/{id}:
+    get:
+      tags:
+      - Components
+      summary: Get a component
+      description: Get a component associated with a given Ardoq Identifier.
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '200':
+          description: The requested component
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component'
+      deprecated: false
+      x-public-v2: true
+      operationId: getComponent
+    delete:
+      tags:
+      - Components
+      summary: Delete a component
+      description: Delete a component associated with a given Ardoq Identifier.
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '204':
+          description: The component was deleted successfully
+      deprecated: false
+      x-public-v2: true
+      operationId: deleteComponent
+    patch:
+      tags:
+      - Components
+      summary: Update a component
+      description: Update a component associated with a given Ardoq Identifier.
+      parameters:
+      - name: ifVersionMatch
+        in: query
+        description: "This parameter is used to manage concurrency control. The value **MUST** be either a positive integer, or the enum `latest`. \n| Value | Meaning |\n|--------|---------|\n|<nobr>`<integer>`</nobr>| The update **MUST** fail if the `_version` field of the stored entity is not identical to the provided value. |\\n|`latest`   | The update should use the current (latest) version of the stored entity. |\n\nFor more information about versioning and concurrency control please see the [API guide on Versioning](/api-guides/concepts/versioning/)"
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '5'
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateComponentRequest'
+        required: true
+      responses:
+        '200':
+          description: The updated component
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component'
+      deprecated: false
+      x-public-v2: true
+      operationId: updateComponent
+  /workspaces:
+    get:
+      tags:
+      - Workspaces
+      summary: List Workspaces
+      description: 'List all workspaces. Query parameters can be used to retrieve a subset of the workspaces. All included query parameters are interpreted as forming a logical **conjunction**, meaning that only workspaces that satisfy every property will be returned. '
+      parameters:
+      - name: name
+        in: query
+        description: The name of the entity
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: My entity
+      - name: componentModel
+        in: query
+        description: The ardoq identifier of the model that the workspace has
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 4b131856bb51f7fa1aace0db
+      responses:
+        '200':
+          description: A paginated list of workspaces matching the given filters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWorkspaceResponse'
+      x-public-v2: true
+      operationId: listWorkspaces
+  /batch:
+    post:
+      tags:
+      - Batch
+      - Components
+      - References
+      summary: Execute a batch request
+      description: The Batch API lets you combine **create**, **update** and **delete** operations on both components and references belonging to disparate workspaces into a single request. All operations are executed within a transaction. If **any** of the operations fail then the whole request will fail leaving the state of Ardoq unmodified.
+      requestBody:
+        $ref: '#/components/requestBodies/Body'
+      responses:
+        '200':
+          description: The results of the create, update, upsert, and delete operations executed in the batch request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+      x-public-v2: true
+      operationId: executeBatch
+  /references/{id}:
+    get:
+      tags:
+      - References
+      summary: Get a reference
+      description: Get a reference associated with a given Ardoq Identifier.
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '200':
+          description: The requested reference
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reference'
+      x-public-v2: true
+      operationId: getReference
+    delete:
+      tags:
+      - References
+      summary: Delete a reference
+      description: Delete a reference associated with a given Ardoq Identifier.
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '204':
+          description: The reference was deleted successfully
+      x-public-v2: true
+      operationId: deleteReference
+    patch:
+      tags:
+      - References
+      summary: Update a Reference
+      description: References are connections between components.
+      parameters:
+      - name: ifVersionMatch
+        in: query
+        description: "This parameter is used to manage concurrency control. The value **MUST** be either a positive integer, or the enum `latest`. \n| Value | Meaning |\n|--------|---------|\n|<nobr>`<integer>`</nobr>| The update **MUST** fail if the `_version` field of the stored entity is not identical to the provided value. |\\n|`latest`   | The update should use the current (latest) version of the stored entity. |\n\nFor more information about versioning and concurrency control please see the [API guide on Versioning](/api-guides/concepts/versioning/)"
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '5'
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReferenceRequest'
+        required: true
+      responses:
+        '200':
+          description: The updated reference
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reference'
+      x-public-v2: true
+      operationId: updateReference
+  /reports/{id}:
+    get:
+      tags:
+      - Reports
+      summary: Report definition
+      description: 'Get the overview of a report associated with a given Ardoq Identifier. The overview contains the name, description, and other _meta_ information about the report. The overview does not contain the actual report data. '
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '200':
+          description: The requested report definition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportOverview'
+      x-public-v2: true
+      operationId: getReport
+  /attachments/{id}:
+    get:
+      tags:
+      - Attachments
+      summary: Get an attachment
+      description: Get an attachment associated with a given Ardoq Identifier.
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '200':
+          description: The requested attachment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+      deprecated: false
+      x-public-v2: true
+      operationId: getAttachment
+  /batch/expand:
+    post:
+      tags:
+      - Batch
+      summary: Expand Batch
+      description: Expand a batch request, but do not execute it. Useful for debugging.
+      requestBody:
+        $ref: '#/components/requestBodies/Body'
+      responses:
+        '200':
+          description: The fully expanded batch request, with aliases resolved to their underlying identifiers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchRequest'
+      x-public-v2: true
+      operationId: expandBatch
+  /reports/{id}/run/objects:
+    get:
+      tags:
+      - Reports
+      summary: Run Report (Objects)
+      description: Run a report associated with a given Ardoq Identifier and return the results in object format (list of objects).
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      - name: keyFormat
+        in: query
+        description: This parameter is used to manage the format of the objects keys. The api will default to 'label'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - label
+          - key
+        example: key
+      responses:
+        '200':
+          description: A paginated list of report result rows, keyed by column label or key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedReportObjectResponse'
+      x-public-v2: true
+      operationId: runReportObjects
+  /workspaces/{id}:
+    get:
+      tags:
+      - Workspaces
+      summary: Get a workspace
+      description: Get a workspace associated with a given Ardoq Identifier.
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '200':
+          description: The requested workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+      x-public-v2: true
+      operationId: getWorkspace
+  /reports:
+    get:
+      tags:
+      - Reports
+      summary: List Report definitions
+      description: 'List all reports. Query parameters can be used to retrieve a subset of the reports. All included query parameters are interpreted as forming a logical **conjunction**, meaning that only reports that satisfy every property will be returned. '
+      parameters:
+      - name: name
+        in: query
+        description: The name of the report
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: My report
+      responses:
+        '200':
+          description: A paginated list of report definitions matching the given filters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedReportResponse'
+      x-public-v2: true
+      operationId: listReports
+  /workspaces/{id}/context:
+    get:
+      tags:
+      - Workspaces
+      summary: Workspace Context
+      description: Information required for interacting with entities that belong to the workspace.
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '200':
+          description: The component and reference types defined by the workspace's model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceContext'
+      x-public-v2: true
+      operationId: getWorkspaceContext
+  /reports/{id}/run/tabular:
+    get:
+      tags:
+      - Reports
+      summary: Run Report (Tabular)
+      description: Run a report associated with a given Ardoq Identifier and return the results in tabular format (list of lists).
+      parameters:
+      - name: id
+        in: path
+        description: An Ardoq identifier (OID)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 633aba0363c9c04370cf8135
+      responses:
+        '200':
+          description: A paginated list of report result rows in tabular (array) format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedReportTabularResponse'
+      x-public-v2: true
+      operationId: runReportTabular
+  /components:
+    get:
+      tags:
+      - Components
+      summary: List Components
+      description: 'List all components. Query parameters can be used to retrieve a subset of the collection. All included query parameters are interpreted as forming a logical **conjunction**, meaning that only the components that satisfy every property will be returned. The list endpoint supports searching for custom fields. When searching for a custom field, the value is interpreted based on the type associated with the field. This means that you are not required to _quote_ strings. To include a **custom field** in your search, you should specify the JSON path. For example; if you wanted to search for all components that have the **name** "Ardoq" and the **custom field** `my_field` with a boolean value of `true` you would use the query param:
+
+
+        ```name=Ardoq&customFields.my_field=true```'
+      parameters:
+      - name: name
+        in: query
+        description: The name of the entity
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: My entity
+      - name: rootWorkspace
+        in: query
+        description: The ardoq identifier of the workspace that the component belongs to
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 4b131856bb51f7fa1aace0db
+      - name: parent
+        in: query
+        description: The parent identifier of the component
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 75d4fd02e43afd31768b2345
+      - name: componentKey
+        in: query
+        description: Referred to as the 'Ardoq ID' in the App
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: MARW2-9
+      - name: typeId
+        in: query
+        description: The type identifier of the component
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: p1416195145887
+      responses:
+        '200':
+          description: A paginated list of components matching the given filters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedComponentResponse'
+      deprecated: false
+      x-public-v2: true
+      operationId: listComponents
+    post:
+      tags:
+      - Components
+      summary: Create a component
+      description: Create a component
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateComponentRequest'
+        required: true
+      responses:
+        '201':
+          description: The newly created component
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component'
+      deprecated: false
+      x-public-v2: true
+      operationId: createComponent
+components:
+  schemas:
+    ColumnInfo:
+      title: Column Info
+      required:
+      - key
+      - label
+      type: object
+      properties:
+        label:
+          title: Label
+          type: string
+          description: 'The column name as displayed in the Ardoq UI. '
+        key:
+          title: key
+          type: string
+          description: The immutable key for the column. This value will never change
+      description: Information about a column
+    Attachment:
+      title: Attachment
+      required:
+      - _id
+      - _meta
+      - _version
+      - filename
+      - folder
+      - resource
+      type: object
+      properties:
+        filename:
+          title: Attachment Filename
+          description: The name of the attachment
+          example: employee-thumbnail.png
+        folder:
+          title: Folder
+          type: string
+          description: Attachments can be placed in folders. If you want to create an attachment inside a folder, you can specify the folder name in this parameter. For more information on folders, please refer to the `Attachment Folder API` documentation
+          nullable: true
+          example: 5c9359717b6041b050fb94f2
+        resource:
+          $ref: '#/components/schemas/AttachmentResource'
+        _meta:
+          allOf:
+          - $ref: '#/components/schemas/Metadata1'
+          x-ballerina-name: meta
+        _id:
+          title: Attachment ID
+          type: string
+          description: The unique Ardoq identifier (oid) of the attachment
+          example: e9b70353a78e952eaececd87
+          x-ballerina-name: id
+        _version:
+          title: Version of your Attachment
+          type: number
+          description: Attachment versions are used to resolve contention between different users editing the same entity simultaneously. This value should not be modified
+          format: double
+          example: 1
+          x-ballerina-name: version
+      description: An Attachment Returned by Ardoq
+    ComponentOperationsUpdate:
+      required:
+      - body
+      - id
+      - ifVersionMatch
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: The value of the components unique identifier. This value may be an Ardoq identifier (oid) or an alias identifier
+        body:
+          $ref: '#/components/schemas/PartialComponentDocument'
+        ifVersionMatch:
+          description: The expected version of the entity. If you wish to use the _latest_ version of the stored entity, then you can use the string `'latest'`
+          anyOf:
+          - minimum: 1
+            type: integer
+            format: int64
+          - type: string
+            enum:
+            - latest
+      description: A component update operation within a batch request
+    ComponentOperationsDelete:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/ComponentMatch'
+        id:
+          title: Id
+          type: string
+          description: The value of the components unique identifier. This value may be an Ardoq identifier (oid) or an alias identifier
+      description: A component delete operation within a batch request
+    ReferenceType:
+      title: Reference Type
+      required:
+      - customFields
+      - name
+      - type
+      type: object
+      properties:
+        customFields:
+          title: Custom Fields
+          type: array
+          description: A list of custom fields supported by the reference type
+          example:
+          - my_field
+          items:
+            type: string
+        name:
+          title: Reference Type Name
+          type: string
+          description: The human readable name of the type
+          example: Knows
+        type:
+          title: Reference Type Identifier
+          type: integer
+          description: The internal type identifier
+          format: int64
+          example: 5
+      description: Information about the reference type
+    ComponentOperations:
+      title: Component operations
+      type: object
+      properties:
+        upsert:
+          title: Upsert a component. An upsert operation will update a component if it exists or create one if it does not exist.
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentOperationsUpsert'
+        create:
+          title: Create component operations
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentCreateOperation'
+        update:
+          title: Update component operations
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentOperationsUpdate'
+        delete:
+          title: Delete component operations
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentOperationsDelete'
+      description: Create, update, upsert, and delete operations on components in a batch request
+    ReferenceOperations:
+      title: Reference operations
+      type: object
+      properties:
+        upsert:
+          title: Upsert a reference. An upsert operation will update a reference if it exists or create one if it does not exist.
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferenceOperationsUpsert'
+        create:
+          title: Create reference operations
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferenceCreateOperation'
+        update:
+          title: Update reference operations
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferenceOperationsUpdate'
+        delete:
+          title: Delete reference operations
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferenceOperationsDelete'
+      description: Create, update, upsert, and delete operations on references in a batch request
+    ReportOverview:
+      title: Report Overview
+      required:
+      - _id
+      - _meta
+      - _version
+      - columns
+      - datasource
+      - name
+      type: object
+      properties:
+        datasource:
+          title: Data Source
+          type: string
+          description: The type of data source backing the report
+          enum:
+          - graphSearch
+          - advancedSearch
+          - advancedSearchPostgres
+        columns:
+          title: Columns
+          type: array
+          description: Information about the columns in a report
+          items:
+            $ref: '#/components/schemas/Column'
+        name:
+          title: Name
+          type: string
+          description: Name of report and stored query
+          nullable: true
+          example: The best of reports
+        description:
+          title: Description
+          type: string
+          description: An optional description of the report
+          nullable: true
+        _meta:
+          allOf:
+          - $ref: '#/components/schemas/Metadata1'
+          x-ballerina-name: meta
+        _id:
+          title: Report Id
+          type: string
+          description: The unique Ardoq identifier (oid) of the report
+          example: 63ea1a02bbed2e0001a19a9c
+          x-ballerina-name: id
+        _version:
+          title: Version
+          minimum: 0
+          type: integer
+          description: The current version of the report. Versions are used to resolve contention between different users editing the same entity simultaneously
+          format: int64
+          example: 1
+          x-ballerina-name: version
+      description: A Report Overview Returned by Ardoq
+    BatchRequestOptions:
+      title: Batch request options
+      type: object
+      properties:
+        respondWithEntities:
+          title: Respond With Entities
+          type: boolean
+          description: By default the full JSON results of create and update operations are not included in the response
+      description: Batch request options
+    ComponentResults:
+      title: Component results
+      type: object
+      properties:
+        deleted:
+          title: Delete component results
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletedResult'
+        created:
+          title: Create component results
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatedComponentResult'
+        updated:
+          title: Update component results
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdatedComponentResult'
+      description: Results of the component operations executed in a batch request
+    Metadata1:
+      title: Metadata
+      required:
+      - created
+      - createdBy
+      - createdByEmail
+      - createdByName
+      - lastModifiedBy
+      - lastModifiedByEmail
+      - lastModifiedByName
+      - lastUpdated
+      type: object
+      properties:
+        createdByEmail:
+          title: Creator Email
+          type: string
+          description: The current email address of the user that created the entity
+          format: email
+          example: creator@ardoq.com
+        lastUpdated:
+          title: Last Updated Timestamp
+          type: string
+          description: A Coordinated Universal Time (UTC) timestamp generated when the entity was last updated
+          format: date-time
+          example: '2026-07-13T08:13:30.378Z'
+        createdByName:
+          title: Creator name
+          type: string
+          description: The current name of the user that created the entity
+          example: Mr. Ardoq
+          x-allOf:
+          - type: string
+          - {}
+        createdBy:
+          title: Creator ID
+          type: string
+          description: The internal Ardoq identifier of the user that created the entity
+          example: 9716c2df44bc00cac998b076
+        created:
+          title: Time of creation
+          type: string
+          description: A Coordinated Universal Time (UTC) timestamp generated when the entity was created
+          format: date-time
+          example: '2026-07-13T08:13:19.621Z'
+        lastModifiedBy:
+          title: Updater ID
+          type: string
+          description: The internal Ardoq identifier of the user that last modified the entity
+          example: 96728a3d6ba53f5bac61c39e
+        lastModifiedByEmail:
+          title: Updater Email
+          type: string
+          description: The current email address of the user that last modified the entity
+          format: email
+          example: updater@ardoq.com
+        lastModifiedByName:
+          title: Updater Name
+          type: string
+          description: The current name of the user that last modified the entity
+          example: Ms. Ardoq
+          x-allOf:
+          - type: string
+          - {}
+      description: Metadata about the entity
+    Next:
+      title: Next
+      required:
+      - href
+      type: object
+      properties:
+        href:
+          title: href
+          type: string
+          description: A URI that can be used to retrieve the next set of paginated results
+      description: A link to the next page in a paginated result
+    AttachmentResource:
+      title: Attachment resource
+      required:
+      - resource-id
+      - resource-type
+      type: object
+      properties:
+        resource-type:
+          title: Resource Type
+          type: string
+          description: For global attachments, the resource type is `org`. For attachments scoped to workspaces, the resource type is `workspace`
+          enum:
+          - org
+          - workspace
+          x-ballerina-name: resourceType
+        resource-id:
+          title: Resource ID
+          type: string
+          description: Depending on the `resource-type`, this is either the `id` of the organization or the `id` of the workspace
+          x-ballerina-name: resourceId
+      description: The type ("org" or "workspace") and id (organization `id` or workspace `id`)
+      example: '{"resource-type":"org","resource-id":"123456789abcdef123456789"}'
+    ReferenceOperationsUpdate:
+      required:
+      - body
+      - id
+      - ifVersionMatch
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: The value of the components unique identifier. This value may be an Ardoq identifier (oid) or an alias identifier
+        body:
+          $ref: '#/components/schemas/PartialReferenceDocument'
+        ifVersionMatch:
+          description: The expected version of the entity. If you wish to use the _latest_ version of the stored entity, then you can use the string `'latest'`
+          anyOf:
+          - minimum: 1
+            type: integer
+            format: int64
+          - type: string
+            enum:
+            - latest
+      description: A reference update operation within a batch request
+    User:
+      title: User
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          title: email
+          type: string
+          description: The email of the user associated with the request
+          example: me@myorg.com
+      description: The user making the request
+    Parent:
+      title: Parent
+      required:
+      - name
+      - typeId
+      type: object
+      properties:
+        name:
+          title: Component Type Name
+          type: string
+          description: The human readable name of the type
+          example: Application
+        typeId:
+          title: Component Type Identifier
+          description: The internal type identifier
+          example: p78263746293840
+      description: The parent of the type based on the models hierarchy
+      example: '{"name":"Server","typeId":"p16253887927364"}'
+    Org:
+      title: Org
+      required:
+      - label
+      - name
+      type: object
+      properties:
+        name:
+          title: Org name
+          type: string
+          description: The name of the organization (org) associated with the request
+          example: My Org
+        label:
+          title: Org label
+          type: string
+          description: The label of the organization (org) associated with the request
+          example: myorg
+      description: The organization of the user making the request
+    Metadata:
+      title: Metadata
+      required:
+      - columns
+      - name
+      type: object
+      properties:
+        columns:
+          title: Column Info
+          type: array
+          description: Information about a column
+          example:
+          - label: Application
+            key: application
+          - label: Value
+            key: value
+          items:
+            $ref: '#/components/schemas/ColumnInfo'
+        name:
+          title: Name
+          type: string
+          description: Name of report and stored query
+          nullable: true
+          example: The best of reports
+      description: Metadata related to the paginated response
+    ReferenceOperationsDelete:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/ReferenceMatch'
+        id:
+          title: Id
+          type: string
+          description: The value of the components unique identifier. This value may be an Ardoq identifier (oid) or an alias identifier
+      description: A reference delete operation within a batch request
+    Field:
+      title: Field
+      required:
+      - apiKey
+      - calculated
+      - defaultValue
+      - description
+      - label
+      - readOnly
+      - type
+      type: object
+      properties:
+        apiKey:
+          title: Custom Field API Key
+          type: string
+          description: The key used to identify the field when using the API
+          example: my_field
+        defaultValue:
+          title: Default Value
+          description: The default value for the field
+          x-any: true
+        options:
+          title: Options
+          type: array
+          description: The set of allowed values. This field is only present on _list like_ types
+          items:
+            title: List Option
+            type: string
+            description: An valid value for a list like type.
+            example: agree
+        description:
+          title: Description
+          type: string
+          description: An optional description of the field
+          nullable: true
+        readOnly:
+          title: Read Only field
+          type: boolean
+          description: True if the field can not be updated directly by the user
+        label:
+          title: Custom Field Label
+          type: string
+          description: The human readable label for the field. This is the value that you will see when working the Ardoq UI
+          example: My Field
+        type:
+          title: Field Type
+          type: string
+          description: The type of the field
+          example: Number
+        calculated:
+          title: Calculated field
+          type: boolean
+          description: Calculated fields are **read only** and should not be included in **create** and **update** requests
+      description: Field information
+    WorkspaceContext:
+      title: Workspace Context
+      required:
+      - componentTypes
+      - customFields
+      - referenceTypes
+      - rootWorkspace
+      - tags
+      type: object
+      properties:
+        customFields:
+          title: Custom Fields
+          type: array
+          description: Information about the custom fields supported by components and references in this workspace
+          items:
+            $ref: '#/components/schemas/Field'
+        componentTypes:
+          title: Component Types
+          type: array
+          description: Information about the component types
+          items:
+            $ref: '#/components/schemas/ComponentType'
+        rootWorkspace:
+          title: Workspace Identifier
+          type: string
+          description: The Ardoq identifier (OID) of the workspace that the model overview describes
+          example: 636cd6aa6565545384dfc401
+        referenceTypes:
+          title: Reference Types
+          type: array
+          description: Information about the reference types
+          items:
+            $ref: '#/components/schemas/ReferenceType'
+        tags:
+          title: Tags
+          type: array
+          description: A list of all tags that are available for components and references in this workspace
+          items:
+            $ref: '#/components/schemas/Tag'
+      description: An overview of the types and fields for the model
+    Column:
+      title: Column
+      required:
+      - key
+      - label
+      type: object
+      properties:
+        label:
+          title: Label
+          type: string
+          description: The column name as displayed in the Ardoq UI
+          example: Application
+        key:
+          title: Key
+          type: string
+          description: The api name of the custom field or built-in property (or custom gremlin result)
+          example: application
+      description: Information out a single column in a report
+    Component:
+      title: Component
+      required:
+      - _id
+      - _meta
+      - _version
+      - customFields
+      - name
+      - rootWorkspace
+      - typeId
+      type: object
+      properties:
+        image:
+          title: Component Image
+          type: string
+          description: Image is a style attribute used by the front-end to display the component image in views like the block diagram. By default this will use the image defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: /api/attachment/workspace/123456789abcdef123456789/205dc72167cc5922bae92a50
+        parent:
+          title: Parent ID
+          type: string
+          description: The Ardoq identifier (oid) of the parent component
+          nullable: true
+          example: d4423756340a8def18739173
+        shape:
+          title: Component Shape
+          type: string
+          description: Shape is a style attribute used by the front-end to display the component shape in views like the block diagram. By default this will use the shape defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: terminal
+        color:
+          title: Component Color
+          type: string
+          description: Color is a style attribute used by the front-end to display the component color in views like the block diagram. By default this will use the color defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: rgba(72,72,72,1)
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        icon:
+          title: Component Icon
+          type: string
+          description: Icon is a style attribute used by the front-end to display the component icon in views like the block diagram. By default this will use the icon defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: road
+        rootWorkspace:
+          title: Component's Workspace ID
+          type: string
+          description: The Ardoq identifier (oid) of the workspace that the component belongs to
+          example: 2340c3ab166278d1c56e0478
+        _meta:
+          allOf:
+          - $ref: '#/components/schemas/Metadata1'
+          x-ballerina-name: meta
+        description:
+          nullable: true
+        type:
+          title: Component Type Name
+          type: string
+          description: The name of the component type
+          example: Decision
+        name:
+          title: Component Name
+          description: The name of the component
+          example: My Component
+        typeId:
+          title: Component Type Id
+          description: Component types are drawn from the type-hierarchy defined by the workspace's metamodel
+          example: p86573295058
+        _id:
+          title: Component ID
+          type: string
+          description: The unique Ardoq identifier (oid) of the component
+          example: d6c56d6651caee202a38939c
+          x-ballerina-name: id
+        _version:
+          title: Version
+          minimum: 0
+          type: integer
+          description: The current version of the component. Versions are used to resolve contention between different users editing the same entity simultaneously
+          format: int64
+          example: 1
+          x-ballerina-name: version
+        componentKey:
+          title: Ardoq ID
+          type: string
+          description: The component key can be used to uniquely refer to a component in a more human-readable way, and is searchable in the application
+          example: BIZ-1234
+      description: A Component Returned by Ardoq
+    ComponentType:
+      title: Component Type
+      required:
+      - color
+      - customFields
+      - icon
+      - image
+      - name
+      - shape
+      - typeId
+      type: object
+      properties:
+        image:
+          title: Component Type Image
+          type: string
+          description: The default display image for the type
+          nullable: true
+          example: /api/attachment/(org|workspace)/{24-hex-id}/{24-hex-id-or-filename}
+        parent:
+          $ref: '#/components/schemas/Parent'
+        color:
+          title: Component Type Color
+          type: string
+          description: The display color of the type
+          nullable: true
+          example: rgba(72, 72, 72, 0)
+        shape:
+          title: Component Type Shape
+          type: string
+          description: The default display shape for the type
+          nullable: true
+          example: circle
+        customFields:
+          title: Custom Fields
+          type: array
+          description: A list of custom fields supported by the component type
+          example:
+          - my_field
+          items:
+            type: string
+        name:
+          title: Component Type Name
+          type: string
+          description: The human readable name of the type
+          example: Application
+        icon:
+          title: Component Type Icon
+          type: string
+          description: The default display icon for the type
+          nullable: true
+          example: svg_sprite_example
+        typeId:
+          title: Component Type Identifier
+          description: The internal type identifier
+          example: p78263746293840
+      description: Information about the component type
+    Reference:
+      title: Reference
+      required:
+      - _id
+      - _meta
+      - _version
+      - customFields
+      - source
+      - target
+      - type
+      type: object
+      properties:
+        displayText:
+          title: Reference Display Text
+          description: Optional display label for your reference in views such as the block diagram
+          nullable: true
+          example: Depends on
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        targetWorkspace:
+          title: Workspace ID of Reference's `target` Component
+          type: string
+          description: This is a read-only field maintained by the backend to simplify workspace lookups. It is derived from the `target` attribute. A reference's `targetWorkspace` cannot be changed by modifying this attribute
+          example: f728ef6ae73b68ba50341690
+        rootWorkspace:
+          title: Workspace ID of Reference's `source` Component
+          type: string
+          description: This is a read-only field maintained by the backend to simplify workspace lookups. It is derived from the `source` attribute. A reference's `rootWorkspace` cannot be changed by modifying this attribute
+          example: 110c4ff2c4d68c511c25ff8b
+        _meta:
+          allOf:
+          - $ref: '#/components/schemas/Metadata1'
+          x-ballerina-name: meta
+        description:
+          nullable: true
+        source:
+          title: ID of Source Component
+          type: string
+          description: ID of the reference's source component
+          example: 499bc6fc6d0532d3e5d37105
+        _id:
+          title: Reference ID
+          type: string
+          description: The unique Ardoq identifier (oid) of the reference
+          example: 15558d9f37cc4e1bfda5eeb6
+          x-ballerina-name: id
+        type:
+          title: Type ID of Reference
+          type: integer
+          description: Required type ID for the reference. This ID must be a valid type defined by the model that is used by the `rootWorkspace`
+          format: int64
+          example: 2
+        _version:
+          title: Reference Version
+          type: integer
+          description: Reference versions are used to resolve contention between different users editing the same entity simultaneously. This value should not be modified
+          format: int64
+          example: 1
+          x-ballerina-name: version
+        target:
+          title: ID of Target Component
+          type: string
+          description: ID of the reference's target component
+          example: 6d1b509a6f500cd9ce1f98d6
+      description: A Reference Returned by Ardoq
+    ComponentOperationsUpsert:
+      required:
+      - body
+      - uniqueBy
+      type: object
+      properties:
+        uniqueBy:
+          title: Unique By
+          type: array
+          description: 'A list of fields that uniquely identify the entity. '
+          example:
+          - rootWorkspace
+          - customFields.my_external_id
+          items:
+            type: string
+        body:
+          $ref: '#/components/schemas/ComponentDocument'
+        batchId:
+          title: Batch identifier
+          type: string
+          description: A unique user provided identifier
+          example: batch_entity-1
+      description: A component upsert operation within a batch request
+    Aliases:
+      title: Aliases
+      type: object
+      properties:
+        components:
+          title: Component Aliases
+          type: object
+          properties: {}
+          additionalProperties:
+            $ref: '#/components/schemas/ComponentAlias'
+        references:
+          title: Reference Aliases
+          type: object
+          properties: {}
+          additionalProperties:
+            $ref: '#/components/schemas/ReferenceAlias'
+      description: 'An alias is a user provided string that resolves to an existing component/reference in Ardoq. An alias may be used in place of an Ardoq Id. '
+    ReferenceOperationsUpsert:
+      required:
+      - body
+      - uniqueBy
+      type: object
+      properties:
+        uniqueBy:
+          title: Unique By
+          type: array
+          description: 'A list of fields that uniquely identify the entity. '
+          example:
+          - rootWorkspace
+          - customFields.my_external_id
+          items:
+            type: string
+        body:
+          $ref: '#/components/schemas/ReferenceDocument'
+        batchId:
+          title: Batch identifier
+          type: string
+          description: A unique user provided identifier
+          example: batch_entity-1
+      description: A reference upsert operation within a batch request
+    Links:
+      title: Links
+      type: object
+      properties:
+        next:
+          $ref: '#/components/schemas/Next'
+      description: Links related to the paginated results
+    Tag:
+      title: Tag
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          title: Tag Name
+          type: string
+          description: The name of the tag
+          example: tagliatelle
+          x-allOf:
+          - type: string
+          - {}
+      description: Tag information
+    ReferenceResults:
+      title: Reference results
+      type: object
+      properties:
+        deleted:
+          title: Delete reference results
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletedResult'
+        created:
+          title: Create reference results
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatedReferenceResult'
+        updated:
+          title: Update reference results
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdatedReferenceResult'
+      description: Results of the reference operations executed in a batch request
+    Workspace:
+      title: Workspace
+      required:
+      - _id
+      - _meta
+      - _version
+      - name
+      type: object
+      properties:
+        startView:
+          title: Start view
+          type: string
+          description: The default view that will be shown when opening the workspace
+          nullable: true
+          example: blockDiagram
+        name:
+          title: Workspace Name
+          description: The name of your workspace. Required
+          example: My First Workspace
+        _meta:
+          allOf:
+          - $ref: '#/components/schemas/Metadata1'
+          x-ballerina-name: meta
+        description:
+          nullable: true
+        _id:
+          title: Workspace ID
+          type: string
+          description: Unique component `id`. Required and read-only
+          example: 8103c183beb498997eac0563
+          x-ballerina-name: id
+        _version:
+          title: Workspace Version
+          minimum: 0
+          type: integer
+          description: Versions are used to resolve contention between different users editing the same entity simultaneously
+          format: int64
+          example: 1
+          x-ballerina-name: version
+        views:
+          title: Views
+          type: array
+          description: The views that are configured as default tabs at the top of the workspace
+          nullable: true
+          example:
+          - blockDiagram
+          - tableView
+          items:
+            type: string
+        workspaceKey:
+          title: Workspace Key
+          type: string
+          description: A unique human-readible workspace identifier
+          example: ABC
+      description: A Workspace Returned by Ardoq
+    UserInfo:
+      title: body
+      type: object
+      properties:
+        org:
+          $ref: '#/components/schemas/Org'
+        user:
+          $ref: '#/components/schemas/User'
+      description: A small amount of data that identifies the user making the request
+    CreateReferenceRequest:
+      title: body
+      required:
+      - source
+      - target
+      - type
+      type: object
+      properties:
+        displayText:
+          title: Reference Display Text
+          type: string
+          description: Display label for your reference in views such as the block diagram
+          example: Depends on
+          x-allOf:
+          - type: string
+          - {}
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        description:
+          nullable: true
+        source:
+          title: ID of Source Component
+          type: string
+          description: ID of the reference's source component
+          example: 499bc6fc6d0532d3e5d37105
+        type:
+          title: Type ID of Reference
+          type: integer
+          description: Required type ID for the reference. This ID must be a valid type defined by the model that is used by the `rootWorkspace`
+          format: int64
+          example: 2
+        target:
+          title: ID of Target Component
+          type: string
+          description: ID of the reference's target component
+          example: 6d1b509a6f500cd9ce1f98d6
+      description: Request body for creating a reference between two components
+    UpdateComponentRequest:
+      title: body
+      type: object
+      properties:
+        image:
+          title: Component Image
+          type: string
+          description: Image is a style attribute used by the front-end to display the component image in views like the block diagram. By default this will use the image defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: /api/attachment/workspace/123456789abcdef123456789/205dc72167cc5922bae92a50
+        parent:
+          title: Parent ID
+          type: string
+          description: The Ardoq identifier (oid) of the parent component
+          nullable: true
+          example: d4423756340a8def18739173
+        color:
+          title: Component Color
+          type: string
+          description: Color is a style attribute used by the front-end to display the component color in views like the block diagram. By default this will use the color defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: rgba(72,72,72,1)
+        shape:
+          title: Component Shape
+          type: string
+          description: Shape is a style attribute used by the front-end to display the component shape in views like the block diagram. By default this will use the shape defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: terminal
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        name:
+          title: Component Name
+          description: The name of the component
+          example: My Component
+        icon:
+          title: Component Icon
+          type: string
+          description: Icon is a style attribute used by the front-end to display the component icon in views like the block diagram. By default this will use the icon defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: road
+        description:
+          nullable: true
+      description: Request body for updating an existing component
+    UpdateReferenceRequest:
+      title: body
+      type: object
+      properties:
+        displayText:
+          title: Reference Display Text
+          type: string
+          description: Display label for your reference in views such as the block diagram
+          example: Depends on
+          x-allOf:
+          - type: string
+          - {}
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        description:
+          nullable: true
+        source:
+          title: ID of Source Component
+          type: string
+          description: ID of the reference's source component
+          example: 499bc6fc6d0532d3e5d37105
+        target:
+          title: ID of Target Component
+          type: string
+          description: ID of the reference's target component
+          example: 6d1b509a6f500cd9ce1f98d6
+      description: Request body for updating an existing reference
+    CreateComponentRequest:
+      title: body
+      required:
+      - name
+      - rootWorkspace
+      - typeId
+      type: object
+      properties:
+        image:
+          title: Component Image
+          type: string
+          description: Image is a style attribute used by the front-end to display the component image in views like the block diagram. By default this will use the image defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: /api/attachment/workspace/123456789abcdef123456789/205dc72167cc5922bae92a50
+        parent:
+          title: Parent ID
+          type: string
+          description: The Ardoq identifier (oid) of the parent component
+          nullable: true
+          example: d4423756340a8def18739173
+        shape:
+          title: Component Shape
+          type: string
+          description: Shape is a style attribute used by the front-end to display the component shape in views like the block diagram. By default this will use the shape defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: terminal
+        color:
+          title: Component Color
+          type: string
+          description: Color is a style attribute used by the front-end to display the component color in views like the block diagram. By default this will use the color defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: rgba(72,72,72,1)
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        name:
+          title: Component Name
+          description: The name of the component
+          example: My Component
+        icon:
+          title: Component Icon
+          type: string
+          description: Icon is a style attribute used by the front-end to display the component icon in views like the block diagram. By default this will use the icon defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: road
+        rootWorkspace:
+          title: Component's Workspace ID
+          type: string
+          description: The Ardoq identifier (oid) of the workspace that the component belongs to
+          example: 2340c3ab166278d1c56e0478
+        description:
+          nullable: true
+        typeId:
+          title: Component Type Id
+          description: Component types are drawn from the type-hierarchy defined by the workspace's metamodel
+          example: p86573295058
+      description: Request body for creating a component
+    PaginatedReferenceResponse:
+      title: Paginated response
+      required:
+      - _links
+      - values
+      type: object
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/Links'
+          x-ballerina-name: links
+        values:
+          title: Paginated values
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        _meta:
+          title: Metadata
+          type: object
+          properties: {}
+          additionalProperties: {}
+          description: Metadata related to the paginated response
+          x-ballerina-name: meta
+      description: The Paginated Response
+    PaginatedAttachmentResponse:
+      title: Paginated response
+      required:
+      - _links
+      - values
+      type: object
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/Links'
+          x-ballerina-name: links
+        values:
+          title: Paginated values
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        _meta:
+          title: Metadata
+          type: object
+          properties: {}
+          additionalProperties: {}
+          description: Metadata related to the paginated response
+          x-ballerina-name: meta
+      description: The Paginated Response
+    PaginatedWorkspaceResponse:
+      title: Paginated response
+      required:
+      - _links
+      - values
+      type: object
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/Links'
+          x-ballerina-name: links
+        values:
+          title: Paginated values
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+        _meta:
+          title: Metadata
+          type: object
+          properties: {}
+          additionalProperties: {}
+          description: Metadata related to the paginated response
+          x-ballerina-name: meta
+      description: The Paginated Response
+    PaginatedReportObjectResponse:
+      title: Paginated response
+      required:
+      - _links
+      - values
+      type: object
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/Links'
+          x-ballerina-name: links
+        values:
+          title: Paginated values
+          type: array
+          items:
+            title: Row
+            type: object
+            properties: {}
+            additionalProperties:
+              title: Value
+              description: The type of each column is determined by the underlying query. All values are valid JSON.
+              example: Ardoq
+            description: A row is represented as a map from column name to column value
+            example:
+              Application: Ardoq
+              Value: Some Value
+        _meta:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          x-ballerina-name: meta
+      description: The Paginated Response
+    PaginatedReportResponse:
+      title: Paginated response
+      required:
+      - _links
+      - values
+      type: object
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/Links'
+          x-ballerina-name: links
+        values:
+          title: Paginated values
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportOverview'
+        _meta:
+          title: Metadata
+          type: object
+          properties: {}
+          additionalProperties: {}
+          description: Metadata related to the paginated response
+          x-ballerina-name: meta
+      description: The Paginated Response
+    PaginatedReportTabularResponse:
+      title: Paginated response
+      required:
+      - _links
+      - values
+      type: object
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/Links'
+          x-ballerina-name: links
+        values:
+          title: Paginated values
+          type: array
+          items:
+            title: Row
+            type: array
+            description: A row consists of a list of column values
+            example:
+            - Ardoq
+            - Some Value
+            items:
+              title: Value
+              description: The type of each column is determined by the underlying query. All values are valid JSON.
+              example: Ardoq
+        _meta:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          x-ballerina-name: meta
+      description: The Paginated Response
+    PaginatedComponentResponse:
+      title: Paginated response
+      required:
+      - _links
+      - values
+      type: object
+      properties:
+        _links:
+          allOf:
+          - $ref: '#/components/schemas/Links'
+          x-ballerina-name: links
+        values:
+          title: Paginated values
+          type: array
+          items:
+            $ref: '#/components/schemas/Component'
+        _meta:
+          title: Metadata
+          type: object
+          properties: {}
+          additionalProperties: {}
+          description: Metadata related to the paginated response
+          x-ballerina-name: meta
+      description: The Paginated Response
+    BatchResponse:
+      title: Batch
+      type: object
+      properties:
+        components:
+          $ref: '#/components/schemas/ComponentResults'
+        references:
+          $ref: '#/components/schemas/ReferenceResults'
+      description: A Batch response
+    BatchRequest:
+      title: Batch
+      type: object
+      properties:
+        components:
+          $ref: '#/components/schemas/ComponentOperations'
+        aliases:
+          $ref: '#/components/schemas/Aliases'
+        references:
+          $ref: '#/components/schemas/ReferenceOperations'
+        options:
+          $ref: '#/components/schemas/BatchRequestOptions'
+      description: A Batch request
+    ComponentDocument:
+      title: Document
+      required:
+      - name
+      - rootWorkspace
+      - typeId
+      type: object
+      properties:
+        image:
+          title: Component Image
+          type: string
+          description: Image is a style attribute used by the front-end to display the component image in views like the block diagram. By default this will use the image defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: /api/attachment/workspace/123456789abcdef123456789/205dc72167cc5922bae92a50
+        parent:
+          title: Parent Component identifier
+          type: string
+          description: Identify the parent component. A component that exists may be identified by either its Ardoq Id (oid) or by an alias. If the parent component is created or upserted in the same batch request, then you must use the `batchId` value associated with the parent component
+          nullable: true
+          example: my-batch-id
+        shape:
+          title: Component Shape
+          type: string
+          description: Shape is a style attribute used by the front-end to display the component shape in views like the block diagram. By default this will use the shape defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: terminal
+        color:
+          title: Component Color
+          type: string
+          description: Color is a style attribute used by the front-end to display the component color in views like the block diagram. By default this will use the color defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: rgba(72,72,72,1)
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        name:
+          title: Component Name
+          description: The name of the component
+          example: My Component
+        icon:
+          title: Component Icon
+          type: string
+          description: Icon is a style attribute used by the front-end to display the component icon in views like the block diagram. By default this will use the icon defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: road
+        rootWorkspace:
+          title: Component's Workspace ID
+          type: string
+          description: The Ardoq identifier (oid) of the workspace that the component belongs to
+          example: 2340c3ab166278d1c56e0478
+        description:
+          nullable: true
+        typeId:
+          title: Component Type Id
+          description: Component types are drawn from the type-hierarchy defined by the workspace's metamodel
+          example: p86573295058
+      description: Similar to the _body_ of a `POST` request to `/api/v2/components`. The only difference is that the value of a `parent` field may be the batch identifier of a component being created in the same request, or an alias identifier
+    ReferenceDocument:
+      title: Document
+      required:
+      - source
+      - target
+      - type
+      type: object
+      properties:
+        displayText:
+          title: Reference Display Text
+          type: string
+          description: Display label for your reference in views such as the block diagram
+          example: Depends on
+          x-allOf:
+          - type: string
+          - {}
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        description:
+          nullable: true
+        source:
+          title: Source Component identifier
+          type: string
+          description: Identify the source component. A component that exists may be identified by an Ardoq Id (oid) or an alias identifier. If the source component is created or upserted in the same batch request, then you must use the `batchId` value associated with that component
+          example: source-component-batchId
+        type:
+          title: Type ID of Reference
+          type: integer
+          description: Required type ID for the reference. This ID must be a valid type defined by the model that is used by the `rootWorkspace`
+          format: int64
+          example: 2
+        target:
+          title: Target Component identifier
+          type: string
+          description: Identify the target component. A component that exists may be identified by an Ardoq Id (oid) or an alias identifier. If the target component is created or upserted in the same batch request, then you must use the `batchId` value associated with that component
+          example: target-component-batchId
+      description: Similar to the _body_ of a `POST` request to `/api/v2/references`. The only difference is that the values both `source` and `target` fields may be the batch identifiers of components being created in the same request, or 'Unique By' objects
+    PartialReferenceDocument:
+      title: Document
+      type: object
+      properties:
+        displayText:
+          title: Reference Display Text
+          type: string
+          description: Display label for your reference in views such as the block diagram
+          example: Depends on
+          x-allOf:
+          - type: string
+          - {}
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        description:
+          nullable: true
+        source:
+          title: Source Component identifier
+          type: string
+          description: Identify the source component. A component that exists may be identified by an Ardoq Id (oid) or an alias identifier. If the source component is created or upserted in the same batch request, then you must use the `batchId` value associated with that component
+          example: source-component-batchId
+        target:
+          title: Target Component identifier
+          type: string
+          description: Identify the target component. A component that exists may be identified by an Ardoq Id (oid) or an alias identifier. If the target component is created or upserted in the same batch request, then you must use the `batchId` value associated with that component
+          example: target-component-batchId
+      description: Similar to the _body_ of a `PATCH` request to `/api/v2/references`. The only difference is that the values both `source` and `target` fields may be the batch identifiers of components being created in the same request, or 'Unique By' objects
+    PartialComponentDocument:
+      title: Partial Document
+      type: object
+      properties:
+        image:
+          title: Component Image
+          type: string
+          description: Image is a style attribute used by the front-end to display the component image in views like the block diagram. By default this will use the image defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: /api/attachment/workspace/123456789abcdef123456789/205dc72167cc5922bae92a50
+        parent:
+          title: Parent Component identifier
+          type: string
+          description: Identify the parent component. A component that exists may be identified by either its Ardoq Id (oid) or by an alias. If the parent component is created or upserted in the same batch request, then you must use the `batchId` value associated with the parent component
+          nullable: true
+          example: my-batch-id
+        color:
+          title: Component Color
+          type: string
+          description: Color is a style attribute used by the front-end to display the component color in views like the block diagram. By default this will use the color defined by the component-type, but can be overriden by setting it explicitly per-component
+          nullable: true
+          example: rgba(72,72,72,1)
+        shape:
+          title: Component Shape
+          type: string
+          description: Shape is a style attribute used by the front-end to display the component shape in views like the block diagram. By default this will use the shape defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: terminal
+        customFields:
+          title: Custom Fields
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            description: The value of a custom field.
+          description: A custom field is a key/value pair that is not intrinsic to the ardoq model
+        name:
+          title: Component Name
+          description: The name of the component
+          example: My Component
+        icon:
+          title: Component Icon
+          type: string
+          description: Icon is a style attribute used by the front-end to display the component icon in views like the block diagram. By default this will use the icon defined by the component-type, but can be overriden by setting it explicitly per-component. A list of valid values for this attribute should be found by inspecting the style drop-down in the front-end
+          nullable: true
+          example: road
+        description:
+          nullable: true
+      description: Similar to the _body_ of a `PATCH` request to `/api/v2/components/{id}`. The only difference is that the value of a `parent` field may be the batch identifier of a component being created in the same request, or an alias identifier
+    CreatedComponentResult:
+      title: ardoq.api.public.v2.specs.batch.components.processed/result-with-id-and-entity-and-possible-batchId
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: The Ardoq identifier (oid) of the entity
+        body:
+          $ref: '#/components/schemas/Component'
+        batchId:
+          title: Batch identifier
+          type: string
+          description: A unique user provided identifier
+          example: batch_entity-1
+      description: Result of a component create operation in a batch request
+    UpdatedComponentResult:
+      title: ardoq.api.public.v2.specs.batch.components.processed/result-with-id-and-entity
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: The Ardoq identifier (oid) of the entity
+        body:
+          $ref: '#/components/schemas/Component'
+      description: Result of a component update operation in a batch request
+    CreatedReferenceResult:
+      title: ardoq.api.public.v2.specs.batch.references.processed/result-with-id-and-entity-and-possible-batchId
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: The Ardoq identifier (oid) of the entity
+        body:
+          $ref: '#/components/schemas/Reference'
+        batchId:
+          title: Batch identifier
+          type: string
+          description: A unique user provided identifier
+          example: batch_entity-1
+      description: Result of a reference create operation in a batch request
+    UpdatedReferenceResult:
+      title: ardoq.api.public.v2.specs.batch.references.processed/result-with-id-and-entity
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: The Ardoq identifier (oid) of the entity
+        body:
+          $ref: '#/components/schemas/Reference'
+      description: Result of a reference update operation in a batch request
+    DeletedResult:
+      title: ardoq.api.public.v2.specs.batch/result-with-id
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: The Ardoq identifier (oid) of the entity
+      description: Result of a delete operation in a batch request
+    ComponentMatch:
+      title: ardoq.api.public.v2.specs.batch.components/match
+      type: object
+      properties:
+        customFields:
+          title: Custom Fields for Aliases
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            type: string
+            description: The value of a searchable custom field.
+          description: A custom field can uniquely identify an entity in a workspace
+        name:
+          title: Component Name
+          description: The name of the component
+          example: My Component
+        rootWorkspace:
+          title: Component's Workspace ID
+          type: string
+          description: The Ardoq identifier (oid) of the workspace that the component belongs to
+          example: 2340c3ab166278d1c56e0478
+        typeId:
+          title: Component Type Id
+          description: Component types are drawn from the type-hierarchy defined by the workspace's metamodel
+          example: p86573295058
+        componentKey:
+          title: Ardoq ID
+          type: string
+          description: The component key can be used to uniquely refer to a component in a more human-readable way, and is searchable in the application
+          example: BIZ-1234
+      description: Criteria for matching an existing component in a batch upsert or delete operation
+    ReferenceMatch:
+      title: ardoq.api.public.v2.specs.batch.references/match
+      type: object
+      properties:
+        customFields:
+          title: Custom Fields for Aliases
+          type: object
+          properties: {}
+          additionalProperties:
+            title: Value
+            type: string
+            description: The value of a searchable custom field.
+          description: A custom field can uniquely identify an entity in a workspace
+        targetWorkspace:
+          title: Workspace ID of Reference's `target` Component
+          type: string
+          description: This is a read-only field maintained by the backend to simplify workspace lookups. It is derived from the `target` attribute. A reference's `targetWorkspace` cannot be changed by modifying this attribute
+          example: f728ef6ae73b68ba50341690
+        rootWorkspace:
+          title: Workspace ID of Reference's `source` Component
+          type: string
+          description: This is a read-only field maintained by the backend to simplify workspace lookups. It is derived from the `source` attribute. A reference's `rootWorkspace` cannot be changed by modifying this attribute
+          example: 110c4ff2c4d68c511c25ff8b
+        source:
+          title: Source Component identifier
+          type: string
+          description: Identify the source component. A component that exists may be identified by an Ardoq Id (oid) or an alias identifier. If the source component is created or upserted in the same batch request, then you must use the `batchId` value associated with that component
+          example: source-component-batchId
+        type:
+          title: Type ID of Reference
+          type: integer
+          description: Required type ID for the reference. This ID must be a valid type defined by the model that is used by the `rootWorkspace`
+          format: int64
+          example: 2
+        target:
+          title: Target Component identifier
+          type: string
+          description: Identify the target component. A component that exists may be identified by an Ardoq Id (oid) or an alias identifier. If the target component is created or upserted in the same batch request, then you must use the `batchId` value associated with that component
+          example: target-component-batchId
+      description: Criteria for matching an existing reference in a batch upsert or delete operation
+    ComponentCreateOperation:
+      title: ardoq.api.public.v2.specs.batch.components.create/op
+      required:
+      - body
+      type: object
+      properties:
+        batchId:
+          title: Batch identifier
+          type: string
+          description: A unique user provided identifier
+          example: batch_entity-1
+        body:
+          $ref: '#/components/schemas/ComponentDocument'
+      description: A component create operation within a batch request
+    ReferenceCreateOperation:
+      title: ardoq.api.public.v2.specs.batch.references.create/op
+      required:
+      - body
+      type: object
+      properties:
+        body:
+          $ref: '#/components/schemas/ReferenceDocument'
+        batchId:
+          title: Batch identifier
+          type: string
+          description: A unique user provided identifier
+          example: batch_entity-1
+      description: A reference create operation within a batch request
+    ComponentAlias:
+      title: ardoq.api.public.v2.specs.batch.aliases/component
+      type: object
+      properties:
+        customFields:
+          title: Custom Fields for Aliases
+          type: object
+          additionalProperties:
+            title: Value
+            type: string
+            description: The value of a searchable custom field.
+          description: A custom field can uniquely identify an entity in a workspace
+        name:
+          title: Component Name
+          description: The name of the component
+          example: My Component
+        rootWorkspace:
+          title: Component's Workspace ID
+          type: string
+          description: The Ardoq identifier (oid) of the workspace that the component belongs to
+          example: 2340c3ab166278d1c56e0478
+        componentKey:
+          title: Ardoq ID
+          type: string
+          description: The component key can be used to uniquely refer to a component in a more human-readable way, and is searchable in the application
+          example: BIZ-1234
+      description: An alias that resolves to an existing component in Ardoq
+    ReferenceAlias:
+      title: ardoq.api.public.v2.specs.batch.aliases/reference
+      type: object
+      properties:
+        customFields:
+          title: Custom Fields for Aliases
+          type: object
+          additionalProperties:
+            title: Value
+            type: string
+            description: The value of a searchable custom field.
+          description: A custom field can uniquely identify an entity in a workspace
+        rootWorkspace:
+          title: Workspace ID of Reference's `source` Component
+          type: string
+          description: This is a read-only field maintained by the backend to simplify workspace lookups. It is derived from the `source` attribute. A reference's `rootWorkspace` cannot be changed by modifying this attribute
+          example: 110c4ff2c4d68c511c25ff8b
+        source:
+          title: Source Component identifier
+          type: string
+          description: Identify the source component. A component that exists may be identified by an Ardoq Id (oid) or an alias identifier. If the source component is created or upserted in the same batch request, then you must use the `batchId` value associated with that component
+          example: source-component-batchId
+        type:
+          title: Type ID of Reference
+          type: integer
+          description: Required type ID for the reference. This ID must be a valid type defined by the model that is used by the `rootWorkspace`
+          format: int64
+          example: 2
+        target:
+          title: Target Component identifier
+          type: string
+          description: Identify the target component. A component that exists may be identified by an Ardoq Id (oid) or an alias identifier. If the target component is created or upserted in the same batch request, then you must use the `batchId` value associated with that component
+          example: target-component-batchId
+      description: An alias that resolves to an existing reference in Ardoq
+  requestBodies:
+    Body:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchRequest'
+      required: true
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+x-id:
+- reitit.swagger/default
+security:
+- BearerAuth: []

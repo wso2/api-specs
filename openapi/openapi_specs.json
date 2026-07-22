@@ -1,5 +1,10 @@
 [
     {
+       "name": "Ardoq",
+       "sourceUrl": "https://developer.ardoq.com/public-api/",
+       "connectorRepo": "ballerina-platform/module-ballerinax-ardoq"
+   },
+   {
        "name": "Asana",
        "sourceUrl": "https://github.com/Asana/openapi",
        "connectorRepo": "ballerina-platform/module-ballerinax-asana"
